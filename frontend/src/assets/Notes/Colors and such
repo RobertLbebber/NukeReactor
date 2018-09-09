@@ -1,0 +1,26 @@
+Active Primary UI            =   
+Disabled Primary UI          =
+Not Active Primary UI        =
+
+Active Secondary UI          =
+Disabled Secondary UI        =
+Not Active Secondary UI      =
+
+Active Background Menu       =
+Disabled Background Menu     =
+Not Active Background Menu   =
+
+Active Editor Foreground     = #1afaef
+Hover Editor Foreground      = #daeff8
+Not Active Editor Foreground = #18cac1
+
+Light Grey = #dadada
+
+
+Active Editor Background     = #fff
+Not Active Editor Background = #dadada
+
+
+Notice Warning    =
+Notice Success    =
+Notice Info       =

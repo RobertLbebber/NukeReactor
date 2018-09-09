@@ -1,0 +1,48 @@
+div.tooltip {
+  display: inline;
+  position: absolute;
+  top: -3em;
+}
+
+div.tooltip.right {
+  /* float: right; */
+  left: 5em;
+}
+
+div.tooltip.left {
+  /* float: left; */
+  left: -20em;
+}
+
+div.tooltip-inner {
+  max-width: none;
+  background: white;
+  border: 1px #dadada solid;
+}
+
+div.tooltip-inner table.table {
+  margin-bottom: 0;
+}
+
+div.tooltip-inner table.table tr:first-child td {
+  border-top: 0px;
+}
+
+.tooltip.left div.tooltip-arrow {
+  top: 50%;
+  border-left-color: #dadada;
+}
+
+.tooltip.right div.tooltip-arrow {
+  top: 50%;
+  border-right-color: #dadada;
+}
+
+td {
+  text-align: center;
+  cursor: move;
+}
+
+span.glyphicon {
+  margin: auto;
+}

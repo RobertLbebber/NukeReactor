@@ -1,0 +1,27 @@
+.edit-me {
+  font-size: 40px;
+  color: #1afaef;
+  background: white;
+  border-radius: 40px;
+  cursor: pointer;
+  position: relative;
+}
+
+.edit-me:active {
+  color: #18cac1;
+  background: #dadada;
+}
+
+.edit-me:hover {
+  color: #1ae7dd;
+  background: #daeff8;
+  cursor: pointer;
+}
+
+.edit-me.right {
+  float: right;
+}
+
+.edit-me.left {
+  float: left;
+}

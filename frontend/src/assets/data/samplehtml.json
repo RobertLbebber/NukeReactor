@@ -1,0 +1,44 @@
+{
+  "div": {
+    "class": "ROOT",
+    "style": "",
+    "name": "",
+    "value": "",
+    "id": "ROOT",
+    "attributes": "",
+    "text": "Page",
+    "children": [
+      {
+        "h1": {
+          "text": "John Smith",
+          "class": "title",
+          "style": "",
+          "name": "",
+          "value": "",
+          "id": "ROOT-h1"
+        }
+      },
+      {
+        "img": {
+          "src": "https://beanteam.com/wp-content/uploads/2013/04/generic-avatar.png",
+          "alt": "Missing Image",
+          "class": "profile",
+          "style": "",
+          "name": "",
+          "value": "",
+          "id": "ROOT-profile"
+        }
+      },
+      {
+        "p": {
+          "text": "Look at this page",
+          "class": "caption",
+          "style": "",
+          "name": "",
+          "value": "",
+          "id": "ROOT-p"
+        }
+      }
+    ]
+  }
+}

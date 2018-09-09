@@ -1,0 +1,183 @@
+{
+  "types": [
+    {
+      "div": {
+        "standard-attributes": ["id", "name", "class", "style"],
+        "custom-attributes": ["attributes", "text"]
+      }
+    },
+    {
+      "a": {
+        "standard-attributes": ["id", "name", "class", "style", "href"],
+        "custom-attributes": ["attributes", "text"]
+      }
+    },
+    {
+      "b": {
+        "standard-attributes": ["id", "name", "class", "style", "value"],
+        "custom-attributes": ["attributes", "text"]
+      }
+    },
+    {
+      "button": {
+        "standard-attributes": ["id", "name", "class", "style"],
+        "object-attributes": [{ "type": ["button", "reset", "submit"] }],
+        "custom-attributes": ["attributes", "text"]
+      }
+    },
+    {
+      "form": {
+        "standard-attributes": [
+          "id",
+          "name",
+          "class",
+          "style",
+          "method",
+          "action"
+        ],
+        "custom-attributes": ["attributes"]
+      }
+    },
+    {
+      "h1": {
+        "standard-attributes": ["id", "name", "class", "style"],
+        "custom-attributes": ["attributes", "text"]
+      }
+    },
+    {
+      "h2": {
+        "standard-attributes": ["id", "name", "class", "style"],
+        "custom-attributes": ["attributes", "text"]
+      }
+    },
+    {
+      "h3": {
+        "standard-attributes": ["id", "name", "class", "style"],
+        "custom-attributes": ["attributes", "text"]
+      }
+    },
+    {
+      "h4": {
+        "standard-attributes": ["id", "name", "class", "style"],
+        "custom-attributes": ["attributes", "text"]
+      }
+    },
+    {
+      "h5": {
+        "standard-attributes": ["id", "name", "class", "style"],
+        "custom-attributes": ["attributes", "text"]
+      }
+    },
+    {
+      "h6": {
+        "standard-attributes": ["id", "name", "class", "style"],
+        "custom-attributes": ["attributes", "text"]
+      }
+    },
+    {
+      "img": {
+        "standard-attributes": ["id", "name", "class", "style", "src", "alt"],
+        "custom-attributes": ["attributes", "text"]
+      }
+    },
+    {
+      "input": {
+        "standard-attributes": [
+          "id",
+          "name",
+          "class",
+          "style",
+          "placeholder",
+          "value"
+        ],
+        "object-attributes": [
+          { "type": ["text", "radio", "select", "option", "text"] }
+        ],
+        "custom-attributes": ["attributes", "text"]
+      }
+    },
+    {
+      "i": {
+        "standard-attributes": ["id", "name", "class", "style"],
+        "custom-attributes": ["attributes", "text"]
+      }
+    },
+    {
+      "p": {
+        "standard-attributes": ["id", "name", "class", "style"],
+        "custom-attributes": ["attributes", "text"]
+      }
+    },
+    {
+      "li": {
+        "standard-attributes": ["id", "name", "class", "style"],
+        "custom-attributes": ["attributes", "text"],
+        "required-parent": ["ol", "ul"]
+      }
+    },
+    {
+      "ol": {
+        "standard-attributes": ["id", "name", "class", "style"],
+        "custom-attributes": ["attributes", "text"]
+      }
+    },
+    {
+      "span": {
+        "standard-attributes": ["id", "name", "class", "style"],
+        "custom-attributes": ["attributes", "text"]
+      }
+    },
+    {
+      "table": {
+        "standard-attributes": ["id", "name", "class", "style"],
+        "custom-attributes": ["attributes", "text"]
+      }
+    },
+    {
+      "td": {
+        "standard-attributes": ["id", "name", "class", "style"],
+        "custom-attributes": ["attributes", "text"],
+        "required-parent": ["tr", "td"]
+      }
+    },
+    {
+      "textarea": {
+        "standard-attributes": [
+          "id",
+          "name",
+          "class",
+          "style",
+          "value",
+          "placeholder"
+        ],
+        "custom-attributes": ["attributes", "text"]
+      }
+    },
+    {
+      "tr": {
+        "standard-attributes": ["id", "name", "class", "style"],
+        "custom-attributes": ["attributes", "text"],
+        "required-parent": "table"
+      }
+    },
+    {
+      "th": {
+        "standard-attributes": ["id", "name", "class", "style"],
+        "custom-attributes": ["attributes", "text"],
+        "required-parent": "table"
+      }
+    },
+    {
+      "u": {
+        "standard-attributes": ["id", "name", "class", "style"],
+        "custom-attributes": ["attributes", "text"]
+      }
+    },
+    {
+      "ul": {
+        "standard-attributes": ["id", "name", "class", "style"],
+        "custom-attributes": ["attributes", "text"]
+      }
+    }
+  ]
+}
