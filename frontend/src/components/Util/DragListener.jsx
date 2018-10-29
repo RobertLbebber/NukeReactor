@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-//import PropTypes from 'prop-types';
+
 export const dragWrapper = ListeningComponent => {
   class DragListener extends React.PureComponent {
     constructor(props) {
@@ -14,6 +14,7 @@ export const dragWrapper = ListeningComponent => {
     }
     componentDidMount() {
       const ref = ReactDOM.findDOMNode(this.reference);
+      ref.className = this.state._tag;
       const box = ref.getBoundingClientRect();
       document.addEventListener("mouseup", e => {
         if (box.bottom > e.clientY && e.clientY > box.top) {
@@ -50,13 +51,11 @@ export const dragWrapper = ListeningComponent => {
           }}
         >
           {React.cloneElement(ListeningComponent, {
-            ...this.state.InheritedStates
+            ...{ InheritedStates: this.state.InheritedStates }
           })}
         </div>
       );
     }
-    // static propTypes = {};
-    // static defaultProps = {};
   }
   return DragListener;
 };

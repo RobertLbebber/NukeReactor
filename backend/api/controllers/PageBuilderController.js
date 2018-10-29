@@ -4,7 +4,6 @@
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
-var x = require("../../../frontend/src/assets/data/samplehtml.json");
 var inputs = {
   sample: {
     description:
@@ -17,12 +16,11 @@ var inputs = {
 module.exports = {
   getSample: function(req, res) {
     console.log("getSample");
-    res.send(x);
+    res.json({ a: "this is something" });
   },
 
   getAnotherSample: function(req, res) {
     console.log("getAnotherSample");
-    res.send(v);
   },
 
   setSample: function(req, res) {

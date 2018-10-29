@@ -21,6 +21,8 @@ module.exports.routes = {
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝  ╚═╝╚═╝╚═╝ ╩ ╚═╝╩ ╩╚═╝
   "GET /pagebuilder": { action: "PageBuilder/getSample" },
   "POST /pagebuilder": { action: "PageBuilder/setSample" },
+  "GET /account/:accountID": { action: "account/Account/getAccount" },
+  "POST /account/update/:accountID": { action: "account/Account/saveUserData" },
 
   //  ╦ ╦╔═╗╔╗ ╔═╗╔═╗╔═╗╔═╗╔═╗
   //  ║║║║╣ ╠╩╗╠═╝╠═╣║ ╦║╣ ╚═╗

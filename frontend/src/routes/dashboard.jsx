@@ -5,7 +5,6 @@ import Typography from "views/Typography/Typography";
 import Icons from "views/Icons/Icons";
 import Maps from "views/Maps/Maps";
 import Notifications from "views/Notifications/Notifications";
-import Upgrade from "views/Upgrade/Upgrade";
 import Electee from "views/Accounts/Electee/Electee";
 import Electr from "views/Accounts/Electr/Electr";
 import Tabular from "views/Examples/Tabular";
@@ -50,21 +49,12 @@ const dashboardRoutes = [
     component: Notifications
   },
   {
-    upgrade: true,
-    path: "/upgrade",
-    name: "Upgrade to PRO",
-    icon: "pe-7s-rocket",
-    component: Upgrade
-  },
-  {
-    // upgrade: true,
     path: "/a/electee/:id",
     name: "Community",
     icon: "pe-7s-comment",
     component: Electee
   },
   {
-    // upgrade: true,
     path: "/a/electr/:id",
     name: "Campaign",
     icon: "pe-7s-id",

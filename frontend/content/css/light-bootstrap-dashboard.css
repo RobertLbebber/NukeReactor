@@ -170,12 +170,12 @@ input:focus {
   -ms-transition: all 150ms ease-in;
   transition: all 150ms ease-in; }
 
-.btn {
+/* .btn {
   -webkit-transition: all 100ms ease-in;
   -moz-transition: all 100ms ease-in;
   -o-transition: all 100ms ease-in;
   -ms-transition: all 100ms ease-in;
-  transition: all 100ms ease-in; }
+  transition: all 100ms ease-in; } */
 
 .fa {
   width: 18px;
@@ -457,7 +457,7 @@ body > .navbar-collapse[data-color="purple"]:after {
   transition-timing-function: linear,linear;
   -webkit-overflow-scrolling: touch; }
 
-.btn {
+/* .btn {
   border-width: 2px;
   background-color: transparent;
   font-weight: 400;
@@ -758,7 +758,7 @@ body > .navbar-collapse[data-color="purple"]:after {
   position: absolute;
   top: 50%;
   margin-top: -1px;
-  right: 8px; }
+  right: 8px; } */
 
 .form-control::-moz-placeholder {
   color: #DDDDDD;

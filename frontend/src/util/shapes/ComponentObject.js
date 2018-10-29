@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { fullHTMLType } from "./HTMLObject";
 
 function lazyFunction(f) {
   return function() {
@@ -12,133 +13,55 @@ const lazyHTMLType = lazyFunction(function() {
 
 export const ContainerType = PropTypes.shape({
   tag: PropTypes.oneOf(["Container"]),
-  positon: PropTypes.oneOf([
-    "tr",
-    "tl",
-    "t",
-    "mr",
-    "ml",
-    "m",
-    "br",
-    "bl",
-    "b",
-    "l",
-    "r",
-    "c"
-  ]),
+  position: PropTypes.oneOf(["tr", "tl", "t", "br", "bl", "b", "l", "r", "f"]),
   id: PropTypes.string,
-  class: PropTypes.string,
+  className: PropTypes.string,
   style: PropTypes.object,
   innerText: PropTypes.string,
-  children: PropTypes.arrayOf(ComponentType)
+  children: PropTypes.objectOf(lazyHTMLType)
 });
 
 export const SeperatorType = PropTypes.shape({
-  positon: PropTypes.oneOf([
-    "tr",
-    "tl",
-    "t",
-    "mr",
-    "ml",
-    "m",
-    "br",
-    "bl",
-    "b",
-    "l",
-    "r",
-    "c"
-  ]),
-  tag: PropTypes.oneOf(["Seperator"]),
+  position: PropTypes.oneOf(["tr", "tl", "t", "br", "bl", "b", "l", "r", "f"]),
   direction: PropTypes.oneOf(["vertical", "horizontal"]),
-  class: PropTypes.string,
+  tag: PropTypes.oneOf(["Seperator"]),
+  className: PropTypes.string,
   id: PropTypes.string,
   style: PropTypes.object
 });
 
 export const ImageType = PropTypes.shape({
-  positon: PropTypes.oneOf([
-    "tr",
-    "tl",
-    "t",
-    "mr",
-    "ml",
-    "m",
-    "br",
-    "bl",
-    "b",
-    "l",
-    "r",
-    "c"
-  ]),
-  tag: PropTypes.oneOf(["Image"]),
-  class: PropTypes.string,
+  position: PropTypes.oneOf(["tr", "tl", "t", "br", "bl", "b", "l", "r", "f"]),
   title: PropTypes.string,
   body: PropTypes.string,
-  src: PropTypes.string,
   alt: PropTypes.string,
+  src: PropTypes.string,
+  tag: PropTypes.oneOf(["Image"]),
+  className: PropTypes.string,
   id: PropTypes.string,
   style: PropTypes.object
 });
 
 export const FormType = PropTypes.shape({
-  positon: PropTypes.oneOf([
-    "tr",
-    "tl",
-    "t",
-    "mr",
-    "ml",
-    "m",
-    "br",
-    "bl",
-    "b",
-    "l",
-    "r",
-    "c"
-  ]),
+  position: PropTypes.oneOf(["tr", "tl", "t", "br", "bl", "b", "l", "r", "f"]),
+  html: PropTypes.object,
   tag: PropTypes.oneOf(["Form"]),
   class: PropTypes.string,
   id: PropTypes.string,
-  style: PropTypes.object,
-  html: PropTypes.object
+  style: PropTypes.object
 });
 
 export const ChartType = PropTypes.shape({
-  positon: PropTypes.oneOf([
-    "tr",
-    "tl",
-    "t",
-    "mr",
-    "ml",
-    "m",
-    "br",
-    "bl",
-    "b",
-    "l",
-    "r",
-    "c"
-  ]),
+  position: PropTypes.oneOf(["tr", "tl", "t", "br", "bl", "b", "l", "r", "f"]),
+  html: PropTypes.object,
   tag: PropTypes.oneOf(["Chart"]),
   class: PropTypes.string,
   id: PropTypes.string,
-  html: PropTypes.object,
   style: PropTypes.object
 });
 
 export const WordType = PropTypes.shape({
-  positon: PropTypes.oneOf([
-    "tr",
-    "tl",
-    "t",
-    "mr",
-    "ml",
-    "m",
-    "br",
-    "bl",
-    "b",
-    "l",
-    "r",
-    "c"
-  ]),
+  position: PropTypes.oneOf(["tr", "tl", "t", "br", "bl", "b", "l", "r", "f"]),
   tag: PropTypes.oneOf(["Word"]),
   innerText: PropTypes.string,
   class: PropTypes.string,
@@ -153,6 +76,7 @@ export const ComponentType = PropTypes.shape({
     PropTypes.shape(ImageType),
     PropTypes.shape(FormType),
     PropTypes.shape(ChartType),
-    PropTypes.shape(WordType)
+    PropTypes.shape(WordType),
+    PropTypes.shape(fullHTMLType)
   ])
 });

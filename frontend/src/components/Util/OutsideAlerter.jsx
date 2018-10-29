@@ -1,18 +1,22 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-
+import ReactDOM from "react-dom";
 /**
  * Component that alerts if you click outside of it
  */
 export default class OutsideAlerter extends Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      _tag: "OutsideAlerter"
+    };
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
   }
 
   componentDidMount() {
+    const ref = ReactDOM.findDOMNode(this.wrapperRef);
+    ref.className = this.state._tag;
     document.addEventListener("mousedown", this.handleClickOutside);
   }
 

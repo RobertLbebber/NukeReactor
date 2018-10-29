@@ -1,7 +1,8 @@
 import { devvar } from "../devvar/devvar";
-export var get = uri => {
+import func from "../func/func";
+export var get = (uri, safe = true) => {
   return fetch(devvar.DOMAIN + uri)
-    .then(function(response) {
+    .then(response => {
       // console.log(response);
       if (response.status !== 200) {
         console.log(
@@ -9,21 +10,22 @@ export var get = uri => {
         );
         return "Failed";
       }
-      // console.log("get", response);
-      return response;
-    })
-    .then(function(data) {
-      return data.json();
+      return response.json();
     })
     .catch(function(err) {
-      console.log("Fetch Error ", err);
+      if (!safe) {
+        throw err;
+      } else {
+        console.log("Fetch Error ", err);
+      }
     });
 };
 
-export var post = (uri, message) => {
+export var post = (uri, message, safe = true) => {
+  console.log(message);
   var myHeaders = new Headers({
     "Content-Type": "application/json",
-    "Content-Length": message.length.toString(),
+    "Content-Length": JSON.stringify(message).length.toString(),
     Origin: "*"
   });
 
@@ -31,7 +33,8 @@ export var post = (uri, message) => {
     method: "POST",
     headers: myHeaders,
     mode: "cors",
-    cache: "default"
+    cache: "default",
+    body: JSON.stringify(message)
   })
     .then(function(response) {
       // console.log("post ", response);
@@ -47,7 +50,11 @@ export var post = (uri, message) => {
       return data.json();
     })
     .catch(function(err) {
-      console.log("Fetch Error ", err);
+      if (!safe) {
+        throw err;
+      } else {
+        console.log("Fetch Error ", err);
+      }
     });
 };
 export default (module.export = {
