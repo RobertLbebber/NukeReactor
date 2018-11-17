@@ -4,6 +4,9 @@
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
+
+let content = require("../../assets/sampleData/content.js");
+
 var inputs = {
   sample: {
     description:
@@ -14,17 +17,48 @@ var inputs = {
 };
 
 module.exports = {
-  getSample: function(req, res) {
-    console.log("getSample");
-    res.json({ a: "this is something" });
+  createDefaultTemplate: function(req, res) {
+    PageTemplates.create(
+      {
+        designName: "Default",
+        designCategory: "Basic",
+        pageLayout: content
+        // accountId: null
+      },
+      function(err, result) {
+        if (err) {
+          if (err.code === "E_UNIQUE") {
+            res.send({
+              error: 400,
+              message: "Could Not Complete Request"
+            });
+          } else {
+            res.send({
+              error: 500,
+              message: "Unknown Error"
+            });
+          }
+        }
+        res.send(result);
+      }
+    );
   },
 
-  getAnotherSample: function(req, res) {
-    console.log("getAnotherSample");
-  },
-
-  setSample: function(req, res) {
-    console.log("setSample", req.body);
-    res.send({ a: "setSample" });
+  getDefaultTemplate: function(req, res) {
+    PageTemplates.findOne({ designName: "Default" }).exec(function(
+      err,
+      result
+    ) {
+      if (err) {
+        return res.serverError(err);
+      } else if (!result) {
+        res.send({
+          error: 400,
+          message: "Data Not Found"
+        });
+      } else {
+        res.send(result.pageLayout);
+      }
+    });
   }
 };

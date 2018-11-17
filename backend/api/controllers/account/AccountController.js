@@ -14,28 +14,136 @@ var output = {
 };
 
 module.exports = {
+  signin: function(req, res) {
+    Account.create({
+      email: req.body.email,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      password: req.body.password
+      // pageContent: PageTemplates.findOne({ designName: "Blank" }),  //UN-Tested
+    })
+      .decrypt()
+      .then(function(err, result) {
+        if (err) {
+          return res.negotiate(err);
+        }
+        if (result.password === result.param("password")) {
+          req.session.userId = result.id; // returned from a database
+          return res.json(Account.getPublicData(result));
+        } else {
+          res.status(401);
+          return res.send({ error: "Invalid Credentials" });
+        }
+      });
+  },
+
+  login: function(req, res) {
+    Account.findOne({ email: req.param("email") })
+      .decrypt()
+      .then(function(err, result) {
+        if (err) {
+          return res.negotiate(err);
+        }
+        if (result.password === result.param("password")) {
+          req.session.userId = result.id; // returned from a database
+          return res.json(Account.getPublicData(result));
+        } else {
+          res.status(401);
+          return res.send({ error: "Invalid Credentials" });
+        }
+      });
+  },
+
+  logout: function(req, res) {
+    Account.findOne({ id: req.session.userId }).then(function(err, result) {
+      if (err) {
+        return res.negotiate(err);
+      }
+      if (result) {
+        req.session.userId = null; // returned from a database
+        res.status(200);
+        return res.send({ message: "Successful Account Closure" });
+      } else {
+        res.status(410);
+        return res.send({ error: "Account Not Active" });
+      }
+    });
+  },
+
+  getMe: function(req, res) {
+    if (!req.session.userId) {
+      res.status(410);
+      return res.json({ error: "Account Not Active" });
+    } else {
+      Account.findOne({ id: req.session.userId }).then(function(err, result) {
+        if (err) {
+          return res.negotiate(err);
+        }
+        return res.json(Account.getPublicData(result));
+      });
+    }
+  },
+
   getAccount: function(req, res) {
-    Account.findOne({ serial: "Test" }).exec(function(err, element) {
-      console.log("Get ", element);
+    Account.findOne({ serial: "Test" }).exec(function(err, result) {
       if (err) {
         return res.serverError(err);
-      } else if (!element) {
+      } else if (!result) {
         return res.serverError({ status: 404, message: "Account Not Found" });
       }
-      res.send(element.pageContent);
-      // res.send(output.sample.userData);
+      res.send(result);
     });
   },
 
   saveUserData: function(req, res) {
     let body = req.body;
-    Account.updateOrCreate(
-      { serial: "Test" },
-      { serial: "Test", pageContent: body }
-    ).then(function(newOrExistingRecord) {
+    PageTemplates.create({
+      // Account.create({
+      designName: "Blank",
+      designCategory: "basic",
+      pageLayout: body
+    }).then(function(newOrExistingRecord) {
       return res.ok({
         message: "Element was Affected"
       });
     });
+  },
+
+  //Debugging and Development Purposes only
+  createDefaultUser: async function(req, res) {
+    console.log(4);
+    Account.createAndGet(
+      {
+        email: "testuser@site.com",
+        firstName: "Test",
+        lastName: "User",
+        password: "password"
+        // pageContent: PageTemplates.findOne({ designName: "Default" }).exec(
+        //   function(err, result) {
+        //     console.log(result);
+        //     return ;
+        //   }
+        // ) //UN-Tested
+      },
+      function(result) {
+        console.log("HERE", result);
+        // if (err) {
+        //   return res.negotiate(err);
+        // } else if (!result) {
+        //   return res.send({
+        //     error: 400,
+        //     message: "Data Not Found"
+        //   });
+        // }
+        // result.decrypt();
+        if (result.password === "password") {
+          req.session.userId = result.id; // returned from a database
+          return res.json(Account.getPublicData(result));
+        } else {
+          res.status(401);
+          return res.send({ error: "Invalid Credentials" });
+        }
+      }
+    );
   }
 };

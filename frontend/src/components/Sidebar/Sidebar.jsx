@@ -1,86 +1,86 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import PropTypes from "prop-types";
+//import func from '/frontend/src/util/func/func'
+
+import { withStyles } from "@material-ui/core/styles";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+// import ListItemLink from "@material-ui/core/ListItemLink";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
+//Icons
+import InboxIcon from "@material-ui/icons/Inbox";
+import DraftsIcon from "@material-ui/icons/Drafts";
+
 import "./Sidebar.css";
 
-import HeaderLinks from "../Header/HeaderLinks.jsx";
-import favicon from "assets/img/logos/logo.ico";
-import imagine from "assets/img/sidebar-3.jpg";
+const styles = () => ({
+  root: {
+    width: "100%",
+    maxWidth: 200
+  }
+});
 
-import dashboardRoutes from "routes/dashboard.jsx";
+const ListItemLink = props => {
+  return <ListItem button component="a" {...props} />;
+};
 
-class Sidebar extends Component {
+export class Sidebar extends Component {
   constructor(props) {
     super(props);
+    //var id=func.generateSerial(9,36);
     this.state = {
-      width: window.innerWidth
+      _tag: this.constructor.name
+      //_id: id
     };
+    this._isMount = false;
   }
-  activeRoute(routeName) {
-    return this.props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
-  }
-  updateDimensions() {
-    this.setState({ width: window.innerWidth });
-  }
+
   componentDidMount() {
-    this.updateDimensions();
-    window.addEventListener("resize", this.updateDimensions.bind(this));
+    this._isMount = true;
   }
+
+  componentWillUnmount() {
+    this._isMount = false;
+  }
+
   render() {
-    const sidebarBackground = {
-      backgroundImage: "url(" + imagine + ")"
-    };
     return (
-      <div
-        id="sidebar"
-        className="sidebar"
-        data-color="black"
-        data-image={imagine}
-      >
-        <div className="sidebar-background" style={sidebarBackground} />
-        <div className="logo">
-          <a className="simple-text logo-mini">
-            <div className="logo-img">
-              <img src={favicon} alt="logo_image" />
-            </div>
-          </a>
-          <a
-            href="https://www.creative-tim.com"
-            className="simple-text logo-normal"
-          >
-            Electr
-          </a>
-        </div>
-        <div className="sidebar-wrapper">
-          <ul className="nav">
-            {this.state.width <= 991 ? <HeaderLinks /> : null}
-            {dashboardRoutes.map((prop, key) => {
-              if (!prop.redirect)
-                return (
-                  <li
-                    className={
-                      prop.upgrade
-                        ? "active active-pro"
-                        : this.activeRoute(prop.path)
-                    }
-                    key={key}
-                  >
-                    <NavLink
-                      to={prop.path}
-                      className="nav-link"
-                      activeClassName="active"
-                    >
-                      <i className={prop.icon} />
-                      <p>{prop.name}</p>
-                    </NavLink>
-                  </li>
-                );
-              return null;
-            })}
-          </ul>
-        </div>
+      <div className={this.props.classes.root + " " + this.state._tag}>
+        <List component="nav">
+          <ListItem button>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Inbox" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <DraftsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Drafts" />
+          </ListItem>
+        </List>
+        <Divider />
+        <List component="nav">
+          <ListItem button>
+            <ListItemText primary="Trash" />
+          </ListItem>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="Spam" />
+          </ListItemLink>
+        </List>
       </div>
     );
   }
+
+  static propTypes = {
+    userData: PropTypes.object,
+    displayType: PropTypes.oneOf(["standard"])
+  };
+
+  // static defaultProps = {};
 }
 
-export default Sidebar;
+export default withStyles(styles)(Sidebar);

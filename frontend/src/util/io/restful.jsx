@@ -1,22 +1,24 @@
 import { devvar } from "../devvar/devvar";
-import func from "../func/func";
+// import func from "../func/func";
+
 export var get = (uri, safe = true) => {
   return fetch(devvar.DOMAIN + uri)
     .then(response => {
-      // console.log(response);
-      if (response.status !== 200) {
-        console.log(
-          "Looks like there was a problem. Status Code: " + response.status
-        );
-        return "Failed";
+      if (response.status === 410) {
+        return response.json().then(result => {
+          return { status: response.status, ...result };
+        });
+      } else if (response.status !== 200) {
+        return { status: response.status, message: "Unknown Failure" };
       }
+
       return response.json();
     })
     .catch(function(err) {
       if (!safe) {
         throw err;
       } else {
-        console.log("Fetch Error ", err);
+        console.log("Operational Error ", err);
       }
     });
 };
@@ -37,12 +39,11 @@ export var post = (uri, message, safe = true) => {
     body: JSON.stringify(message)
   })
     .then(function(response) {
-      // console.log("post ", response);
       if (response.status !== 200) {
         console.log(
           "Looks like there was a problem. Status Code: " + response.status
         );
-        return "Failed";
+        return { status: response.status, message: response };
       }
       return response;
     })
@@ -53,7 +54,7 @@ export var post = (uri, message, safe = true) => {
       if (!safe) {
         throw err;
       } else {
-        console.log("Fetch Error ", err);
+        console.log("Operational Error ", err);
       }
     });
 };

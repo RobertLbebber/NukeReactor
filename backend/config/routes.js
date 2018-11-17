@@ -19,10 +19,17 @@ module.exports.routes = {
   //  ╔═╗╔═╗╦  ╔═╗╔╗╔╔╦╗╔═╗╔═╗╦╔╗╔╔╦╗╔═╗  ╔═╗╔ ╗╔═╗╔╦╗╔═╗╔╦╗╔═╗
   //  ╠═╣╠═╝║  ║╣ ║║║ ║║╠═╝║ ║║║║║ ║ ╚═╗  ║  ║ ║╚═╗ ║ ║ ║║║║╚═╗
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝  ╚═╝╚═╝╚═╝ ╩ ╚═╝╩ ╩╚═╝
-  "GET /pagebuilder": { action: "PageBuilder/getSample" },
-  "POST /pagebuilder": { action: "PageBuilder/setSample" },
+
+  //    PAGE BUILDER CONTROLLER
+  "GET /createDefaultTemplate": { action: "PageBuilder/createDefaultTemplate" },
+  "GET /getDefaultTemplate": { action: "PageBuilder/getDefaultTemplate" },
+
+  //    ACCOUNTS CONTROLLER
   "GET /account/:accountID": { action: "account/Account/getAccount" },
   "POST /account/update/:accountID": { action: "account/Account/saveUserData" },
+
+  "GET /getMe": { action: "account/Account/getMe" },
+  "GET /createDefaultUser": { action: "account/Account/createDefaultUser" },
 
   //  ╦ ╦╔═╗╔╗ ╔═╗╔═╗╔═╗╔═╗╔═╗
   //  ║║║║╣ ╠╩╗╠═╝╠═╣║ ╦║╣ ╚═╗

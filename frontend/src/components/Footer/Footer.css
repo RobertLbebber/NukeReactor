@@ -1,0 +1,10 @@
+.Footer {
+  margin-left: 200px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.Footer .Footer-nav {
+  background-color: rgb(99, 99, 99);
+}

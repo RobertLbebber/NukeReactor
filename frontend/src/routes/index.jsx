@@ -9,12 +9,18 @@ import {
   NavLink
 } from "reactstrap";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 import Home from "../components/Pages/Index/Home";
 import Electr from "../components/Pages/Electr/Electr";
 import Electee from "../components/Pages/Electee/Electee";
 import Feed from "../components/Pages/Feed/Feed";
 import Account from "../components/Pages/Account/Account";
+import Footer from "../components/Footer/Footer";
+import { UserContext, UserProvider } from "../components/Context/UserContext";
+import Sidebar from "../components/Sidebar/Sidebar";
 import func from "../util/func/func";
+
+import "./Index.css";
 
 const indexRoutes = Object.freeze([
   { path: "/", name: "Home", component: Home, exact: true },
@@ -27,15 +33,6 @@ const indexRoutes = Object.freeze([
   },
   { path: "/Feed", name: "Feed", component: Feed, exact: true }
 ]);
-
-// var indexRoutes = [
-//   { path: "/Electr", name: "Electr", component: Electr },
-//   { path: "/Electee", name: "Electee", component: Electee }
-// { path: "/Feed", name: "Feed", component: Feed }
-// ];
-
-//import PropTypes from 'prop-types';
-//import func from '/frontend/src/util/func/func'
 
 export class Index extends Component {
   constructor(props) {
@@ -86,14 +83,23 @@ export class Index extends Component {
         </Navbar>
         <Router>
           <div>
-            {indexRoutes.map(indexRoute => (
-              <Route
-                exact={indexRoute.exact}
-                key={indexRoute.name}
-                path={indexRoute.path}
-                component={indexRoute.component}
-              />
-            ))}
+            <UserProvider>
+              <UserContext.Consumer>
+                {value => <Sidebar displayType={"standard"} userData={value} />}
+              </UserContext.Consumer>
+            </UserProvider>
+
+            <div className={"main-content"}>
+              {indexRoutes.map(indexRoute => (
+                <Route
+                  exact={indexRoute.exact}
+                  key={indexRoute.name}
+                  path={indexRoute.path}
+                  component={indexRoute.component}
+                />
+              ))}
+            </div>
+            <Footer />
           </div>
         </Router>
       </div>

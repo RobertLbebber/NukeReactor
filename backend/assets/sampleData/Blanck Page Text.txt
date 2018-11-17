@@ -1,0 +1,8 @@
+Page Creation
+This is your page, you can design any way you want and we can help. We provide many tools to make your page unique to your campaign. 
+
+Instructions
+We provide an assortment of what we call elements. Elements allow you to display the information you want in the way you want it. The availble elements are the Text Elemnent, Spacer Element, Image Element, Video Element, Divider Element and the Background Element. All of these Elements can be found when clicked the "+" button when in Edit Mode.
+
+Use the Pencil Icon to edit any available elements. Each element type has their own options. 
+
