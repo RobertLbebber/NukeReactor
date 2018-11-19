@@ -20,11 +20,11 @@
  *     }
  * ```
  */
-module.exports = function unauthorized() {
+module.exports = function invalidResponse() {
   var req = this.req;
   var res = this.res;
 
-  sails.log.verbose("Ran custom response: res.unauthorized()");
+  sails.log.verbose("Ran custom response: res.invalidResponse()");
 
   if (req.wantsJSON) {
     return res.sendStatus(401);
@@ -35,6 +35,6 @@ module.exports = function unauthorized() {
       delete req.session.userId;
     }
 
-    return res.sendStatus(403);
+    return res.sendStatus(409);
   }
 };

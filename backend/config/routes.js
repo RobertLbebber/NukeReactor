@@ -31,53 +31,53 @@ module.exports.routes = {
   "GET /getMe": { action: "account/Account/getMe" },
   "GET /createDefaultUser": { action: "account/Account/createDefaultUser" },
 
-  //  ╦ ╦╔═╗╔╗ ╔═╗╔═╗╔═╗╔═╗╔═╗
-  //  ║║║║╣ ╠╩╗╠═╝╠═╣║ ╦║╣ ╚═╗
-  //  ╚╩╝╚═╝╚═╝╩  ╩ ╩╚═╝╚═╝╚═╝
-  "GET /": { action: "view-homepage-or-redirect" },
-  "GET /welcome": { action: "dashboard/view-welcome" },
+  // //  ╦ ╦╔═╗╔╗ ╔═╗╔═╗╔═╗╔═╗╔═╗
+  // //  ║║║║╣ ╠╩╗╠═╝╠═╣║ ╦║╣ ╚═╗
+  // //  ╚╩╝╚═╝╚═╝╩  ╩ ╩╚═╝╚═╝╚═╝
+  // "GET /": { action: "view-homepage-or-redirect" },
+  // "GET /welcome": { action: "dashboard/view-welcome" },
 
-  "GET /faq": { view: "pages/faq" },
-  "GET /legal/terms": { view: "pages/legal/terms" },
-  "GET /legal/privacy": { view: "pages/legal/privacy" },
-  "GET /contact": { view: "pages/contact" },
+  // "GET /faq": { view: "pages/faq" },
+  // "GET /legal/terms": { view: "pages/legal/terms" },
+  // "GET /legal/privacy": { view: "pages/legal/privacy" },
+  // "GET /contact": { view: "pages/contact" },
 
-  "GET /signup": { action: "entrance/view-signup" },
-  "GET /email/confirm": { action: "entrance/confirm-email" },
-  "GET /email/confirmed": { view: "pages/entrance/confirmed-email" },
+  // "GET /signup": { action: "entrance/view-signup" },
+  // "GET /email/confirm": { action: "entrance/confirm-email" },
+  // "GET /email/confirmed": { view: "pages/entrance/confirmed-email" },
 
-  "GET /login": { action: "entrance/view-login" },
-  "GET /password/forgot": { action: "entrance/view-forgot-password" },
-  "GET /password/new": { action: "entrance/view-new-password" },
+  // "GET /login": { action: "entrance/view-login" },
+  // "GET /password/forgot": { action: "entrance/view-forgot-password" },
+  // "GET /password/new": { action: "entrance/view-new-password" },
 
-  "GET /account": { action: "account/view-account-overview" },
-  "GET /account/password": { action: "account/view-edit-password" },
-  "GET /account/profile": { action: "account/view-edit-profile" },
+  // "GET /account": { action: "account/view-account-overview" },
+  // "GET /account/password": { action: "account/view-edit-password" },
+  // "GET /account/profile": { action: "account/view-edit-profile" },
 
   //  ╔═╗╔═╗╦  ╔═╗╔╗╔╔╦╗╔═╗╔═╗╦╔╗╔╔╦╗╔═╗  ╔═╗╔═╗╔═╗╔═╗╔ ╗╔  ╔╦╗╔═╗
   //  ╠═╣╠═╝║  ║╣ ║║║ ║║╠═╝║ ║║║║║ ║ ╚═╗  ║ ║║╣ ╠═ ╠═╣║ ║║   ║ ╚═╗
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝  ╚═╝╚═╝╩  ╩ ╩╚═╝╚═╝ ╩ ╚═╝
   // Note that, in this app, these API endpoints may be accessed using the `Cloud.*()` methods
   // from the CloudSDK library.
-  "PUT   /api/v1/account/update-password": {
+  "PUT   /account/update-password": {
     action: "account/update-password"
   },
-  "PUT   /api/v1/account/update-profile": { action: "account/update-profile" },
-  "PUT   /api/v1/account/update-billing-card": {
+  "PUT   /account/update-profile": { action: "account/update-profile" },
+  "PUT   /account/update-billing-card": {
     action: "account/update-billing-card"
   },
-  "/api/v1/entrance/logout": { action: "entrance/logout" },
-  "PUT   /api/v1/entrance/login": { action: "entrance/login" },
-  "POST  /api/v1/entrance/signup": {
+  "/entrance/logout": { action: "entrance/logout" },
+  "POST   /entrance/login": { action: "entrance/login" },
+  "POST  /entrance/signup": {
     action: "entrance/signup"
   },
-  "POST  /api/v1/entrance/send-password-recovery-email": {
+  "POST  /entrance/send-password-recovery-email": {
     action: "entrance/send-password-recovery-email"
   },
-  "POST  /api/v1/entrance/update-password-and-login": {
+  "POST  /entrance/update-password-and-login": {
     action: "entrance/update-password-and-login"
   },
-  "POST  /api/v1/deliver-contact-form-message": {
+  "POST  /deliver-contact-form-message": {
     action: "deliver-contact-form-message"
   },
 
@@ -89,5 +89,5 @@ module.exports.routes = {
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗
   //  ╩ ╩╩╚═╝╚═╝  ╩╚═╚═╝═╩╝╩╩╚═╚═╝╚═╝ ╩ ╚═╝
   "/terms": "/legal/terms",
-  "/logout": "/api/v1/account/logout"
+  "/logout": "/account/logout"
 };

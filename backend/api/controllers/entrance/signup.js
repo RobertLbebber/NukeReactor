@@ -32,19 +32,33 @@ the account verification message.)`,
       description: "The unencrypted password to use for the new account."
     },
 
-    fullName: {
+    confirmation: {
       // required: true,
       type: "string",
-      example: "Frida Kahlo de Rivera",
-      description: "The user's full name."
+      maxLength: 200,
+      example: "passwordlol",
+      description: "The unencrypted password to use for the new account."
+    },
+
+    fName: {
+      // required: true,
+      type: "string",
+      example: "John",
+      description: "The user's first name."
+    },
+
+    lName: {
+      // required: true,
+      type: "string",
+      example: "Smiths",
+      description: "The user's last name."
     }
   },
 
   exits: {
     invalid: {
       responseType: "badRequest",
-      description:
-        "The provided fullName, password and/or email address are invalid.",
+      description: "The provided parameters are invalid.",
       extendedDescription:
         "If this request was sent from a graphical user interface, the request " +
         "parameters should have been validated/coerced _before_ they were sent."
@@ -53,20 +67,35 @@ the account verification message.)`,
     emailAlreadyInUse: {
       statusCode: 409,
       description: "The provided email address is already in use."
+    },
+
+    badPassword: {
+      statusCode: 409,
+      description: "The provided password is invalid."
     }
   },
 
   fn: async function(inputs, exits) {
+    console.log(inputs);
     var newEmailAddress = inputs.emailAddress.toLowerCase();
 
+    if (inputs.password !== inputs.confirmation) {
+      throw "badPassword";
+    }
     // Build up data for the new user record and save it to the database.
     // (Also use `fetch` to retrieve the new ID so that we can use it below.)
-    var newUserRecord = await User.create(
+    var newUserRecord = await Account.create(
       Object.assign(
         {
-          emailAddress: newEmailAddress,
-          password: await sails.helpers.passwords.hashPassword(inputs.password),
-          fullName: inputs.fullName,
+          email: newEmailAddress,
+          password: inputs.password,
+          confirmation: inputs.confirmation,
+          // password: await sails.helpers.passwords.hashPassword(inputs.password),
+          // confirmation: await sails.helpers.passwords.hashPassword(
+          //   inputs.confirmation
+          // ),
+          firstName: inputs.fName,
+          lastName: inputs.lName,
           tosAcceptedByIp: this.req.ip
         },
         sails.config.custom.verifyEmailAddresses
@@ -82,7 +111,7 @@ the account verification message.)`,
       )
     )
       .intercept("E_UNIQUE", "emailAlreadyInUse")
-      .intercept({ name: "UsageError" }, "invalid")
+      // .intercept({ name: "UsageError" }, "invalid")
       .fetch();
 
     // If billing feaures are enabled, save a new customer entry in the Stripe API.

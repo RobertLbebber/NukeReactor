@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Button } from "reactstrap";
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
-import _ from "lodash";
+// import _ from "lodash";
 
 // The editor core
 import Editor, { Editable, createEmptyState } from "ory-editor-core";
@@ -47,7 +47,7 @@ import native from "ory-editor-plugins-default-native";
 import divider from "ory-editor-plugins-divider";
 
 // Renders json state to html, can be used on server and client side
-import { HTMLRenderer } from "ory-editor-renderer";
+// import { HTMLRenderer } from "ory-editor-renderer";
 
 export class PageCreator extends Component {
   constructor(props) {

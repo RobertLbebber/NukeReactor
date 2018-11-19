@@ -8,17 +8,25 @@ import {
   NavItem,
   NavLink
 } from "reactstrap";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route
+  // Link
+} from "react-router-dom";
 
 import Home from "../components/Pages/Index/Home";
-import Electr from "../components/Pages/Electr/Electr";
-import Electee from "../components/Pages/Electee/Electee";
+// import Electr from "../components/Pages/Electr/Electr";
+// import Electee from "../components/Pages/Electee/Electee";
 import Feed from "../components/Pages/Feed/Feed";
 import Account from "../components/Pages/Account/Account";
 import Footer from "../components/Footer/Footer";
-import { UserContext, UserProvider } from "../components/Context/UserContext";
+import {
+  HeartbeatContext,
+  HeartbeatProvider
+} from "../components/Context/HeartbeatContext";
 import Sidebar from "../components/Sidebar/Sidebar";
 import func from "../util/func/func";
+// import restful from "../util/io/restful";
 
 import "./Index.css";
 
@@ -64,44 +72,46 @@ export class Index extends Component {
   render() {
     return (
       <div className={this.state._tag}>
-        <Navbar color="light" light expand="md">
-          <NavbarBrand href="/">Electr</NavbarBrand>
-          <NavbarToggler onClick={this.toggleMenu} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              {indexRoutes.map(indexRoute => (
-                <NavItem key={indexRoute.name}>
-                  <NavLink
-                    href={indexRoute.exact ? indexRoute.path : indexRoute.alt}
-                  >
-                    {indexRoute.name}
-                  </NavLink>
-                </NavItem>
-              ))}
-            </Nav>
-          </Collapse>
-        </Navbar>
-        <Router>
-          <div>
-            <UserProvider>
-              <UserContext.Consumer>
+        <HeartbeatProvider>
+          <HeartbeatContext.Consumer>
+            <Navbar color="light" light expand="md">
+              <NavbarBrand href="/">Electr</NavbarBrand>
+              <NavbarToggler onClick={this.toggleMenu} />
+              <Collapse isOpen={this.state.isOpen} navbar>
+                <Nav className="ml-auto" navbar>
+                  {indexRoutes.map(indexRoute => (
+                    <NavItem key={indexRoute.name}>
+                      <NavLink
+                        href={
+                          indexRoute.exact ? indexRoute.path : indexRoute.alt
+                        }
+                      >
+                        {indexRoute.name}
+                      </NavLink>
+                    </NavItem>
+                  ))}
+                </Nav>
+              </Collapse>
+            </Navbar>
+            <Router>
+              <div>
                 {value => <Sidebar displayType={"standard"} userData={value} />}
-              </UserContext.Consumer>
-            </UserProvider>
 
-            <div className={"main-content"}>
-              {indexRoutes.map(indexRoute => (
-                <Route
-                  exact={indexRoute.exact}
-                  key={indexRoute.name}
-                  path={indexRoute.path}
-                  component={indexRoute.component}
-                />
-              ))}
-            </div>
-            <Footer />
-          </div>
-        </Router>
+                <div className={"main-content"}>
+                  {indexRoutes.map(indexRoute => (
+                    <Route
+                      exact={indexRoute.exact}
+                      key={indexRoute.name}
+                      path={indexRoute.path}
+                      component={indexRoute.component}
+                    />
+                  ))}
+                </div>
+                <Footer />
+              </div>
+            </Router>
+          </HeartbeatContext.Consumer>
+        </HeartbeatProvider>
       </div>
     );
   }

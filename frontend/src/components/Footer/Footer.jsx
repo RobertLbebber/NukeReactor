@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 
-import { withStyles } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import RestoreIcon from "@material-ui/icons/Restore";
@@ -42,7 +40,4 @@ export class Footer extends Component {
     );
   }
 }
-Footer.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 export default Footer;

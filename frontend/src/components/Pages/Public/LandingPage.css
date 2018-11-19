@@ -1,0 +1,18 @@
+.LandingPage .shadow-e {
+  margin-left: 10px;
+  margin-top: 14vh;
+}
+
+.LandingPage .card {
+  position: absolute;
+  top: 35vh;
+  right: 5vw;
+  max-width: 30vw;
+  z-index: 1;
+}
+.LandingPage .card.adjustHeight {
+  top: 20vh;
+}
+.LandingPage .crowns .ECrown {
+  position: absolute;
+}

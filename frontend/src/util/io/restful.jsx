@@ -1,5 +1,6 @@
 import { devvar } from "../devvar/devvar";
 // import func from "../func/func";
+import _ from "lodash";
 
 export var get = (uri, safe = true) => {
   return fetch(devvar.DOMAIN + uri)
@@ -23,11 +24,42 @@ export var get = (uri, safe = true) => {
     });
 };
 
-export var post = (uri, message, safe = true) => {
-  console.log(message);
+export var getM = (uri, flatMap, safe = true) => {
+  let message = "?";
+  for (let key in flatMap) {
+    if (!flatMap.hasOwnProperty(key)) continue;
+    let value = flatMap[key];
+    message += key + "=" + value + "&";
+  }
+  message = encodeURI(message.substring(0, message.length - 1));
+  return fetch(devvar.DOMAIN + uri + message)
+    .then(response => {
+      if (response.status === 410) {
+        return response.json().then(result => {
+          return { status: response.status, ...result };
+        });
+      } else if (response.status !== 200) {
+        return { status: response.status, message: "Unknown Failure" };
+      }
+
+      return response.json();
+    })
+    .catch(function(err) {
+      if (!safe) {
+        throw err;
+      } else {
+        console.log("Operational Error ", err);
+      }
+    });
+};
+
+export var post = (uri, message, responseData = true) => {
+  let messageLength = _.isNil(message)
+    ? 0
+    : JSON.stringify(message).length.toString();
   var myHeaders = new Headers({
     "Content-Type": "application/json",
-    "Content-Length": JSON.stringify(message).length.toString(),
+    "Content-Length": messageLength,
     Origin: "*"
   });
 
@@ -48,17 +80,15 @@ export var post = (uri, message, safe = true) => {
       return response;
     })
     .then(function(data) {
-      return data.json();
-    })
-    .catch(function(err) {
-      if (!safe) {
-        throw err;
+      if (responseData) {
+        return data.json();
       } else {
-        console.log("Operational Error ", err);
+        return data;
       }
     });
 };
 export default (module.export = {
   get,
+  getM,
   post
 });
