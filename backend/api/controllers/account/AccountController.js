@@ -75,12 +75,7 @@ module.exports = {
       res.status(410);
       return res.json({ error: "Account Not Active" });
     } else {
-      Account.findOne({ id: req.session.userId }).then(function(err, result) {
-        if (err) {
-          return res.negotiate(err);
-        }
-        return res.json(Account.getPublicData(result));
-      });
+      return res.status(200);
     }
   },
 

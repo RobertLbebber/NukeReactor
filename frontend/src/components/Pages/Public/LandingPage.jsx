@@ -246,7 +246,7 @@ export class LandingPage extends Component {
   }
 
   static propTypes = {
-    updateUserDataFn: PropType.func.isRequired
+    updateUserDataFn: PropTypes.func.isRequired
   };
 
   // static defaultProps = {};

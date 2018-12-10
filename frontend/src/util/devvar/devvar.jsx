@@ -5,6 +5,11 @@ var devvar = {
   COMPANY_NAME: "Electr"
 };
 
+var Debug = {
+  enforceAccount: true
+};
+
 module.exports = {
-  devvar
+  devvar,
+  Debug
 };

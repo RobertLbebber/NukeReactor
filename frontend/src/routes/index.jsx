@@ -24,6 +24,10 @@ import {
   HeartbeatContext,
   HeartbeatProvider
 } from "../components/Context/HeartbeatContext";
+import {
+  AccountContext,
+  AccountProvider
+} from "../components/Context/AccountContext";
 import Sidebar from "../components/Sidebar/Sidebar";
 import func from "../util/func/func";
 // import restful from "../util/io/restful";
@@ -73,44 +77,51 @@ export class Index extends Component {
     return (
       <div className={this.state._tag}>
         <HeartbeatProvider>
-          <HeartbeatContext.Consumer>
-            <Navbar color="light" light expand="md">
-              <NavbarBrand href="/">Electr</NavbarBrand>
-              <NavbarToggler onClick={this.toggleMenu} />
-              <Collapse isOpen={this.state.isOpen} navbar>
-                <Nav className="ml-auto" navbar>
-                  {indexRoutes.map(indexRoute => (
-                    <NavItem key={indexRoute.name}>
-                      <NavLink
-                        href={
-                          indexRoute.exact ? indexRoute.path : indexRoute.alt
-                        }
-                      >
-                        {indexRoute.name}
-                      </NavLink>
-                    </NavItem>
-                  ))}
-                </Nav>
-              </Collapse>
-            </Navbar>
-            <Router>
-              <div>
-                {value => <Sidebar displayType={"standard"} userData={value} />}
-
-                <div className={"main-content"}>
-                  {indexRoutes.map(indexRoute => (
-                    <Route
-                      exact={indexRoute.exact}
-                      key={indexRoute.name}
-                      path={indexRoute.path}
-                      component={indexRoute.component}
-                    />
-                  ))}
+          <AccountProvider>
+            <React.Fragment>
+              <Navbar color="light" light expand="md">
+                <NavbarBrand href="/">Electr</NavbarBrand>
+                <NavbarToggler onClick={this.toggleMenu} />
+                <Collapse isOpen={this.state.isOpen} navbar>
+                  <Nav className="ml-auto" navbar>
+                    {indexRoutes.map(indexRoute => (
+                      <NavItem key={indexRoute.name}>
+                        <NavLink
+                          href={
+                            indexRoute.exact ? indexRoute.path : indexRoute.alt
+                          }
+                        >
+                          {indexRoute.name}
+                        </NavLink>
+                      </NavItem>
+                    ))}
+                  </Nav>
+                </Collapse>
+              </Navbar>
+              <Router>
+                <div>
+                  <AccountContext.Consumer>
+                    {account => (
+                      <React.Fragment>
+                        <Sidebar displayType={"standard"} userData={account} />
+                        <div className={"main-content"}>
+                          {indexRoutes.map(indexRoute => (
+                            <Route
+                              exact={indexRoute.exact}
+                              key={indexRoute.name}
+                              path={indexRoute.path}
+                              component={indexRoute.component}
+                            />
+                          ))}
+                        </div>
+                      </React.Fragment>
+                    )}
+                  </AccountContext.Consumer>
+                  <Footer />
                 </div>
-                <Footer />
-              </div>
-            </Router>
-          </HeartbeatContext.Consumer>
+              </Router>
+            </React.Fragment>
+          </AccountProvider>
         </HeartbeatProvider>
       </div>
     );

@@ -146,6 +146,7 @@ the account verification message.)`,
     }
 
     // Since everything went ok, send our 200 response.
-    return exits.success();
+    this.res.json(Account.getPublicData(newUserRecord));
+    // return exits.success();
   }
 };
