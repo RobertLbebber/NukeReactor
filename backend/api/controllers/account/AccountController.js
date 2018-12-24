@@ -31,9 +31,11 @@ module.exports = {
       .intercept("E_UNIQUE", "emailAlreadyInUse")
       .fetch()
       .decrypt()
-      .exec(function(err, result) {
-        // req.session.userId = result.id;
-        res.cookie("email", result.email, {
+      .then(function(result) {
+        res.cookie("user", JSON.stringify(Account.getPublicData(result)), {
+          maxAge: 19000000
+        });
+        res.cookie("UID", JSON.stringify(result.id), {
           maxAge: 19000000,
           httpOnly: true
         });
@@ -82,11 +84,11 @@ module.exports = {
   },
 
   getMe: function(req, res) {
-    if (!req.cookies || !req.cookies.email) {
+    if (!req.cookies || !req.cookies.UID) {
       res.status(410);
       return res.send({ error: "Account Not Active" });
     } else {
-      Account.findOne({ email: req.cookies.email })
+      Account.findOne({ id: req.cookies.UID })
         .decrypt()
         .exec(function(err, result) {
           if (_.isNil(result)) {

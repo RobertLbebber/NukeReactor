@@ -5,13 +5,7 @@ import {
   HeartbeatContext,
   HeartbeatProvider
 } from "../components/Context/HeartbeatContext";
-import {
-  AccountContext,
-  AccountProvider
-} from "../components/Context/AccountContext";
 import { Routes } from "./Routes";
-// import func from "../util/func/func";
-// import restful from "../util/io/restful";
 import "./Index.css";
 
 export class Index extends Component {
@@ -46,11 +40,9 @@ export class Index extends Component {
       <div className={this.state._tag}>
         {/* <CookiesProvider> */}
         <HeartbeatProvider>
-          <AccountProvider>
-            <AccountContext.Consumer>
-              {account => <Routes accountData={account} />}
-            </AccountContext.Consumer>
-          </AccountProvider>
+          <HeartbeatContext.Consumer>
+            {user => <Routes accountData={user.account} />}
+          </HeartbeatContext.Consumer>
         </HeartbeatProvider>
         {/* </CookiesProvider> */}
       </div>

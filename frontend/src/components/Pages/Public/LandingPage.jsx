@@ -53,11 +53,9 @@ export class LandingPage extends Component {
     restful
       .post(url, this.state.form)
       .then(response => {
-        //TODO Redirect
         this.props.updateUserDataFn(response);
       })
       .catch(error => {
-        //TODO
         console.log(error);
       });
   }
@@ -246,7 +244,7 @@ export class LandingPage extends Component {
   }
 
   static propTypes = {
-    updateUserDataFn: PropTypes.func.isRequired
+    // updateUserDataFn: PropTypes.func.isRequired
   };
 
   // static defaultProps = {};

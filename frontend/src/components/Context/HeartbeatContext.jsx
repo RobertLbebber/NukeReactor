@@ -1,13 +1,20 @@
 import React from "react";
-import restful from "../../util/io/restful";
 import _ from "lodash";
+import Cookies from "js-cookie";
+
+import restful from "../../util/io/restful";
 import { LandingPage } from "../Pages/Public/LandingPage";
+import { Debug } from "../../util/devvar/devvar";
+
 export const HeartbeatContext = React.createContext();
 
 export class HeartbeatProvider extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      userEmail: Cookies.get("email"),
+      user: null
+    };
     this._mounted = false;
     this.heartbeatTimer = setInterval(() => {
       this.heartbeat();
@@ -32,25 +39,48 @@ export class HeartbeatProvider extends React.Component {
   }
 
   componentDidMount() {
+    let cachedAccount = Cookies.get("user");
+    let cachedAccount2 = Cookies.get();
+    Cookies.set("manual", "value");
+    localStorage.setItem("SelectedOption", "4");
+    // let cachedAccount = JSON.parse(Cookies.get("user"));
+    console.log(cachedAccount);
+    console.log(cachedAccount2);
+    if (!_.isNil(cachedAccount)) {
+      this.setState({ account: cachedAccount });
+    }
     this._mounted = true;
   }
 
-  componentDidUpdate() {}
+  componentDidUpdate() {
+    let cachedAccount = Cookies.get("user");
+    let cachedAccount2 = Cookies.get();
+    // let cachedAccount = JSON.parse(Cookies.get("user"));
+    console.log(cachedAccount);
+    console.log(cachedAccount2);
+  }
 
   componentWillUnmount() {
     this._mounted = false;
   }
 
   updateUserData(data) {
-    // this.setState({ currentUser: data });
+    this.setState({ userEmail: data });
+    console.log(Cookies.get("user"));
   }
 
   render() {
-    return (
-      <HeartbeatContext.Provider value={this.state}>
-        {this.props.children}
-      </HeartbeatContext.Provider>
-    );
+    let content;
+    if (_.isNil(this.state.userEmail) && Debug.enforceAccount) {
+      content = <LandingPage updateUserDataFn={this.updateUserData} />;
+    } else {
+      content = (
+        <HeartbeatContext.Provider value={this.state}>
+          {this.props.children}
+        </HeartbeatContext.Provider>
+      );
+    }
+    return content;
   }
 }
 export default HeartbeatProvider;
