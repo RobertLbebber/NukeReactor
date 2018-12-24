@@ -10,10 +10,23 @@ export class AccountProvider extends React.Component {
     super(props);
     this.state = { currentUser: null };
     this._mounted = false;
+    this.updateUserData = this.updateUserData.bind(this);
   }
 
   componentDidMount() {
     this._mounted = true;
+    let url = "getMe";
+    restful
+      .get(url)
+      .then(response => {
+        if (response.status === 200) {
+          this.setState({ currentUser: response });
+        }
+      })
+      .catch(error => {
+        //TODO
+        console.log(error);
+      });
   }
 
   componentDidUpdate() {}

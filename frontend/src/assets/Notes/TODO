@@ -2,4 +2,9 @@ Landing page was being worked on.
 
 Check the Zenhub
 
-Finish hte login/ signup redirect, 
+Finish the login/ signup redirect,  Pretty Good rn
+Working on getting default page templates.
+
+Remember the difference between then(result) and exec(err,result)
+
+Got Cookies to work on the backend. httpOnly means the user can't alter so it will serve well for keeping ID

@@ -90,10 +90,6 @@ the account verification message.)`,
           email: newEmailAddress,
           password: inputs.password,
           confirmation: inputs.confirmation,
-          // password: await sails.helpers.passwords.hashPassword(inputs.password),
-          // confirmation: await sails.helpers.passwords.hashPassword(
-          //   inputs.confirmation
-          // ),
           firstName: inputs.fName,
           lastName: inputs.lName,
           tosAcceptedByIp: this.req.ip
@@ -145,8 +141,19 @@ the account verification message.)`,
       );
     }
 
+    await PageTemplates.createDefaultTemplate(newUserRecord.id);
+
+    await Account.update(
+      { id: newUserRecord.id },
+      {
+        pageContent: await PageTemplates.getDefaultTemplate().accountId
+      }
+    );
+
+    this.req.session.user = newUserRecord;
+
+    sails.log("Session in Signin: ", this.req.session);
     // Since everything went ok, send our 200 response.
-    this.res.json(Account.getPublicData(newUserRecord));
-    // return exits.success();
+    return this.res.json(Account.getPublicData(newUserRecord));
   }
 };

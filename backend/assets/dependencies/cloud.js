@@ -1679,7 +1679,7 @@
         // Further negotiate based on "verb", if configured to do so.
         actualHandler = function(msg) {
           var handlerToRun;
-          if (_.contains(_.keys(handleSocketMsg), msg.verb)) {
+          if (_.includes(_.keys(handleSocketMsg), msg.verb)) {
             handlerToRun = handleSocketMsg[msg.verb];
           } else if (handleSocketMsg['*']) {
             handlerToRun = handleSocketMsg['*'];

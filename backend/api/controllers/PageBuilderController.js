@@ -45,7 +45,7 @@ module.exports = {
   },
 
   getDefaultTemplate: function(req, res) {
-    PageTemplates.findOne({ designName: "Default" }).exec(function(
+    PageTemplates.findOne({ designName: "Default" }).then(function(
       err,
       result
     ) {

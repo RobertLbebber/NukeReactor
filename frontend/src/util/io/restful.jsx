@@ -3,7 +3,9 @@ import { devvar } from "../devvar/devvar";
 import _ from "lodash";
 
 export var get = (uri, safe = true) => {
-  return fetch(devvar.DOMAIN + uri)
+  return fetch(devvar.DOMAIN + uri, {
+    credentials: "include"
+  })
     .then(response => {
       if (response.status === 410) {
         return response.json().then(result => {
@@ -41,7 +43,6 @@ export var getM = (uri, flatMap, safe = true) => {
       } else if (response.status !== 200) {
         return { status: response.status, message: "Unknown Failure" };
       }
-
       return response.json();
     })
     .catch(function(err) {
@@ -53,21 +54,33 @@ export var getM = (uri, flatMap, safe = true) => {
     });
 };
 
+/**
+ *
+ * @param {*} uri
+ * @param {*} message
+ * @param {*} responseData true if expecting data rather than a status
+ */
 export var post = (uri, message, responseData = true) => {
   let messageLength = _.isNil(message)
     ? 0
     : JSON.stringify(message).length.toString();
-  var myHeaders = new Headers({
-    "Content-Type": "application/json",
-    "Content-Length": messageLength,
-    Origin: "*"
-  });
+  // var myHeaders = new Headers({
+  //   "Content-Type": "application/json",
+
+  //   "Content-Length": messageLength,
+  //   Origin: "*"
+  // });
 
   return fetch(devvar.DOMAIN + uri, {
     method: "POST",
-    headers: myHeaders,
-    mode: "cors",
-    cache: "default",
+    // headers: myHeaders,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    // mode: "cors",
+    // cache: "default",
+    credentials: "include",
     body: JSON.stringify(message)
   })
     .then(function(response) {
@@ -75,7 +88,7 @@ export var post = (uri, message, responseData = true) => {
         console.log(
           "Looks like there was a problem. Status Code: " + response.status
         );
-        return { status: response.status, message: response };
+        throw { status: response.status, message: response };
       }
       return response;
     })
@@ -85,6 +98,9 @@ export var post = (uri, message, responseData = true) => {
       } else {
         return data;
       }
+    })
+    .catch(function(error) {
+      return error;
     });
 };
 export default (module.export = {

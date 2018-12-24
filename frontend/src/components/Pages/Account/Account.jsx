@@ -12,7 +12,6 @@ export class Account extends Component {
     // var id = func.generateSerial(9, 36);
     this.state = {
       _tag: this.constructor.name,
-      accountID: this.props.match.params.accountID,
       userData: null
       //   _id: id
     };
@@ -23,7 +22,7 @@ export class Account extends Component {
   componentDidMount() {
     this._isMount = true;
     restful
-      .get(`account/:${this.state.accountID}`)
+      .get(`account/${this.props.currentUser.id}`, false)
       .then(object => {
         if (this._isMount) {
           this.setState({
@@ -44,7 +43,7 @@ export class Account extends Component {
     console.log(newUserData);
     this.setState({ userData: newUserData });
     restful
-      .post(`account/update/:${this.state.accountID}`, newUserData)
+      .post(`account/update/${this.props.currentUser.id}`, newUserData)
       .then(object => {
         if (this._isMount) {
           console.log(object);
@@ -77,6 +76,8 @@ export class Account extends Component {
     locaton: PropTypes.object,
     match: PropTypes.object,
     staticContext: PropTypes.object
+
+    //
   };
 
   static defaultProps = {};

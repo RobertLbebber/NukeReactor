@@ -25,8 +25,10 @@ module.exports.routes = {
   "GET /getDefaultTemplate": { action: "PageBuilder/getDefaultTemplate" },
 
   //    ACCOUNTS CONTROLLER
-  "GET /account/:accountID": { action: "account/Account/getAccount" },
+  "GET /account/:email": { action: "account/Account/getAccount" },
   "POST /account/update/:accountID": { action: "account/Account/saveUserData" },
+  "POST /account/addAccount": { action: "account/Account/addAccount" },
+  "GET /account/getAll": { action: "account/Account/getAll" },
 
   "GET /getMe": { action: "account/Account/getMe" },
   "GET /createDefaultUser": { action: "account/Account/createDefaultUser" },
@@ -67,10 +69,9 @@ module.exports.routes = {
     action: "account/update-billing-card"
   },
   "/entrance/logout": { action: "entrance/logout" },
-  "POST   /entrance/login": { action: "entrance/login" },
-  "POST  /entrance/signup": {
-    action: "entrance/signup"
-  },
+  "POST  /entrance/login": { action: "account/Account/login" },
+  "POST  /entrance/signup": { action: "account/Account/signup" },
+  // action: "entrance/signup"},
   "POST  /entrance/send-password-recovery-email": {
     action: "entrance/send-password-recovery-email"
   },

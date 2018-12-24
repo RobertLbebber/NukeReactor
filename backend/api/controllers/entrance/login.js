@@ -53,6 +53,11 @@ and exposed as \`req.me\`.)`
       // To customize the response for _only this_ action, replace `responseType` with
       // something else.  For example, you might set `statusCode: 498` and change the
       // implementation below accordingly (see http://sailsjs.com/docs/concepts/controllers).
+    },
+
+    badPassword: {
+      description: `The provided password doesn't match the user with the corresponding email in the database.`,
+      responseType: "invalidResponse"
     }
   },
 
@@ -92,9 +97,12 @@ and exposed as \`req.me\`.)`
     } //ﬁ
 
     // Modify the active session instance.
-    this.req.session.userId = userRecord.id;
+    this.req.session.user = userRecord;
 
+    sails.log("Session in Login: ", this.req.session);
+    req.session.player_id = sails.uuid.v4();
+    req.session.save();
     // Send success response (this is where the session actually gets persisted)
-    this.res.json(Account.getPublicData(userRecord));
+    return this.res.send(Account.getPublicData(userRecord));
   }
 };

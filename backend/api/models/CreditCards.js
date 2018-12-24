@@ -11,9 +11,9 @@ module.exports = {
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
     //Generic
-    id: { type: "number", autoIncrement: true },
-    createdAt: { type: "number", autoCreatedAt: true },
-    updatedAt: { type: "number", autoUpdatedAt: true },
+    id: { columnName: "_id", type: "string", required: true },
+    // createdAt: { type: "number", autoCreatedAt: true },
+    // updatedAt: { type: "number", autoUpdatedAt: true },
     serial: { type: "string", required: true, unique: true },
 
     cardNumber: { type: "string", required: true, unique: true },

@@ -103,7 +103,7 @@ parasails.registerComponent('ajaxForm', {
       ];
       for (let fieldName in this.formRules) {
         for (let ruleName in this.formRules[fieldName]) {
-          if (_.contains(SUPPORTED_RULES, ruleName)) {
+          if (_.includes(SUPPORTED_RULES, ruleName)) {
             // OK.  Good enough.
             // - - - - - - - - - - - - - - - - - - - - -
             // FUTURE: move rule rhs checks out here
@@ -228,7 +228,7 @@ parasails.registerComponent('ajaxForm', {
             } else if (ruleName === 'isIn' && _.isArray(ruleRhs)) {
               // ® Must be one of these things
               violation = (
-                !_.contains(ruleRhs, fieldValue)
+                !_.includes(ruleRhs, fieldValue)
               );
             } else if (ruleName === 'is') {
               // ® Must be exactly this thing (useful for required checkboxes)

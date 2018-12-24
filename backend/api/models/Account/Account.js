@@ -34,20 +34,26 @@ module.exports = {
   getPublicData: function(fullAccount) {
     return {
       email: fullAccount.email,
+      id: fullAccount.id,
       firstName: fullAccount.firstName,
       lastName: fullAccount.lastName,
-      pageContent: fullAccount.pageContent
+      pageContent: fullAccount.pageContent,
+      profile_img: fullAccount.profile_img
     };
   },
+
+  // customToJSON:function(){
+  //   return _.omit(this,['password,']);
+  // },
 
   attributes: {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
     //Generic
-    id: { type: "number", autoIncrement: true, unique: true },
-    createdAt: { type: "number", autoCreatedAt: true },
-    updatedAt: { type: "number", autoUpdatedAt: true },
+    id: { columnName: "_id", type: "string", autoIncrement: true },
+    // createdAt: { type: "number", autoCreatedAt: true },
+    // updatedAt: { type: "number", autoUpdatedAt: true },
 
     //Account Structure
     email: { type: "string", required: true, unique: true },
@@ -55,6 +61,10 @@ module.exports = {
     firstName: { type: "string", required: true, encrypt: true },
     middleName: { type: "string", encrypt: true },
     lastName: { type: "string", required: true, encrypt: true },
+
+    profile_img: {
+      type: "string"
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
