@@ -8,12 +8,11 @@ import ListItem from "@material-ui/core/ListItem";
 // import ListItemLink from "@material-ui/core/ListItemLink";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
 //Icons
-import InboxIcon from "@material-ui/icons/Inbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
+import _ from "lodash";
 
 import "./Sidebar.css";
+import { Link } from "react-router-dom";
 
 const styles = () => ({
   root: {
@@ -46,37 +45,33 @@ export class Sidebar extends Component {
   }
 
   render() {
+    let account = this.props.account;
     return (
       <div className={this.props.classes.root + " " + this.state._tag}>
         <List component="nav">
-          <ListItem button>
-            <ListItemIcon>
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText primary="Inbox" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <DraftsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Drafts" />
-          </ListItem>
-        </List>
-        <Divider />
-        <List component="nav">
-          <ListItem button>
-            <ListItemText primary="Trash" />
-          </ListItem>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Spam" />
-          </ListItemLink>
+          {this.props.routes.map(route => (
+            <ListItem
+              key={route.name}
+              button
+              component={Link}
+              to={
+                route.dynamic && !_.isNil(account)
+                  ? route.path + account.id
+                  : route.path
+              }
+            >
+              <ListItemIcon>{route.iconComponent}</ListItemIcon>
+              <ListItemText primary={route.name} />
+            </ListItem>
+          ))}
         </List>
       </div>
     );
   }
 
   static propTypes = {
-    userData: PropTypes.object,
+    account: PropTypes.object,
+    routes: PropTypes.arrayOf(PropTypes.object),
     displayType: PropTypes.oneOf(["standard"])
   };
 

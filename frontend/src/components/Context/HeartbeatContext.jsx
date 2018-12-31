@@ -1,26 +1,44 @@
 import React from "react";
 import _ from "lodash";
 import Cookies from "js-cookie";
+import Redirect from "react-router-dom/Redirect";
 
 import restful from "../../util/io/restful";
 import { LandingPage } from "../Pages/Public/LandingPage";
-import { Debug } from "../../util/devvar/devvar";
+import { Debug, devvar } from "../../util/devvar/devvar";
 
 export const HeartbeatContext = React.createContext();
 
 export class HeartbeatProvider extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      userEmail: Cookies.get("email"),
-      user: null
-    };
-    this._mounted = false;
+    this.destroyCookies = this.destroyCookies.bind(this);
+    this.updateUserData = this.updateUserData.bind(this);
     this.heartbeatTimer = setInterval(() => {
       this.heartbeat();
     }, 600000);
-    this.updateUserData = this.updateUserData.bind(this);
+    this.state = {
+      account: null,
+      destroyCookies: this.destroyCookies,
+      updateUserData: this.updateUserData
+    };
+    this._mounted = false;
   }
+
+  destroyCookies() {
+    restful
+      .get("logout")
+      .then(response => {
+        this.setState({ account: null });
+      })
+      .catch(error => {
+        this.setState({ account: null });
+        Cookies.remove("account", { path: "/", domain: devvar.LOCAL });
+        Cookies.remove("UID", { path: "/", domain: devvar.LOCAL });
+        console.error(error);
+      });
+  }
+
   heartbeat() {
     restful
       .get("getMe", false)
@@ -33,31 +51,20 @@ export class HeartbeatProvider extends React.Component {
       })
       .catch(error => {
         if (error.status === 410) {
-          this.setState({ currentUser: null });
+          this.setState({ account: null });
         }
       });
   }
 
   componentDidMount() {
-    let cachedAccount = Cookies.get("user");
-    let cachedAccount2 = Cookies.get();
-    Cookies.set("manual", "value");
-    localStorage.setItem("SelectedOption", "4");
-    // let cachedAccount = JSON.parse(Cookies.get("user"));
-    console.log(cachedAccount);
-    console.log(cachedAccount2);
-    if (!_.isNil(cachedAccount)) {
-      this.setState({ account: cachedAccount });
+    let account = Cookies.get("account");
+    if (!_.isNil(account)) {
+      let cachedAccount = JSON.parse(account);
+      if (!_.isNil(cachedAccount)) {
+        this.setState({ account: { ...cachedAccount } });
+      }
+      this._mounted = true;
     }
-    this._mounted = true;
-  }
-
-  componentDidUpdate() {
-    let cachedAccount = Cookies.get("user");
-    let cachedAccount2 = Cookies.get();
-    // let cachedAccount = JSON.parse(Cookies.get("user"));
-    console.log(cachedAccount);
-    console.log(cachedAccount2);
   }
 
   componentWillUnmount() {
@@ -65,22 +72,15 @@ export class HeartbeatProvider extends React.Component {
   }
 
   updateUserData(data) {
-    this.setState({ userEmail: data });
-    console.log(Cookies.get("user"));
+    this.setState({ account: { ...data } });
   }
 
   render() {
-    let content;
-    if (_.isNil(this.state.userEmail) && Debug.enforceAccount) {
-      content = <LandingPage updateUserDataFn={this.updateUserData} />;
-    } else {
-      content = (
-        <HeartbeatContext.Provider value={this.state}>
-          {this.props.children}
-        </HeartbeatContext.Provider>
-      );
-    }
-    return content;
+    return (
+      <HeartbeatContext.Provider value={this.state}>
+        {this.props.children}
+      </HeartbeatContext.Provider>
+    );
   }
 }
 export default HeartbeatProvider;

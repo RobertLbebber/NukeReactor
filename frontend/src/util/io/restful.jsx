@@ -2,31 +2,22 @@ import { devvar } from "../devvar/devvar";
 // import func from "../func/func";
 import _ from "lodash";
 
-export var get = (uri, safe = true) => {
+export var get = uri => {
   return fetch(devvar.DOMAIN + uri, {
     credentials: "include"
   })
-    .then(response => {
-      if (response.status === 410) {
-        return response.json().then(result => {
-          return { status: response.status, ...result };
-        });
-      } else if (response.status !== 200) {
-        return { status: response.status, message: "Unknown Failure" };
-      }
-
-      return response.json();
+    .then(async response => {
+      return { status: response.status, body: await response.json() };
     })
-    .catch(function(err) {
-      if (!safe) {
-        throw err;
-      } else {
-        console.log("Operational Error ", err);
+    .then(response => {
+      if (response.status === 415) {
+        return { status: response.status, body: "Unknown Error" };
       }
+      return { status: response.status, body: response.body };
     });
 };
 
-export var getM = (uri, flatMap, safe = true) => {
+export var getM = (uri, flatMap) => {
   let message = "?";
   for (let key in flatMap) {
     if (!flatMap.hasOwnProperty(key)) continue;
@@ -35,22 +26,16 @@ export var getM = (uri, flatMap, safe = true) => {
   }
   message = encodeURI(message.substring(0, message.length - 1));
   return fetch(devvar.DOMAIN + uri + message)
+    .then(async response => {
+      return await response.json();
+    })
     .then(response => {
       if (response.status === 410) {
-        return response.json().then(result => {
-          return { status: response.status, ...result };
-        });
+        return { status: response.status, body: response };
       } else if (response.status !== 200) {
         return { status: response.status, message: "Unknown Failure" };
       }
-      return response.json();
-    })
-    .catch(function(err) {
-      if (!safe) {
-        throw err;
-      } else {
-        console.log("Operational Error ", err);
-      }
+      return { status: response.status, body: response };
     });
 };
 
@@ -60,7 +45,7 @@ export var getM = (uri, flatMap, safe = true) => {
  * @param {*} message
  * @param {*} responseData true if expecting data rather than a status
  */
-export var post = (uri, message, responseData = true) => {
+export var post = (uri, message, responseData = true, safe = true) => {
   let messageLength = _.isNil(message)
     ? 0
     : JSON.stringify(message).length.toString();
@@ -83,24 +68,14 @@ export var post = (uri, message, responseData = true) => {
     credentials: "include",
     body: JSON.stringify(message)
   })
-    .then(function(response) {
-      if (response.status !== 200) {
-        console.log(
-          "Looks like there was a problem. Status Code: " + response.status
-        );
-        throw { status: response.status, message: response };
-      }
-      return response;
+    .then(async response => {
+      return { status: response.status, body: await response.json() };
     })
-    .then(function(data) {
-      if (responseData) {
-        return data.json();
-      } else {
-        return data;
+    .then(response => {
+      if (response.status === 415) {
+        return { status: response.status, body: "Unknown Error" };
       }
-    })
-    .catch(function(error) {
-      return error;
+      return { status: response.status, body: response.body };
     });
 };
 export default (module.export = {

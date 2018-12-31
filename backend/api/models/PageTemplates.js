@@ -9,27 +9,27 @@ let content = require("../../assets/sampleData/content.js");
 
 module.exports = {
   createDefaultTemplate: async function(accountId) {
-    console.log(content);
-    console.log(accountId);
     await this.create({
       designName: "Default",
       designCategory: "Basic",
       pageLayout: content,
       accountId: accountId ? accountId : null
+    }).tolerate("E_UNIQUE", () => {
+      sails.log(
+        "There was a Duplicate Default Page Template Error that we ignore"
+      );
     });
   },
 
   getDefaultTemplate: async function() {
-    let result = await this.findOne({ designName: "Default" });
-    console.log(result.pageLayout);
-    return result;
+    return await this.findOne({ designName: "Default" });
   },
 
   attributes: {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
-    id: { columnName: "_id", type: "string", required: true },
+    id: { columnName: "_id", type: "string", autoIncrement: true },
     // createdAt: { type: "number", autoCreatedAt: true },
     // updatedAt: { type: "number", autoUpdatedAt: true },
     serial: { type: "string" },

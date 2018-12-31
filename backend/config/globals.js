@@ -46,5 +46,11 @@ module.exports.globals = {
    *                                                                           *
    ****************************************************************************/
 
-  sails: true
+  sails: true,
+
+  dev: {
+    react_server: "localhost:1337",
+    sails_server: "localhost:3000",
+    dev_mode: true
+  }
 };

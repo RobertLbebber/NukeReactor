@@ -15,10 +15,12 @@ import {
   Input,
   Row
 } from "reactstrap";
+import _ from "lodash";
 import ECrown from "../../Util/Icons/ECrown";
 import "./LandingPage.css";
 import "../../../assets/css/generic.css";
 import restful from "../../../util/io/restful";
+import { Alert } from "react-bootstrap";
 
 export class LandingPage extends Component {
   constructor(props) {
@@ -27,7 +29,8 @@ export class LandingPage extends Component {
       _tag: this.constructor.name,
       toggleRegister: true,
       formData: {},
-      redirect: false
+      redirect: false,
+      errorMessage: null
     };
     this._isMount = false;
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -44,7 +47,10 @@ export class LandingPage extends Component {
   }
 
   addFormData(name, data) {
-    this.setState({ form: { ...this.state.form, [name]: data } });
+    this.setState({
+      form: { ...this.state.form, [name]: data },
+      errorMessage: null
+    });
   }
 
   onFormSubmit(e) {
@@ -53,16 +59,22 @@ export class LandingPage extends Component {
     restful
       .post(url, this.state.form)
       .then(response => {
-        this.props.updateUserDataFn(response);
+        if (this._isMount && response.status === 200) {
+          this.props.updateUserDataFn(response);
+        } else if (this._isMount && response.status === 400) {
+          this.setState({ errorMessage: response.body.errorMessage });
+        }
       })
-      .catch(error => {
-        console.log(error);
-      });
+      .catch(error => {});
   }
 
   toggleRegister = e => {
     e.preventDefault();
-    this.setState({ toggleRegister: !this.state.toggleRegister, formData: {} });
+    this.setState({
+      toggleRegister: !this.state.toggleRegister,
+      formData: {},
+      errorMessage: null
+    });
   };
 
   getLogin() {
@@ -72,6 +84,11 @@ export class LandingPage extends Component {
           Login
         </CardTitle>
         <CardBody>
+          {!_.isNil(this.state.errorMessage) ? (
+            <Alert bsStyle="danger" onDismiss={this.handleDismiss}>
+              {this.state.errorMessage}
+            </Alert>
+          ) : null}
           <Form onSubmit={this.onFormSubmit}>
             <Row form>
               <Col md={6}>
@@ -123,7 +140,7 @@ export class LandingPage extends Component {
           </Form>
           <CardSubtitle>
             Already have an account?
-            <a href="" className="hyperlink" onClick={this.toggleRegister}>
+            <a href="" className="hyperlink d-b " onClick={this.toggleRegister}>
               click here
             </a>
           </CardSubtitle>
@@ -143,6 +160,11 @@ export class LandingPage extends Component {
           Register
         </CardTitle>
         <CardBody>
+          {!_.isNil(this.state.errorMessage) ? (
+            <Alert bsStyle="danger" onDismiss={this.handleDismiss}>
+              {this.state.errorMessage}
+            </Alert>
+          ) : null}
           <Form onSubmit={this.onFormSubmit}>
             <Row form>
               <Col md={6}>
@@ -220,7 +242,7 @@ export class LandingPage extends Component {
           </Form>
           <CardSubtitle>
             Already have an account?
-            <a href="" className="hyperlink" onClick={this.toggleRegister}>
+            <a href="" className="hyperlink d-b " onClick={this.toggleRegister}>
               click here
             </a>
           </CardSubtitle>
@@ -244,7 +266,7 @@ export class LandingPage extends Component {
   }
 
   static propTypes = {
-    // updateUserDataFn: PropTypes.func.isRequired
+    updateUserDataFn: PropTypes.func.isRequired
   };
 
   // static defaultProps = {};

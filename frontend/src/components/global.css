@@ -73,3 +73,17 @@
   margin-top: 30px;
   margin-bottom: 30px;
 }
+
+.po-abs {
+  position: absolute;
+}
+.po-rel {
+  position: relative;
+}
+
+.d-b {
+  display: block;
+}
+.d-i {
+  display: inline;
+}

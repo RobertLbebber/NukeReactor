@@ -12,7 +12,7 @@ export class Account extends Component {
     // var id = func.generateSerial(9, 36);
     this.state = {
       _tag: this.constructor.name,
-      userData: null
+      account: null
       //   _id: id
     };
     this.saveChanges = this.saveChanges.bind(this);
@@ -22,11 +22,11 @@ export class Account extends Component {
   componentDidMount() {
     this._isMount = true;
     restful
-      .get(`account/${this.props.currentUser.id}`, false)
+      .get(`account/${this.props.id}`, false)
       .then(object => {
         if (this._isMount) {
           this.setState({
-            userData: object
+            account: object
           });
         }
       })
@@ -39,16 +39,16 @@ export class Account extends Component {
     this._isMount = false;
   }
 
-  saveChanges(newUserData) {
-    console.log(newUserData);
-    this.setState({ userData: newUserData });
+  saveChanges(newAccount) {
+    console.log(newAccount);
+    this.setState({ account: newAccount });
     restful
-      .post(`account/update/${this.props.currentUser.id}`, newUserData)
+      .post(`account/update/${this.props.currentUser.id}`, newAccount)
       .then(object => {
         if (this._isMount) {
           console.log(object);
           // this.setState({
-          //   userData: object
+          //   account: object
           // });
         }
       })
@@ -60,9 +60,9 @@ export class Account extends Component {
   render() {
     return (
       <div className={this.state._tag}>
-        {!_.isNil(this.state.userData) ? (
+        {!_.isNil(this.state.account) ? (
           <PageCreator
-            userData={this.state.userData}
+            account={this.state.account}
             saveChanges={this.saveChanges}
           />
         ) : null}

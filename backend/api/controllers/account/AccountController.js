@@ -15,7 +15,6 @@ var output = {
 
 module.exports = {
   /**
-   * @deprecated
    */
   signup: function(req, res) {
     if (req.body.password !== req.body.confirmation) {
@@ -26,13 +25,17 @@ module.exports = {
       firstName: req.body.fName,
       lastName: req.body.lName,
       password: req.body.password
-      // pageContent: PageTemplates.findOne({ designName: "Blank" }),  //UN-Tested
+      // pageContent: content
     })
-      .intercept("E_UNIQUE", "emailAlreadyInUse")
+      /* Error Catching */
+      .tolerate("E_UNIQUE", () => {
+        res.status(400);
+        throw res.json({ errorMessage: "Email account not permitted." });
+      })
       .fetch()
       .decrypt()
       .then(function(result) {
-        res.cookie("user", JSON.stringify(Account.getPublicData(result)), {
+        res.cookie("account", JSON.stringify(Account.getPublicData(result)), {
           maxAge: 19000000
         });
         res.cookie("UID", JSON.stringify(result.id), {
@@ -40,11 +43,14 @@ module.exports = {
           httpOnly: true
         });
         res.json(Account.getPublicData(result));
+      })
+      /* Error Shipping */
+      .catch(input => {
+        return input;
       });
   },
 
   /**
-   * @deprecated
    */
   login: function(req, res) {
     Account.findOne({
@@ -52,43 +58,52 @@ module.exports = {
     })
       .decrypt()
       .exec(function(err, result) {
-        console.log(result);
-        if (_.isNil(result)) {
-          res.status(401);
-          return res.json({ error: "Invalid Credentials" });
-        }
-        if (result.password === req.param("password")) {
-          // req.session.userId = result.id; // returned from a database
-          return res.json(Account.getPublicData(result));
-        } else {
+        if (_.isNil(result) || result.password !== req.param("password")) {
           res.status(400);
-          return res.json({ error: "Unknown Failure" });
+          return res.json({ errorMessage: "Invalid Credentials" });
+        } else {
+          res.cookie("account", JSON.stringify(Account.getPublicData(result)), {
+            maxAge: 19000000
+          });
+          res.cookie("UID", JSON.stringify(result.id), {
+            maxAge: 19000000,
+            httpOnly: true
+          });
+          return res.json(Account.getPublicData(result));
         }
       });
   },
 
   /**
-   * @deprecated
    */
   logout: function(req, res) {
-    Account.findOne({ id: req.session.userId }).exec(function(err, result) {
-      if (result) {
-        req.session.userId = null; // returned from a database
-        res.status(200);
-        return res.send({ message: "Successful Account Closure" });
-      } else {
-        res.status(410);
-        return res.send({ error: "Account Not Active" });
-      }
-    });
+    let id = JSON.parse(req.cookies.UID);
+    if (_.isNil(id)) {
+      res.status(500);
+      res.clearCookie("account", { path: "/" });
+      res.clearCookie("UID", { path: "/" });
+      return res.json({ errorMessage: "Account Not Found" });
+    } else {
+      Account.findOne({ id: id }).exec(function(err, result) {
+        if (!_.isNil(result)) {
+          res.clearCookie("account", { path: "/" });
+          res.clearCookie("UID", { path: "/" });
+          res.status(200);
+          return res.send({ message: "Successful Account Closure" });
+        } else {
+          res.status(410);
+          return res.json({ errorMessage: "Account Not Active" });
+        }
+      });
+    }
   },
 
   getMe: function(req, res) {
     if (!req.cookies || !req.cookies.UID) {
       res.status(410);
-      return res.send({ error: "Account Not Active" });
+      return res.send({ errorMessage: "Account Not Active" });
     } else {
-      Account.findOne({ id: req.cookies.UID })
+      Account.findOne({ id: JSON.parse(req.cookies.UID) })
         .decrypt()
         .exec(function(err, result) {
           if (_.isNil(result)) {
@@ -100,16 +115,23 @@ module.exports = {
   },
 
   getAccount: function(req, res) {
-    Account.findOne({ email: req.param("email") })
+    Account.findOne({ id: req.param("id") })
       .populate("pageContent")
       .exec(function(err, result) {
+        sails.log(Account.getPublicData(result));
         if (_.isNil(result)) {
-          return res.sendStatus(404, {
-            status: 404,
-            message: "Account Not Found"
+          res.sendStatus(404, {
+            errorMessage: "Account Not Found"
           });
+        } else {
+          if (!_.isNil(result.pageContent[0])) {
+            res.json(result.pageContent[0].pageLayout);
+          } else {
+            res.sendStatus(404, {
+              errorMessage: "Account Data Not Found"
+            });
+          }
         }
-        res.send(result.pageContent[0].pageLayout);
       });
   },
 
@@ -160,7 +182,7 @@ module.exports = {
           return res.json(Account.getPublicData(result));
         } else {
           res.status(401);
-          return res.send({ error: "Invalid Credentials" });
+          return res.send({ errorMessage: "Invalid Credentials" });
         }
       }
     );
@@ -190,6 +212,17 @@ module.exports = {
     Account.find().exec(function(err, newOrExistingRecord) {
       console.log(err, newOrExistingRecord);
       return res.json(newOrExistingRecord);
+    });
+  },
+
+  /**
+   * @Debug
+   */
+  runQuery: function(req, res) {
+    Account.find({ ...req.body.json }).exec((err, result) => {
+      console.log(err, result);
+      res.status(200);
+      res.json({ message: "look At the Server logs" });
     });
   }
 };

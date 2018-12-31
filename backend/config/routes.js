@@ -25,14 +25,16 @@ module.exports.routes = {
   "GET /getDefaultTemplate": { action: "PageBuilder/getDefaultTemplate" },
 
   //    ACCOUNTS CONTROLLER
-  "GET /account/:email": { action: "account/Account/getAccount" },
+  "GET /account/:id": { action: "account/Account/getAccount" },
   "POST /account/update/:accountID": { action: "account/Account/saveUserData" },
   "POST /account/addAccount": { action: "account/Account/addAccount" },
   "GET /account/getAll": { action: "account/Account/getAll" },
 
   "GET /getMe": { action: "account/Account/getMe" },
+  "GET /logout": { action: "account/Account/logout" },
   "GET /createDefaultUser": { action: "account/Account/createDefaultUser" },
 
+  "POST /debug/account/runQuery": { action: "account/Account/runQuery" },
   // //  ╦ ╦╔═╗╔╗ ╔═╗╔═╗╔═╗╔═╗╔═╗
   // //  ║║║║╣ ╠╩╗╠═╝╠═╣║ ╦║╣ ╚═╗
   // //  ╚╩╝╚═╝╚═╝╩  ╩ ╩╚═╝╚═╝╚═╝
