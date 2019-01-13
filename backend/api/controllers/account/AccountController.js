@@ -140,7 +140,7 @@ module.exports = {
     PageTemplates.create({
       // Account.create({
       designName: "Blank",
-      designCategory: "basic",
+      designCategory: "Basic",
       pageLayout: body
     }).exec(function(err, newOrExistingRecord) {
       return res.ok({

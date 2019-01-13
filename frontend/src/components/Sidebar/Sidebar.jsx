@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 //import func from '/frontend/src/util/func/func'
+import { Navbar, NavbarBrand } from "reactstrap";
 
 import { withStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -14,12 +15,7 @@ import _ from "lodash";
 import "./Sidebar.css";
 import { Link } from "react-router-dom";
 
-const styles = () => ({
-  root: {
-    width: "100%",
-    maxWidth: 200
-  }
-});
+const styles = () => ({ root: {} });
 
 const ListItemLink = props => {
   return <ListItem button component="a" {...props} />;
@@ -48,6 +44,14 @@ export class Sidebar extends Component {
     let account = this.props.account;
     return (
       <div className={this.props.classes.root + " " + this.state._tag}>
+        <Navbar
+          color="light"
+          light
+          expand="md"
+          style={{ borderRight: "1px solid #dadada" }}
+        >
+          <NavbarBrand href="/">Electr</NavbarBrand>
+        </Navbar>
         <List component="nav">
           {this.props.routes.map(route => (
             <ListItem

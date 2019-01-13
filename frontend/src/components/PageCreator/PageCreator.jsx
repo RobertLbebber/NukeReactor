@@ -84,7 +84,7 @@ export class PageCreator extends Component {
         plugins: plugins,
         // pass the content states
         editables: [
-          ...this.props.userData,
+          ...this.props.account,
           // creates an empty state, basically like the line above
           createEmptyState()
         ]
@@ -92,7 +92,7 @@ export class PageCreator extends Component {
       plugins: plugins
     };
     this.sendUpdate = this.sendUpdate.bind(this);
-    this.updateUserData = this.updateUserData.bind(this);
+    this.updateAccount = this.updateAccount.bind(this);
     this._isMounted = false;
   }
 
@@ -108,7 +108,7 @@ export class PageCreator extends Component {
           editor={this.state.editor}
           id={element.dataset.id}
           onChange={state => {
-            this.updateUserData(state);
+            this.updateAccount(state);
           }}
         />
       );
@@ -146,7 +146,7 @@ export class PageCreator extends Component {
     });
   }
 
-  updateUserData(state) {
+  updateAccount(state) {
     if (!this.state.isDirty) {
       this.setState(
         {
@@ -227,7 +227,7 @@ export class PageCreator extends Component {
   }
 
   static propTypes = {
-    userData: PropTypes.array.isRequired,
+    account: PropTypes.array.isRequired,
     saveChanges: PropTypes.func.isRequired
   };
 

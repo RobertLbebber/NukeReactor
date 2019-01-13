@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+
+import gibberish from "../../../assets/data/GibberishText.json";
 //import func from '/frontend/src/util/func/func'
 
 export class Home extends Component {
@@ -22,7 +24,12 @@ export class Home extends Component {
   }
 
   render() {
-    return <div className={this.state._tag}>{this.state._tag}</div>;
+    return (
+      <div className={this.state._tag}>
+        {this.state._tag}
+        {gibberish.message}
+      </div>
+    );
   }
 
   static propTypes = {

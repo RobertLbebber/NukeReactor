@@ -17,8 +17,16 @@ export class HeartbeatProvider extends React.Component {
     this.heartbeatTimer = setInterval(() => {
       this.heartbeat();
     }, 600000);
+
+    let account = Cookies.get("account");
+    if (!_.isNil(account)) {
+      let cachedAccount = JSON.parse(account);
+      if (!_.isNil(cachedAccount)) {
+        account = { ...cachedAccount };
+      }
+    }
     this.state = {
-      account: null,
+      account: account,
       destroyCookies: this.destroyCookies,
       updateUserData: this.updateUserData
     };
@@ -57,14 +65,7 @@ export class HeartbeatProvider extends React.Component {
   }
 
   componentDidMount() {
-    let account = Cookies.get("account");
-    if (!_.isNil(account)) {
-      let cachedAccount = JSON.parse(account);
-      if (!_.isNil(cachedAccount)) {
-        this.setState({ account: { ...cachedAccount } });
-      }
-      this._mounted = true;
-    }
+    this._mounted = true;
   }
 
   componentWillUnmount() {

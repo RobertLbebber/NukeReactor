@@ -10,3 +10,5 @@ Remember the difference between then(result) and exec(err,result)
 Got Cookies to work on the backend. httpOnly means the user can't alter so it will serve well for keeping ID
 
 We just made a hook for initating the database (only populates when on safe *Roll Eyes*), Sessions now work with logging out and page redirects. Debugging is also now a thing (Use app.js).
+
+WE just got Scss to work as importable css and that is why the webapp looks like trash. start transfering everything over

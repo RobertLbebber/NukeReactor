@@ -1,69 +1,20 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import { Navbar, NavbarBrand } from "reactstrap";
 import {
   BrowserRouter as Router,
   Route,
   Link,
   Redirect
 } from "react-router-dom";
-import {
-  ViewDay,
-  AccountCircle,
-  Home as HomeIcon,
-  HighlightOff
-} from "@material-ui/icons";
-import { Debug, devvar } from "../util/devvar/devvar";
 
-// import Electr from "../components/Pages/Electr/Electr";
-//import func from '/frontend/src/util/func/func'
-import Feed from "../components/Pages/Feed/Feed";
-import Account from "../components/Pages/Account/Account";
-import Home from "../components/Pages/Index/Home";
 import Sidebar from "../components/Sidebar/Sidebar";
 import Footer from "../components/Footer/Footer";
-import LogOut from "../components/Pages/Public/LogOut";
+import { Debug, devvar } from "../util/devvar/devvar";
+import { Switch } from "react-router-dom";
 import { HeartbeatContext } from "../components/Context/HeartbeatContext";
 import { LandingPage } from "../components/Pages/Public/LandingPage";
-
-const indexRoutes = Object.freeze([
-  {
-    path: "/",
-    name: "Home",
-    component: Home,
-    dynamic: false,
-    iconComponent: <HomeIcon />
-  },
-  {
-    path: "/acc/",
-    name: "Account",
-    component: Account,
-    dynamic: true,
-    iconComponent: <AccountCircle />
-  },
-  {
-    path: "/Feed",
-    name: "Feed",
-    component: Feed,
-    dynamic: false,
-    iconComponent: <ViewDay />
-  },
-  {
-    path: "/logout",
-    name: "Log out",
-    component: () => {
-      console.log("functions");
-      return (
-        <HeartbeatContext.Consumer>
-          {heart => <LogOut logOutFn={heart.destroyCookies} />}
-        </HeartbeatContext.Consumer>
-      );
-    },
-    dynamic: false,
-    iconComponent: <HighlightOff />
-  }
-]);
+import indexRoutes from "./routes.js";
 
 export class Routes extends Component {
   constructor(props) {
@@ -95,9 +46,6 @@ export class Routes extends Component {
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  <Navbar color="light" light expand="md">
-                    <NavbarBrand href="/">Electr</NavbarBrand>
-                  </Navbar>
                   <div>
                     <Sidebar
                       displayType={"standard"}
@@ -105,21 +53,25 @@ export class Routes extends Component {
                       account={heart.account}
                     />
                     <div className={"main-content"}>
-                      {indexRoutes.map(indexRoute => (
-                        <Route
-                          exact={indexRoute.exact}
-                          key={indexRoute.name}
-                          path={indexRoute.path}
-                          render={props => (
-                            <indexRoute.component
-                              {...props}
-                              {...heart.account}
-                            />
-                          )}
-                        />
-                      ))}
+                      <Switch>
+                        {indexRoutes.map(indexRoute => (
+                          <Route
+                            exact={indexRoute.exact}
+                            key={indexRoute.name}
+                            path={indexRoute.path}
+                            render={props => (
+                              <React.Fragment>
+                                <indexRoute.component
+                                  {...props}
+                                  {...heart.account}
+                                />
+                                <Footer />
+                              </React.Fragment>
+                            )}
+                          />
+                        ))}
+                      </Switch>
                     </div>
-                    <Footer />
                   </div>
                 </React.Fragment>
               )

@@ -1,8 +1,7 @@
 .Sidebar {
-  max-width: 200px;
-  width: 200px;
-  position: absolute;
-  top: 55px;
-  bottom: 0;
+  max-width: 14vw;
+  width: 14vw;
   border-right: 1px solid #dadada;
+  height: 100%;
+  position: fixed;
 }

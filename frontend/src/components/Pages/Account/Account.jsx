@@ -1,9 +1,12 @@
 import React, { Component } from "react";
-import restful from "../../../util/io/restful";
 import PropTypes from "prop-types";
-import PageCreator from "../../PageCreator/PageCreator";
-
 import _ from "lodash";
+
+import restful from "../../../util/io/restful";
+import PageCreator from "../../PageCreator/PageCreator";
+import Loading from "../../Util/Loading";
+import "./Account.css";
+
 //import func from '/frontend/src/util/func/func'
 
 export class Account extends Component {
@@ -26,7 +29,7 @@ export class Account extends Component {
       .then(object => {
         if (this._isMount) {
           this.setState({
-            account: object
+            account: object.body
           });
         }
       })
@@ -40,16 +43,15 @@ export class Account extends Component {
   }
 
   saveChanges(newAccount) {
-    console.log(newAccount);
     this.setState({ account: newAccount });
     restful
-      .post(`account/update/${this.props.currentUser.id}`, newAccount)
+      .post(`account/update/${this.props.id}`, newAccount)
       .then(object => {
         if (this._isMount) {
           console.log(object);
-          // this.setState({
-          //   account: object
-          // });
+          this.setState({
+            account: object
+          });
         }
       })
       .catch(err => {
@@ -60,6 +62,7 @@ export class Account extends Component {
   render() {
     return (
       <div className={this.state._tag}>
+        <Loading className="center-container" />
         {!_.isNil(this.state.account) ? (
           <PageCreator
             account={this.state.account}
