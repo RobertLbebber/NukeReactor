@@ -4,7 +4,7 @@ import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import RestoreIcon from "@material-ui/icons/Restore";
 
-import "./Footer.css";
+
 //import func from '/frontend/src/util/func/func'
 
 export class Footer extends Component {

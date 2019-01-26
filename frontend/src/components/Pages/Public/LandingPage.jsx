@@ -17,8 +17,8 @@ import {
 } from "reactstrap";
 import _ from "lodash";
 import ECrown from "../../Util/Icons/ECrown";
-import "./LandingPage.css";
-import "../../../assets/css/generic.css";
+
+
 import restful from "../../../util/io/restful";
 import { Alert } from "react-bootstrap";
 

@@ -12,7 +12,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 //Icons
 import _ from "lodash";
 
-import "./Sidebar.css";
+
 import { Link } from "react-router-dom";
 
 const styles = () => ({ root: {} });

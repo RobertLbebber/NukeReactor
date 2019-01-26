@@ -5,7 +5,7 @@ import _ from "lodash";
 import restful from "../../../util/io/restful";
 import PageCreator from "../../PageCreator/PageCreator";
 import Loading from "../../Util/Loading";
-import "./Account.css";
+
 
 //import func from '/frontend/src/util/func/func'
 

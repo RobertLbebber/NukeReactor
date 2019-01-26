@@ -5,7 +5,7 @@ import {
   HeartbeatProvider
 } from "../components/Context/HeartbeatContext";
 import { Routes } from "./Routes.jsx";
-import "./Index.css";
+
 
 export class Index extends Component {
   constructor(props) {
