@@ -71,6 +71,7 @@ module.exports = {
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
     //Account References
     pageContent: { collection: "pageTemplates", via: "accountId" },
+    messages: { collection: "messages", via: "accountId" },
     creditCard: { collection: "creditCards", via: "accountId" },
 
     //  ╦  ╔═╗╔═╗╔═╗╔═╗╦ ╦

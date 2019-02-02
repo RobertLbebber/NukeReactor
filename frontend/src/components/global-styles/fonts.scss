@@ -1,0 +1,29 @@
+$gaint-font: 56px;
+$large-font: 28px;
+$regular-font: 14px;
+$small-font: 10px;
+
+.large-font {
+  font-size: $large-font;
+}
+.regular-font {
+  font-size: $regular-font;
+}
+.gaint-font {
+  font-size: $gaint-font;
+}
+.small-font {
+  font-size: $small-font;
+}
+.large-font-chd > * {
+  font-size: $large-font;
+}
+.regular-font-chd > * {
+  font-size: $regular-font;
+}
+.gaint-font-chd > * {
+  font-size: $gaint-font;
+}
+.small-font-chd > * {
+  font-size: $small-font;
+}

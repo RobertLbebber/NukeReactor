@@ -12,7 +12,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 //Icons
 import _ from "lodash";
 
-
 import { Link } from "react-router-dom";
 
 const styles = () => ({ root: {} });
@@ -44,13 +43,10 @@ export class Sidebar extends Component {
     let account = this.props.account;
     return (
       <div className={this.props.classes.root + " " + this.state._tag}>
-        <Navbar
-          color="light"
-          light
-          expand="md"
-          style={{ borderRight: "1px solid #dadada" }}
-        >
-          <NavbarBrand href="/">Electr</NavbarBrand>
+        <Navbar color="light" light expand="md">
+          <NavbarBrand href="/" className="brand-name">
+            Electr
+          </NavbarBrand>
         </Navbar>
         <List component="nav">
           {this.props.routes.map(route => (

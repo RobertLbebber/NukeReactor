@@ -1,0 +1,28 @@
+$brand-primary: #ffffff;
+$brand-primary-dark: invert($brand-primary);
+$brand-secondary: #53bea7;
+$brand-secondary-dark: darker($brand-secondary);
+$brand-tertiary: #be53a7;
+$brand-tertiary-dark: darker($brand-tertiary);
+$brand-grey: #dadada;
+$brand-grey-dark: darker($brand-grey);
+
+//Form Colors
+$form-default: #5b7bfc;
+$form-basic: #ffffff;
+$form-confirm: #45d445;
+$form-default: disable($form-default);
+$form-basic: disable($form-basic);
+$form-confirm: disable($form-confirm);
+
+@function disable($property) {
+  @return desaturate($property, 20%);
+}
+
+@function darker($property) {
+  @return darken($property, 20%);
+}
+
+@function invert($property) {
+  @return invert($property);
+}

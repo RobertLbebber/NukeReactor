@@ -1,0 +1,23 @@
+.large-font {
+  font-size: 28px; }
+
+.regular-font {
+  font-size: 14px; }
+
+.gaint-font {
+  font-size: 56px; }
+
+.small-font {
+  font-size: 10px; }
+
+.large-font-chd > * {
+  font-size: 28px; }
+
+.regular-font-chd > * {
+  font-size: 14px; }
+
+.gaint-font-chd > * {
+  font-size: 56px; }
+
+.small-font-chd > * {
+  font-size: 10px; }

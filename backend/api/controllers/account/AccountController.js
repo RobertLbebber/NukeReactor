@@ -135,6 +135,31 @@ module.exports = {
       });
   },
 
+  getFeed: function(req, res) {
+    if (!req.cookies || !req.cookies.UID) {
+      res.status(410);
+      return res.send({ errorMessage: "Account Not Active" });
+    } else {
+      Subscription.find({ accountId: JSON.parse(req.cookies.UID) })
+        .populate("account")
+        .exec(function(err, result) {
+          if (_.isNil(result)) {
+            return res.sendStatus(404);
+          } else {
+            let listOfIds = _.map(result, item => item.id);
+            sails.log(listOfIds);
+            Messages.find({ accountId: listOfIds })
+              .populate("account")
+              .exec(function(err, result) {
+                if (_.isNil(result)) {
+                  return res.send(Account.getPublicData(result));
+                }
+              });
+          }
+        });
+    }
+  },
+
   saveUserData: function(req, res) {
     let body = req.body;
     PageTemplates.create({

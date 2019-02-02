@@ -1,0 +1,15 @@
+.Footer {
+  position: initial;
+  bottom: 0;
+  height: 65px;
+  z-index: 100; }
+  .Footer header {
+    width: calc(100% - 14vw); }
+    @media screen and (max-width: 1200px) {
+      .Footer header {
+        width: calc(100vw - 75px); } }
+  .Footer .Footer-nav {
+    background-color: #dadada;
+    bottom: 0;
+    position: fixed;
+    width: 100%; }

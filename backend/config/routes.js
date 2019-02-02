@@ -26,6 +26,7 @@ module.exports.routes = {
 
   //    ACCOUNTS CONTROLLER
   "GET /account/:id": { action: "account/Account/getAccount" },
+  "GET /feed/:id": { action: "account/Account/getFeed" },
   "POST /account/update/:accountID": { action: "account/Account/saveUserData" },
   "POST /account/addAccount": { action: "account/Account/addAccount" },
   "GET /account/getAll": { action: "account/Account/getAll" },

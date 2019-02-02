@@ -1,0 +1,29 @@
+// @import "../_standards.scss";
+
+.Sidebar {
+  max-width: 14vw;
+  width: 14vw;
+  border-right: 1px solid $brand-grey;
+  height: 100%;
+  position: fixed;
+  font-size: 14px;
+  @media screen and (max-width: 1200px) {
+    max-width: 75px;
+    span {
+      display: none;
+    }
+  }
+  .navbar-brand {
+    font-size: 55px;
+    padding-top: 30px;
+    font-family: serif;
+    color: $brand-secondary;
+  }
+  nav > a[role="button"]:last-child {
+    bottom: 10;
+    position: fixed;
+  }
+  * span {
+    font-size: 18px;
+  }
+}

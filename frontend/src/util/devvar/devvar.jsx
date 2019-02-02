@@ -7,7 +7,7 @@ var devvar = {
 };
 
 var Debug = {
-  enforceAccount: false
+  enforceAccount: true
 };
 
 module.exports = {

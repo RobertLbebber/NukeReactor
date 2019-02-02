@@ -1,3 +1,127 @@
-#root2 {
-  margin: 20;
-  background-color: blue; }
+.large-font {
+  font-size: 28px; }
+
+.regular-font {
+  font-size: 14px; }
+
+.gaint-font {
+  font-size: 56px; }
+
+.small-font {
+  font-size: 10px; }
+
+.large-font-chd > * {
+  font-size: 28px; }
+
+.regular-font-chd > * {
+  font-size: 14px; }
+
+.gaint-font-chd > * {
+  font-size: 56px; }
+
+.small-font-chd > * {
+  font-size: 10px; }
+
+.card-title {
+  margin-top: 0.75rem; }
+
+.LandingPage .shadow-e {
+  margin-left: 10px;
+  margin-top: 14vh; }
+
+.LandingPage .card {
+  position: absolute;
+  top: 35vh;
+  right: 5vw;
+  max-width: 30vw;
+  z-index: 1; }
+
+.LandingPage .card.adjustHeight {
+  top: 20vh; }
+
+.LandingPage .crowns .ECrown {
+  position: absolute; }
+
+div.center-container > div {
+  width: 250px !important;
+  height: 250px !important;
+  position: fixed;
+  left: 50%; }
+
+.Feed div {
+  margin: auto; }
+
+.Sidebar {
+  max-width: 14vw;
+  width: 14vw;
+  border-right: 1px solid #dadada;
+  height: 100%;
+  position: fixed;
+  font-size: 14px; }
+  @media screen and (max-width: 1200px) {
+    .Sidebar {
+      max-width: 75px; }
+      .Sidebar span {
+        display: none; } }
+  .Sidebar .navbar-brand {
+    font-size: 55px;
+    padding-top: 30px;
+    font-family: serif;
+    color: #53bea7; }
+  .Sidebar nav > a[role="button"]:last-child {
+    bottom: 10;
+    position: fixed; }
+  .Sidebar * span {
+    font-size: 18px; }
+
+.Footer {
+  position: initial;
+  bottom: 0;
+  height: 65px;
+  z-index: 100; }
+  .Footer header {
+    width: calc(100% - 14vw); }
+    @media screen and (max-width: 1200px) {
+      .Footer header {
+        width: calc(100vw - 75px); } }
+  .Footer .Footer-nav {
+    background-color: #dadada;
+    bottom: 0;
+    position: fixed;
+    width: 100%; }
+
+header.FooterBar {
+  background-color: #53bea7;
+  position: fixed; }
+  header.FooterBar button.post-btn {
+    position: absolute;
+    background-color: #be53a7;
+    z-index: 1;
+    top: -30;
+    left: 45%;
+    margin: 0 auto;
+    border-radius: 30px; }
+    header.FooterBar button.post-btn svg {
+      font-size: 55px; }
+
+.FeedCard > div:first-child {
+  margin-top: 0px; }
+
+.FeedCard > div {
+  margin-bottom: 5px;
+  margin-top: 5px;
+  max-width: 600px; }
+  .FeedCard > div * {
+    font-size: 20px; }
+  .FeedCard > div span > svg {
+    font-size: 28px; }
+  .FeedCard > div div.avatar {
+    margin-right: 10px; }
+
+.main-content {
+  margin-left: 14vw;
+  background-color: aliceblue;
+  margin-bottom: 15px; }
+  @media screen and (max-width: 1200px) {
+    .main-content {
+      margin-left: 75px; } }

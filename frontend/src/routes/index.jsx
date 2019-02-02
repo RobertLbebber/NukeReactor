@@ -6,7 +6,6 @@ import {
 } from "../components/Context/HeartbeatContext";
 import { Routes } from "./Routes.jsx";
 
-
 export class Index extends Component {
   constructor(props) {
     super(props);

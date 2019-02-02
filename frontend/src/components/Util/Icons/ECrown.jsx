@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Glyphicon } from "react-bootstrap";
+import { FaPoundSign, FaCrown } from "react-icons/fa";
 import PropTypes from "prop-types";
+// import Icon from "@material-ui/core/Icon";
 // import _ from "lodash";
 
 export class ECrown extends Component {
@@ -12,24 +13,19 @@ export class ECrown extends Component {
   }
 
   render() {
-    // let marginTop = !_.isNil(this.props.marginTop)
-    //   ? this.props.marginTop
-    //   : this.props.fontSize / 6 + this.props.fontUnit;
     return (
       <div className={this.state._tag}>
-        {/* style={{ marginTop: marginTop }} */}
-        <Glyphicon
-          glyph="tower"
+        <FaCrown
           style={{
+            position: "relative",
             fontSize: this.props.fontSize / 6 + this.props.fontUnit,
-            top: this.props.fontSize * -0.9333 + this.props.fontUnit,
-            right: this.props.fontSize / -1.8018 + this.props.fontUnit,
+            top: this.props.fontSize * -1 + this.props.fontUnit,
+            left: this.props.fontSize / 1.6 + this.props.fontUnit,
             transform: "scale(2, 1)",
             color: this.props.color
           }}
         />
-        <Glyphicon
-          glyph="gbp"
+        <FaPoundSign
           style={{
             fontSize: this.props.fontSize + this.props.fontUnit,
             color: this.props.color,
@@ -42,7 +38,6 @@ export class ECrown extends Component {
   static propTypes = {
     fontSize: PropTypes.number,
     fontUnit: PropTypes.string,
-    // marginTop: PropTypes.number,
     color: PropTypes.string
   };
 

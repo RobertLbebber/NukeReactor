@@ -2,25 +2,18 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import {
+  Alert,
   Button,
   Card,
   CardBody,
   CardTitle,
-  // CardText,
   CardSubtitle,
-  Col,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Row
-} from "reactstrap";
+  Form
+} from "react-bootstrap";
 import _ from "lodash";
 import ECrown from "../../Util/Icons/ECrown";
 
-
 import restful from "../../../util/io/restful";
-import { Alert } from "react-bootstrap";
 
 export class LandingPage extends Component {
   constructor(props) {
@@ -80,71 +73,58 @@ export class LandingPage extends Component {
   getLogin() {
     return (
       <Card className="shadow">
-        <CardTitle className="text-center" tag="h3">
+        <Card.Title className="text-center" tag="h3">
           Login
-        </CardTitle>
-        <CardBody>
+        </Card.Title>
+        <Card.Body>
           {!_.isNil(this.state.errorMessage) ? (
-            <Alert bsStyle="danger" onDismiss={this.handleDismiss}>
+            <Alert variant="danger" onDismiss={this.handleDismiss}>
               {this.state.errorMessage}
             </Alert>
           ) : null}
           <Form onSubmit={this.onFormSubmit}>
-            <Row form>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="Email" hidden>
-                    Email
-                  </Label>
-                  <Input
-                    type="email"
-                    name="emailAddress"
-                    id="Email"
-                    placeholder="Email"
-                    onChange={e =>
-                      this.addFormData(e.target.name, e.target.value)
-                    }
-                  />
-                </FormGroup>
-              </Col>
-              <Col>
-                <FormGroup>
-                  <Label for="Password" hidden>
-                    Password
-                  </Label>
-                  <Input
-                    type="password"
-                    name="password"
-                    id="Password"
-                    onChange={e =>
-                      this.addFormData(e.target.name, e.target.value)
-                    }
-                    placeholder="Password"
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-            <Label check>
-              Remember Me
-              <Input
-                type="checkbox"
-                name="rememberMe"
-                id="rememberMe"
-                style={{ marginTop: 3, marginLeft: 10 }}
+            <Form.Group>
+              <Form.Label htmlFor="Email" hidden>
+                Email
+              </Form.Label>
+              <Form.Control
+                type="email"
+                name="emailAddress"
+                id="Email"
+                placeholder="Email"
                 onChange={e => this.addFormData(e.target.name, e.target.value)}
               />
-            </Label>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label htmlFor="Password" hidden>
+                Password
+              </Form.Label>
+              <Form.Control
+                type="password"
+                name="password"
+                id="Password"
+                onChange={e => this.addFormData(e.target.name, e.target.value)}
+                placeholder="Password"
+              />
+            </Form.Group>
+            <Form.Group controlId="RememberMe">
+              <Form.Check
+                type="checkbox"
+                label="Remember Me"
+                onChange={e => this.addFormData(e.target.name, e.target.value)}
+              />
+            </Form.Group>
             <Button type="submit" color="success" className=" float-right ">
               Submit
             </Button>
           </Form>
-          <CardSubtitle>
+          <Card.Subtitle>
             Already have an account?
             <a href="" className="hyperlink d-b " onClick={this.toggleRegister}>
               click here
             </a>
-          </CardSubtitle>
-        </CardBody>
+          </Card.Subtitle>
+        </Card.Body>
       </Card>
     );
   }
@@ -156,97 +136,77 @@ export class LandingPage extends Component {
           "shadow" + (this.state.toggleRegister ? " adjustHeight" : "")
         }
       >
-        <CardTitle className="text-center" tag="h3">
+        <Card.Title className="text-center" tag="h3">
           Register
-        </CardTitle>
-        <CardBody>
+        </Card.Title>
+        <Card.Body>
           {!_.isNil(this.state.errorMessage) ? (
-            <Alert bsStyle="danger" onDismiss={this.handleDismiss}>
+            <Alert variant="danger" onDismiss={this.handleDismiss}>
               {this.state.errorMessage}
             </Alert>
           ) : null}
           <Form onSubmit={this.onFormSubmit}>
-            <Row form>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="fName">First Name</Label>
-                  <Input
-                    type="text"
-                    name="fName"
-                    id="fName"
-                    onChange={e =>
-                      this.addFormData(e.target.name, e.target.value)
-                    }
-                    placeholder="First Name"
-                  />
-                </FormGroup>
-              </Col>
-              <Col>
-                <FormGroup>
-                  <Label for="lName">Last Name</Label>
-                  <Input
-                    type="text"
-                    name="lName"
-                    onChange={e =>
-                      this.addFormData(e.target.name, e.target.value)
-                    }
-                    id="lName"
-                    placeholder="Last Name"
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-            <FormGroup>
-              <Label for="Email">Email</Label>
-              <Input
+            <Form.Group>
+              <Form.Label htmlFor="fName">First Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="fName"
+                id="fName"
+                onChange={e => this.addFormData(e.target.name, e.target.value)}
+                placeholder="First Name"
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label htmlFor="lName">Last Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="lName"
+                onChange={e => this.addFormData(e.target.name, e.target.value)}
+                id="lName"
+                placeholder="Last Name"
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label htmlFor="Email">Email</Form.Label>
+              <Form.Control
                 type="email"
                 name="emailAddress"
                 id="Email"
                 placeholder="Email"
                 onChange={e => this.addFormData(e.target.name, e.target.value)}
               />
-            </FormGroup>
-            <Row form>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="Password">Password</Label>
-                  <Input
-                    type="password"
-                    onChange={e =>
-                      this.addFormData(e.target.name, e.target.value)
-                    }
-                    name="password"
-                    id="Password"
-                    placeholder="Password"
-                  />
-                </FormGroup>
-              </Col>
-              <Col>
-                <FormGroup>
-                  <Label for="Confirmation">Confirm Password</Label>
-                  <Input
-                    type="password"
-                    onChange={e =>
-                      this.addFormData(e.target.name, e.target.value)
-                    }
-                    name="confirmation"
-                    id="confirmation"
-                    placeholder="Confirmation"
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label htmlFor="Password">Password</Form.Label>
+              <Form.Control
+                type="password"
+                onChange={e => this.addFormData(e.target.name, e.target.value)}
+                name="password"
+                id="Password"
+                placeholder="Password"
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label htmlFor="Confirmation">Confirm Password</Form.Label>
+              <Form.Control
+                type="password"
+                onChange={e => this.addFormData(e.target.name, e.target.value)}
+                name="confirmation"
+                id="confirmation"
+                placeholder="Confirmation"
+              />
+            </Form.Group>
             <Button type="submit" color="success" className=" float-right ">
               Submit
             </Button>
           </Form>
-          <CardSubtitle>
+          <Card.Subtitle>
             Already have an account?
             <a href="" className="hyperlink d-b " onClick={this.toggleRegister}>
               click here
             </a>
-          </CardSubtitle>
-        </CardBody>
+          </Card.Subtitle>
+        </Card.Body>
       </Card>
     );
   }
