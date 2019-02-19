@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 
-import {
-  HeartbeatContext,
-  HeartbeatProvider
-} from "../components/Context/HeartbeatContext";
+import { HeartbeatProvider } from "../components/Context/HeartbeatContext";
 import { Routes } from "./Routes.jsx";
+import { GlobalInputsProvider } from "../components/Context/GlobalInputsContext";
 
 export class Index extends Component {
   constructor(props) {
@@ -27,9 +25,11 @@ export class Index extends Component {
   render() {
     return (
       <div className={this.state._tag}>
-        <HeartbeatProvider>
-          <Routes />
-        </HeartbeatProvider>
+        <GlobalInputsProvider>
+          <HeartbeatProvider>
+            <Routes />
+          </HeartbeatProvider>
+        </GlobalInputsProvider>
       </div>
     );
   }

@@ -84,9 +84,9 @@ class FeedCard extends React.Component {
             action={
               <IconButton
                 onClick={e => {
-                  !_.isNil(this.props.menuButton)
-                    ? this.props.menuButton(e)
-                    : null;
+                  if (!_.isNil(this.props.menuButton)) {
+                    this.props.menuButton(e);
+                  }
                 }}
               >
                 <MoreVertIcon />
@@ -121,9 +121,9 @@ class FeedCard extends React.Component {
             <IconButton
               aria-label="Like"
               onClick={e => {
-                !_.isNil(this.props.likeButton)
-                  ? this.props.likeButton(e)
-                  : null;
+                if (!_.isNil(this.props.likeButton)) {
+                  this.props.likeButton(e);
+                }
               }}
             >
               <FavoriteIcon />
@@ -131,9 +131,9 @@ class FeedCard extends React.Component {
             <IconButton
               aria-label="Share"
               onClick={e => {
-                !_.isNil(this.props.shareButton)
-                  ? this.props.shareButton(e)
-                  : null;
+                if (!_.isNil(this.props.shareButton)) {
+                  this.props.shareButton(e);
+                }
               }}
             >
               <ShareIcon />

@@ -1,2 +1,17 @@
 .card-title {
   margin-top: 0.75rem; }
+
+.profile-icon-lg {
+  max-width: 75px;
+  max-height: 75px; }
+
+.profile-icon-md {
+  max-width: 50px;
+  max-height: 50px; }
+
+.profile-icon-sm {
+  max-width: 25px;
+  max-height: 25px; }
+
+.btn-toolbar > button {
+  margin-left: 5px; }

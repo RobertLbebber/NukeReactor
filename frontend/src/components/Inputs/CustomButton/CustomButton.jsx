@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button } from "reactstrap";
+import { Button } from "react-bootstrap";
 import cx from "classnames";
 import PropTypes from "prop-types";
 

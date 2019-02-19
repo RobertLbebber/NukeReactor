@@ -38,7 +38,7 @@ export class FooterBar extends Component {
     const { classes } = this.props;
     return (
       <AppBar
-        position="relative"
+        position="static"
         color="primary"
         className={this.state._tag + " " + classes.appBar}
       >
@@ -46,7 +46,21 @@ export class FooterBar extends Component {
           <IconButton color="inherit" aria-label="Open drawer">
             <MenuIcon />
           </IconButton>
-          <Button variant="contained" color="secondary" className="post-btn">
+          <Button
+            variant="contained"
+            className={
+              this.props.context.activePostEvent
+                ? "post-btn active"
+                : "post-btn"
+            }
+            onClick={() => {
+              if (this.props.context.activePostEvent) {
+                this.props.context.postEvent.deactivate();
+              } else {
+                this.props.context.postEvent.activate();
+              }
+            }}
+          >
             <Chat />
           </Button>
           <div>
@@ -64,7 +78,8 @@ export class FooterBar extends Component {
 }
 
 FooterBar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  context: PropTypes.object
 };
 
 export default withStyles(styles)(FooterBar);

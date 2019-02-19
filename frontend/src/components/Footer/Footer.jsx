@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import FooterBar from "../Sections/MaterialWrappers/FooterBar";
+import {
+  GlobalInputsConsumer,
+  GlobalInputsProvider
+} from "../Context/GlobalInputsContext";
 
 export class Footer extends Component {
   constructor(props) {
@@ -21,7 +25,9 @@ export class Footer extends Component {
   render() {
     return (
       <div className={this.state._tag}>
-        <FooterBar />
+        <GlobalInputsConsumer>
+          {input => <FooterBar context={input} />}
+        </GlobalInputsConsumer>
       </div>
     );
   }

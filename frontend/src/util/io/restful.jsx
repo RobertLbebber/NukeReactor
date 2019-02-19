@@ -2,6 +2,13 @@ import { devvar } from "../devvar/devvar";
 // import func from "../func/func";
 import _ from "lodash";
 
+/**
+ * This method is responsible for sending get requests to the server and returning a response
+ *
+ * @param {String} uri - Non-domain endpoint for the server
+ * @returns {object} @property status - status code from the server
+ *                   @property body - response information from the server
+ */
 export var get = uri => {
   return fetch(devvar.DOMAIN + uri, {
     credentials: "include"
@@ -17,6 +24,14 @@ export var get = uri => {
     });
 };
 
+/**
+ * This method is responsible for sending gest requests to the server and returning a response with a json object in URL
+ *
+ * @param {String} uri - Non-domain endpoint for the server
+ * @param {String} flatMap - shallow flattens json to a url
+ * @returns {object} @property status - status code from the server
+ *                   @property body - response information from the server
+ */
 export var getM = (uri, flatMap) => {
   let message = "?";
   for (let key in flatMap) {
@@ -40,31 +55,20 @@ export var getM = (uri, flatMap) => {
 };
 
 /**
+ * This method is responsible for sending post requests to the server and returning a response
  *
- * @param {*} uri
- * @param {*} message
- * @param {*} responseData true if expecting data rather than a status
+ * @param {String} uri - Non-domain endpoint for the server
+ * @param {String} message - Information to be sent to the server
+ * @returns {object} @property status - status code from the server
+ *                   @property body - response information from the server
  */
-export var post = (uri, message, responseData = true, safe = true) => {
-  let messageLength = _.isNil(message)
-    ? 0
-    : JSON.stringify(message).length.toString();
-  // var myHeaders = new Headers({
-  //   "Content-Type": "application/json",
-
-  //   "Content-Length": messageLength,
-  //   Origin: "*"
-  // });
-
+export var post = (uri, message) => {
   return fetch(devvar.DOMAIN + uri, {
     method: "POST",
-    // headers: myHeaders,
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json"
     },
-    // mode: "cors",
-    // cache: "default",
     credentials: "include",
     body: JSON.stringify(message)
   })

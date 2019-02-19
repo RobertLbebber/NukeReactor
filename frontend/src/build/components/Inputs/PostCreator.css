@@ -1,0 +1,23 @@
+.PostCreator .PostCreator-body form {
+  margin-bottom: 0px; }
+  .PostCreator .PostCreator-body form .post-form {
+    display: flex;
+    padding: 0px;
+    padding-top: 5px;
+    margin: 0px; }
+    .PostCreator .PostCreator-body form .post-form textarea {
+      resize: none;
+      border: none; }
+      .PostCreator .PostCreator-body form .post-form textarea:focus {
+        box-shadow: none; }
+  .PostCreator .PostCreator-body form .post-buttons {
+    margin: 1rem;
+    margin-bottom: 0px; }
+    .PostCreator .PostCreator-body form .post-buttons .btn-toolbar {
+      justify-content: center; }
+  .PostCreator .PostCreator-body form hr {
+    margin-top: 0px; }
+
+.PostCreator-modal .modal-body {
+  margin: 0px;
+  padding: 0px; }

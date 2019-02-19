@@ -3,6 +3,11 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 import { get } from "../../../util/io/restful";
 import FeedCard from "../../Sections/MaterialWrappers/FeedCard";
+import PostCreator from "../../Inputs/PostCreator";
+import {
+  GlobalInputsConsumer,
+  GlobalInputsProvider
+} from "../../Context/GlobalInputsContext";
 //import func from '/frontend/src/util/func/func'
 
 const sampleData = [
@@ -119,6 +124,10 @@ export class Feed extends Component {
     return null;
   }
 
+  handlePostButton() {
+    this.setState({ showPostCreator: false });
+  }
+
   render() {
     return (
       <div className={this.state._tag}>
@@ -127,6 +136,11 @@ export class Feed extends Component {
               <FeedCard content={feedElement.content} key={i} />
             ))
           : this.getEmptyFeed()}
+        <GlobalInputsConsumer>
+          {input => (
+            <PostCreator context={input} active={input.activePostEvent} />
+          )}
+        </GlobalInputsConsumer>
       </div>
     );
   }
