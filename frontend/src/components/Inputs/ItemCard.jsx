@@ -95,7 +95,7 @@ export class ItemCard extends Component {
 
   static propTypes = {
     type: PropTypes.oneOf(["image", "video", "link", "file", "element"]),
-    data: PropTypes.object,
+    data: PropTypes.object.isRequired,
     accessKey: PropTypes.number,
     width: PropTypes.number,
     height: PropTypes.number,
