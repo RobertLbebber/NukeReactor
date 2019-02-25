@@ -1,8 +1,25 @@
 {
   "name": "Electr",
-  "version": "1.2.0",
+  "version": "0.2.4 ",
   "private": true,
   "port": 1337,
+  "jest": {
+    "verbose": true,
+    "moduleFileExtensions": [
+      "js",
+      "t.jsx",
+      "jsx"
+    ],
+    "modulePaths": [
+      "**/*.{t.jsx,js,jsx}"
+    ],
+    "coverageDirectory": "src/coverage",
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/node_modules/**",
+      "!**/vendor/**"
+    ]
+  },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.3.3",
     "@babel/preset-env": "^7.3.1",
@@ -65,11 +82,12 @@
     "start": "npm-run-all -p watch-css start-js",
     "build": "npm run build-css && react-scripts build",
     "legacy-test": "react-scripts test --env=jsdom",
-    "test": "jest \"*.t.jsx\"",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
     "css-loader": "2.1.0",
+    "jest-config": "^24.1.0",
     "less": "^3.9.0",
     "npm-run-all": "^4.1.2",
     "selenium-webdriver": "^4.0.0-alpha.1"

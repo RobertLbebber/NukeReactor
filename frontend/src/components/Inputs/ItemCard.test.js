@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { expect } from "chai";
 import TestUtils from "react-dom/test-utils";
-import Footer from "./Footer";
+import ItemCard from "./ItemCard.jsx";
 
 let container;
 
@@ -15,11 +16,13 @@ afterEach(() => {
   container = null;
 });
 
+// mockComponent(componentClass, [mockTagName]);
+
 it("can render and update a Footer", () => {
   // Test first render and componentDidMount
   TestUtils.act(() => {
-    ReactDOM.render(<Footer />, container);
+    ReactDOM.render(<ItemCard data={{}} />, container);
   });
-  const component = container.querySelector(".Footer");
-  expect(component).toBe("div");
+  const itemCard = document.querySelector(".ItemCard");
+  expect(itemCard.tagName).to.equal("DIV");
 });

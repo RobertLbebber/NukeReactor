@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import FooterBar from "../Sections/MaterialWrappers/FooterBar";
-import {
-  GlobalInputsConsumer,
-  GlobalInputsProvider
-} from "../Context/GlobalInputsContext";
+import { GlobalInputsConsumer } from "../Context/GlobalInputsContext";
 
 export class Footer extends Component {
   constructor(props) {
