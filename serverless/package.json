@@ -1,0 +1,40 @@
+{
+  "name": "serverless",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build.js",
+  "scripts": {
+    "start": "babel-node --presets es2015 build.js && serverless deploy",
+    "deploy": "serverless deploy",
+    "build": "babel-node --presets es2015 build.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "graceful-fs": "^4.1.15",
+    "node-yaml": "^3.2.0",
+    "serverless-dynamodb-local": "^0.2.37",
+    "serverless-offline": "^3.8.3"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.437.0",
+    "lodash": "^4.17.11",
+    "npm": "^6.9.0",
+    "serverless-dynamodb-local": "^0.2.35",
+    "uuid": "^2.0.3"
+  },
+  "plugins": [
+    "transform-object-rest-spread"
+  ],
+  "presets": [
+    "env",
+    "stage-0",
+    "react"
+  ]
+}
