@@ -73,8 +73,8 @@ export class PageCreator extends Component {
       ],
       native
     };
+    this._tag = this.constructor.name;
     this.state = {
-      _tag: this.constructor.name,
       _isMounted: false,
       sendSave: false,
       isDirty: false,
@@ -84,7 +84,7 @@ export class PageCreator extends Component {
         plugins: plugins,
         // pass the content states
         editables: [
-          ...this.props.account,
+          ...this.props.page,
           // creates an empty state, basically like the line above
           createEmptyState()
         ]
@@ -135,17 +135,6 @@ export class PageCreator extends Component {
     });
   };
 
-  toggleEdit() {
-    if (!this.state.edit) {
-      this.state.editor.trigger.mode.edit();
-    } else {
-      this.state.editor.trigger.mode.preview();
-    }
-    this.setState({
-      edit: !this.state.edit
-    });
-  }
-
   updateAccount(state) {
     if (!this.state.isDirty) {
       this.setState(
@@ -169,51 +158,51 @@ export class PageCreator extends Component {
     }
   }
 
-  getEditButtons() {
-    let buttons = null;
-    if (!this.state.edit) {
-      buttons = (
-        <Button
-          color="primary"
-          onClick={() => {
-            this.toggleEdit();
-          }}
-        >
-          Edit Page
-        </Button>
-      );
-    } else {
-      buttons = (
-        <React.Fragment>
-          <Button
-            color="success"
-            onClick={() => {
-              this.sendUpdate();
-            }}
-            disabled={this.state.isDirty}
-          >
-            {this.state.isDirty ? "Loading..." : "Save Changes"}
-          </Button>
-          <Button
-            color="danger"
-            onClick={() => {
-              this.toggleEdit();
-            }}
-          >
-            Cancel
-          </Button>
-        </React.Fragment>
-      );
-    }
-    return buttons;
-  }
+  // getEditButtons() {
+  //   let buttons = null;
+  //   if (!this.props.edit) {
+  //     buttons = (
+  //       <Button
+  //         color="primary"
+  //         onClick={() => {
+  //           this.toggleEdit();
+  //         }}
+  //       >
+  //         Edit Page
+  //       </Button>
+  //     );
+  //   } else {
+  //     buttons = (
+  //       <React.Fragment>
+  //         <Button
+  //           color="success"
+  //           onClick={() => {
+  //             this.sendUpdate();
+  //           }}
+  //           disabled={this.state.isDirty}
+  //         >
+  //           {this.state.isDirty ? "Loading..." : "Save Changes"}
+  //         </Button>
+  //         <Button
+  //           color="danger"
+  //           onClick={() => {
+  //             this.toggleEdit();
+  //           }}
+  //         >
+  //           Cancel
+  //         </Button>
+  //       </React.Fragment>
+  //     );
+  //   }
+  //   return buttons;
+  // }
 
   render() {
-    let editButtons = this.getEditButtons();
-    let showFn = Component => (this.state.edit ? Component : null);
+    // let editButtons = this.getEditButtons();
+    let showFn = Component => (this.props.edit ? Component : null);
     return (
-      <div>
-        {editButtons}
+      <div className={this._tag}>
+        {/* {editButtons} */}
         <div className="container">
           <div className="editable editable-area" data-id="1">
             {this.state.elements.map(element => element)}
@@ -227,7 +216,7 @@ export class PageCreator extends Component {
   }
 
   static propTypes = {
-    account: PropTypes.array.isRequired,
+    page: PropTypes.object.isRequired,
     saveChanges: PropTypes.func.isRequired
   };
 

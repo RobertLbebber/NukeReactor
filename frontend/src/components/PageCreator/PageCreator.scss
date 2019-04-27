@@ -1,0 +1,17 @@
+.PageCreator {
+  .ory-toolbar-drawer > div {
+    width: 14vw;
+    li.ory-toolbar-item {
+      display: block;
+      //   position: fixed;
+      //   margin-top: -25px;
+      //   margin-left: 5em;
+      span.ory-toolbar-item-drag-handle-button {
+        position: absolute;
+        opacity: 0;
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+}

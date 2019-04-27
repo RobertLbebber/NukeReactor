@@ -17,12 +17,12 @@ export class ECrown extends Component {
       <div className={this.state._tag}>
         <FaCrown
           style={{
-            position: "relative",
-            fontSize: this.props.fontSize / 6 + this.props.fontUnit,
-            top: this.props.fontSize * -1 + this.props.fontUnit,
-            left: this.props.fontSize / 1.6 + this.props.fontUnit,
+            position: "fixed",
+            fontSize: this.props.fontSize * 0.2 + this.props.fontUnit,
             transform: "scale(2, 1)",
-            color: this.props.color
+            color: this.props.color,
+            marginLeft: "2em",
+            marginTop: "-1em"
           }}
         />
         <FaPoundSign

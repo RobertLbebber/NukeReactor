@@ -91,8 +91,7 @@ div.center-container > div {
 
 .Footer {
   position: initial;
-  bottom: 0;
-  height: 65px;
+  height: 75px;
   z-index: 100; }
   .Footer header {
     width: calc(100% - 14vw); }
@@ -107,21 +106,24 @@ div.center-container > div {
 
 header.FooterBar {
   background-color: #4db6ac;
-  position: fixed; }
-  header.FooterBar button.post-btn {
-    position: absolute;
-    background-color: #78909c;
-    color: #ffffff;
-    z-index: 1;
-    top: -30;
-    left: 45%;
-    margin: 0 auto;
-    border-radius: 30px; }
-    header.FooterBar button.post-btn svg {
-      font-size: 55px; }
-    header.FooterBar button.post-btn.active {
-      background-color: #ffffff;
-      color: #78909c; }
+  bottom: inherit;
+  position: fixed;
+  height: 45px; }
+  header.FooterBar div {
+    min-height: 50px; }
+    header.FooterBar div button.special-btn {
+      margin-left: 5px;
+      margin-right: 5px;
+      margin-top: 35px;
+      background-color: #78909c;
+      color: #ffffff;
+      z-index: 1;
+      border-radius: 30px; }
+      header.FooterBar div button.special-btn svg {
+        font-size: 55px; }
+      header.FooterBar div button.special-btn.active {
+        background-color: #ffffff;
+        color: #78909c; }
 
 .FeedCard > div:first-child {
   margin-top: 0px; }
@@ -199,6 +201,16 @@ header.FooterBar {
   margin-left: 5px; }
   .ItemBar .ItemCard {
     margin-right: 5px; }
+
+.PageCreator .ory-toolbar-drawer > div {
+  width: 14vw; }
+  .PageCreator .ory-toolbar-drawer > div li.ory-toolbar-item {
+    display: block; }
+    .PageCreator .ory-toolbar-drawer > div li.ory-toolbar-item span.ory-toolbar-item-drag-handle-button {
+      position: absolute;
+      opacity: 0;
+      width: 40px;
+      height: 40px; }
 
 .main-content {
   margin-left: 14vw;

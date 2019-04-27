@@ -1,0 +1,9 @@
+.PageCreator .ory-toolbar-drawer > div {
+  width: 14vw; }
+  .PageCreator .ory-toolbar-drawer > div li.ory-toolbar-item {
+    display: block; }
+    .PageCreator .ory-toolbar-drawer > div li.ory-toolbar-item span.ory-toolbar-item-drag-handle-button {
+      position: absolute;
+      opacity: 0;
+      width: 40px;
+      height: 40px; }

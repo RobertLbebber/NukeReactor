@@ -9,6 +9,7 @@ import { AttachFile, InsertPhoto, Link, Videocam } from "@material-ui/icons/";
 import avatar from "../../assets/img/avatar.png";
 import FileUploader from "./FileUploader";
 import ItemBar from "./ItemBar";
+import * as Keys from "../../util/io/KeyCode.json";
 import { findKey, pop } from "../../util/func/jsonUtil";
 
 export class PostCreator extends Component {
@@ -25,6 +26,7 @@ export class PostCreator extends Component {
     };
     this._tag = this.constructor.name;
     this._isMount = false;
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleHideModal = this.handleHideModal.bind(this);
     this.handleAttachments = this.handleAttachments.bind(this);
     this.handleDeleteItemCard = this.handleDeleteItemCard.bind(this);
@@ -57,12 +59,16 @@ export class PostCreator extends Component {
   }
 
   onKeyPress = e => {
-    switchBox(e.keyCode, {
+    switch (e.keyCode) {
       /** Enter */
-      13: this.handleSubmit(),
+      case Keys.backspace:
+        this.handleSubmit();
+        break;
       /** Escape */
-      27: this.handleHideModal()
-    });
+      case Keys.escape:
+        this.handleHideModal();
+        break;
+    }
   };
 
   handleDeleteItemCard(e, type, index) {
@@ -133,30 +139,23 @@ export class PostCreator extends Component {
       { list: this.state.form.attachments.link, name: "link" }
     ];
     return (
-      <div
-        className={this._tag + " " + this._tag + "-body"}
-        onKeyPress={this.onKeyPress}
-      >
+      <div className={this._tag + " " + this._tag + "-body"} onKeyPress={this.onKeyPress}>
         <Form>
-          <Form.Group
-            controlId="exampleForm.ControlTextarea1"
-            className="post-form"
-          >
+          <Form.Group controlId="exampleForm.ControlTextarea1" className="post-form">
             <Image src={avatar} className="profile-icon-lg" roundedCircle />
             <Form.Control
               as="textarea"
               rows="3"
               placeholder="Have something to say?"
+              onChange={e => {
+                this.setState({ form: { ...this.state.form, mainMessage: e.currentTarget.value } });
+              }}
             />
           </Form.Group>
           <hr />
           <ButtonToolbar className="post-buttons">
             {_.map(uploaders, (uploader, i) => (
-              <Form.Group
-                key={i}
-                controlId={"post_buttons_" + i}
-                className="post-button"
-              >
+              <Form.Group key={i} controlId={"post_buttons_" + i} className="post-button">
                 <Form.Label>
                   <div className="btn btn-link">
                     <uploader.component />

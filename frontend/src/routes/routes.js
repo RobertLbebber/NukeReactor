@@ -1,16 +1,12 @@
 import React, { Component } from "react";
-import {
-  ViewDay,
-  AccountCircle,
-  Home as HomeIcon,
-  HighlightOff
-} from "@material-ui/icons";
+import { ViewDay, AccountCircle, Home as HomeIcon, HighlightOff, Code } from "@material-ui/icons";
 
 import { HeartbeatContext } from "../components/Context/HeartbeatContext";
 import Feed from "../components/Pages/Feed/Feed";
 import Account from "../components/Pages/Account/Account";
 import Home from "../components/Pages/Index/Home";
 import LogOut from "../components/Pages/Public/LogOut";
+import LandingPage from "../components/Pages/Public/LandingPage";
 
 export default Object.freeze([
   {
@@ -37,6 +33,14 @@ export default Object.freeze([
     dynamic: false,
     exact: true,
     iconComponent: <ViewDay />
+  },
+  {
+    path: "/landing-page",
+    name: "Landing Page",
+    component: LandingPage,
+    dynamic: false,
+    exact: true,
+    iconComponent: <Code />
   },
   {
     path: "/logout",

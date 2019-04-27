@@ -1,22 +1,18 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-
 import restful from "../../../util/io/restful";
 import PageCreator from "../../PageCreator/PageCreator";
 import Loading from "../../Util/Loading";
-
-
-//import func from '/frontend/src/util/func/func'
+import { GlobalInputsConsumer } from "../../Context/GlobalInputsContext";
 
 export class Account extends Component {
   constructor(props) {
     super(props);
-    // var id = func.generateSerial(9, 36);
     this.state = {
       _tag: this.constructor.name,
-      account: null
-      //   _id: id
+      account: { ...this.props.body },
+      subscribed: false
     };
     this.saveChanges = this.saveChanges.bind(this);
     this._isMount = false;
@@ -25,11 +21,11 @@ export class Account extends Component {
   componentDidMount() {
     this._isMount = true;
     restful
-      .get(`account/${this.props.id}`, false)
+      .get(`account/${this.state.account.id}`, false)
       .then(object => {
         if (this._isMount) {
           this.setState({
-            account: object.body
+            page: object.body
           });
         }
       })
@@ -45,12 +41,12 @@ export class Account extends Component {
   saveChanges(newAccount) {
     this.setState({ account: newAccount });
     restful
-      .post(`account/update/${this.props.id}`, newAccount)
+      .post(`account/update/${this.state.account.id}`, newAccount)
       .then(object => {
         if (this._isMount) {
           console.log(object);
           this.setState({
-            account: object
+            page: object
           });
         }
       })
@@ -59,16 +55,32 @@ export class Account extends Component {
       });
   }
 
+  subscribeEvents(globalInput) {
+    if (!this.state.subscribed) {
+      globalInput.subscribeTo(this.saveChanges, ["accountEditor", "save"]);
+      this.setState({ subscribed: true });
+    }
+  }
+
   render() {
     return (
       <div className={this.state._tag}>
-        <Loading className="center-container" />
         {!_.isNil(this.state.account) ? (
-          <PageCreator
-            account={this.state.account}
-            saveChanges={this.saveChanges}
-          />
-        ) : null}
+          <GlobalInputsConsumer>
+            {globalInput => {
+              this.subscribeEvents(globalInput);
+              return (
+                <PageCreator
+                  page={this.state.page.jsx}
+                  saveChanges={globalInput.accountEditor.save}
+                  edit={globalInput.activeAccountEditor}
+                />
+              );
+            }}
+          </GlobalInputsConsumer>
+        ) : (
+          <Loading className="center-container" />
+        )}
       </div>
     );
   }
@@ -78,7 +90,8 @@ export class Account extends Component {
     history: PropTypes.object,
     locaton: PropTypes.object,
     match: PropTypes.object,
-    staticContext: PropTypes.object
+    staticContext: PropTypes.object,
+    body: PropTypes.object
 
     //
   };

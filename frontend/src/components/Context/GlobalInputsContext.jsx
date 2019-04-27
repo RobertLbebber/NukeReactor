@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-//import PropTypes from 'prop-types';
-//import func from '/frontend/src/util/func/func'
+import _ from "lodash";
 
 const GlobalInputsContext = React.createContext();
 
@@ -9,14 +8,22 @@ export class GlobalInputsProvider extends Component {
     super(props);
     this.deactivatePostEvent = this.deactivatePostEvent.bind(this);
     this.activatePostEvent = this.activatePostEvent.bind(this);
-    //var id=func.generateSerial(9,36);
+    this.subscribeTo = this.subscribeTo.bind(this);
     this.state = {
       _tag: this.constructor.name,
+      subscribeTo: this.subscribeTo,
+      //Items
+      activePostEvent: false,
       postEvent: {
         activate: this.activatePostEvent,
         deactivate: this.deactivatePostEvent
       },
-      activePostEvent: false
+      activeAccountEditor: false,
+      accountEditor: {
+        activate: this.activateAccountEditor,
+        deactivate: this.deactivateAccountEditor,
+        save: null
+      }
     };
     this._isMount = false;
   }
@@ -29,6 +36,18 @@ export class GlobalInputsProvider extends Component {
     this.setState({ activePostEvent: false });
   };
 
+  activateAccountEditor = () => {
+    this.setState({ activeAccountEditor: true });
+  };
+
+  deactivateAccountEditor = () => {
+    this.setState({ activeAccountEditor: false });
+  };
+
+  subscribeTo(fn, path) {
+    this.setState(_.set(this.state, path, fn));
+  }
+
   componentDidMount() {
     this._isMount = true;
   }
@@ -39,9 +58,7 @@ export class GlobalInputsProvider extends Component {
 
   render() {
     return (
-      <GlobalInputsContext.Provider value={this.state}>
-        {this.props.children}
-      </GlobalInputsContext.Provider>
+      <GlobalInputsContext.Provider value={this.state}>{this.props.children}</GlobalInputsContext.Provider>
     );
   }
 

@@ -1,12 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Redirect
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
 import Sidebar from "../components/Sidebar/Sidebar";
 import Footer from "../components/Footer/Footer";
@@ -47,11 +42,7 @@ export class Routes extends Component {
               ) : (
                 <React.Fragment>
                   <div>
-                    <Sidebar
-                      displayType={"standard"}
-                      routes={indexRoutes}
-                      account={heart.account}
-                    />
+                    <Sidebar displayType={"standard"} routes={indexRoutes} account={heart.account} />
                     <div className={"main-content"}>
                       <Switch>
                         {indexRoutes.map(indexRoute => (
@@ -61,11 +52,8 @@ export class Routes extends Component {
                             path={indexRoute.path}
                             render={props => (
                               <React.Fragment>
-                                <indexRoute.component
-                                  {...props}
-                                  {...heart.account}
-                                />
-                                <Footer />
+                                <Footer componentName={indexRoute.name} />
+                                <indexRoute.component {...props} {...heart.account} />
                               </React.Fragment>
                             )}
                           />

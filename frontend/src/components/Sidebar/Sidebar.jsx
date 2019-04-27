@@ -13,6 +13,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import _ from "lodash";
 
 import { Link } from "react-router-dom";
+import ECrown from "../Util/Icons/ECrown";
 
 const styles = () => ({ root: {} });
 
@@ -29,23 +30,31 @@ export class Sidebar extends Component {
       //_id: id
     };
     this._isMount = false;
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
 
   componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener("resize", this.updateWindowDimensions);
     this._isMount = true;
   }
 
   componentWillUnmount() {
+    window.removeEventListener("resize", this.updateWindowDimensions);
     this._isMount = false;
+  }
+
+  updateWindowDimensions() {
+    this.setState({ showThinBar: window.innerWidth <= 1200 });
   }
 
   render() {
     let account = this.props.account;
     return (
       <div className={this.props.classes.root + " " + this.state._tag}>
-        <Navbar color="light" light expand="md">
+        <Navbar color="light" light expand="md" style={{ paddingLeft: "10px" }}>
           <NavbarBrand href="/" className="brand-name">
-            Electr
+            {this.state.showThinBar ? <ECrown fontSize={55} /> : "Electr"}
           </NavbarBrand>
         </Navbar>
         <List component="nav">
@@ -54,11 +63,7 @@ export class Sidebar extends Component {
               key={route.name}
               button
               component={Link}
-              to={
-                route.dynamic && !_.isNil(account)
-                  ? route.path + account.id
-                  : route.path
-              }
+              to={route.dynamic && !_.isNil(account) ? route.path + account.id : route.path}
             >
               <ListItemIcon>{route.iconComponent}</ListItemIcon>
               <ListItemText primary={route.name} />
