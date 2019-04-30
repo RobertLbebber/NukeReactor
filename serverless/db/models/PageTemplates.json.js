@@ -4,10 +4,24 @@
  * @description :: A model definition.  Represents a database table/collection/etc.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
-import Attributes from "./common/Attributes";
+import Attributes, { type } from "./common/Attributes";
+import Account from "./Account.json";
 import env from "../../config/env";
 
-export default {
+export const Model = {
+  primaryKey: "id",
+  props: {
+    ...Attributes.createdDate,
+    ...Attributes.updatedDate,
+    serial: { ...type.STRING },
+    designName: { ...type.STRING },
+    designCategory: { ...type.STRING },
+    pageLayout: { ...type.STRING },
+    accountId: { ...type.REF(Account) }
+  }
+};
+
+export const Table = {
   // updateOrCreate: function(criteria, values) {
   //   var self = this; // reference for use by callbacks
   //   // If no values were specified, use criteria
@@ -61,31 +75,6 @@ export default {
         AttributeName: "id",
         AttributeType: "S"
       }
-      // Attributes.createdDate,
-      // Attributes.updatedDate,
-      // {
-      //   AttributeName: "serial",
-      //   AttributeType: "S"
-      // },
-      // {
-      //   AttributeName: "designName",
-      //   AttributeType: "S"
-      // },
-      // {
-      //   AttributeName: "designCategory",
-      //   AttributeType: "S"
-      // },
-      // {
-      //   AttributeName: "pageLayout",
-      //   AttributeType: "S"
-      // },
-      // //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
-      // //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
-      // //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
-      // {
-      //   AttributeName: "accountId",
-      //   AttributeType: "account"
-      // }
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 1,
@@ -97,3 +86,4 @@ export default {
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
   }
 };
+export default Model;

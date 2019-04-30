@@ -5,19 +5,24 @@
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
 import env from "../../config/env";
-import Attributes, { type } from "./common/Attributes";
+import Attributes, { type, required, unique } from "./common/Attributes";
 
 export const Model = {
   primaryKey: "id",
   props: {
     ...Attributes.createdDate,
     ...Attributes.updatedDate,
-    serial: { ...type.STRING },
-    cardNumber: { ...type.NUMBER },
-    expMonth: { ...type.NUMBER },
-    expYear: { ...type.NUMBER },
-    cvv: { ...type.NUMBER },
-    accountId: { ...type.STRING }
+    ...Attributes.id,
+    email: { ...type.STRING, ...required, ...unique },
+    password: { ...type.STRING, ...required },
+    firstName: { ...type.STRING, ...required },
+    middleName: { ...type.STRING, ...required },
+    lastName: { ...type.STRING, ...required },
+
+    profile_img: { ...type.STRING },
+    pageContent: { collection: "pageTemplates", via: "accountId" },
+    messages: { collection: "messages", via: "accountId" },
+    creditCard: { collection: "creditCards", via: "accountId" }
   }
 };
 
@@ -44,3 +49,4 @@ export const Table = {
     }
   }
 };
+export default Model;

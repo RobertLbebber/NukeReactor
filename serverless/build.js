@@ -13,7 +13,6 @@ let full = {
   ...provider,
   ...db
 };
-// console.log(JSON.stringify(full));
 
 const target = "serverless.yml";
 const verbose = false;
@@ -44,15 +43,6 @@ async function runner() {
       resolve();
     })
   );
-
-  // //Adding Custom Section
-  // await appender(custom, "custom");
-  // //Adding Provider Section
-  // await appender(provider, "provider");
-  // //Adding Routes Section Section"
-  // await appender(routes, "routes");
-  // //Adding Database Structure Section
-  // await appender(db, "db");
 
   if (verbose) {
     console.log("The file has been completed!");

@@ -7,7 +7,12 @@
 import Attributes from "./common/Attributes";
 import env from "../../config/env";
 
-export default {
+export const Model= {
+  ...Attributes.id,
+  ...Attributes.createdDate,
+  ...Attributes.updatedDate,
+}
+export const Table= {
   Type: env.mainDB,
   DeletionPolicy: "Retain",
   Properties: {
@@ -16,12 +21,7 @@ export default {
         AttributeName: "id",
         AttributeType: "S"
       }
-      // Attributes.createdDate,
-      // Attributes.updatedDate,
-      // {
-      //   AttributeName: "other",
-      //   AttributeType: "S"
-      // }
+      /
     ],
     KeySchema: [
       {
@@ -36,3 +36,4 @@ export default {
     TableName: env.tableName("TodoTable")
   }
 };
+export default Model;

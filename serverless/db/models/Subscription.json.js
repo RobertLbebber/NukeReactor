@@ -4,10 +4,22 @@
  * @description :: A model definition represents a database table/collection.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
-import Attributes from "./common/Attributes";
+import Attributes, {type} from "./common/Attributes";
 import env from "../../config/env";
+import Account from "./Account.json";
 
-export default {
+export const Model = {
+  primaryKey:"id",
+  props: {
+    ...Attributes.id,
+    ...Attributes.createdDate,
+    ...Attributes.updatedDate,
+    serial: {type.STRING},
+    accountId: {type.REF(Account)},
+    subscribeTo: {type.REF(Account)}
+  }
+};
+export const Table = {
   Type: env.mainDB,
   DeletionPolicy: "Retain",
   Properties: {
@@ -19,26 +31,11 @@ export default {
         KeyType: "HASH"
       }
     ],
-    //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
-    //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
-    //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
     AttributeDefinitions: [
       {
         AttributeName: "id",
         AttributeType: "S"
       }
-      // Attributes.createdDate,
-      // Attributes.updatedDate,
-      // {
-      //   AttributeName: "serial",
-      //   AttributeType: "S"
-      // },
-
-      // //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
-      // //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
-      // //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
-      // { AttributeName: "accountId", AttributeType: "account" },
-      // { AttributeName: "subscribeTo", AttributeType: "account" }
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 1,
@@ -46,3 +43,5 @@ export default {
     }
   }
 };
+
+export default Model;

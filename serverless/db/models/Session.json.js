@@ -7,7 +7,13 @@
 import Attributes from "./common/Attributes";
 import env from "../../config/env";
 
-export default {
+export const Model = {
+  primaryKey: "id",
+  ...Attributes.id,
+  ...Attributes.createdDate,
+  ...Attributes.updatedDate
+};
+export const Table = {
   Type: env.mainDB,
   DeletionPolicy: "Retain",
   Properties: {
@@ -23,12 +29,6 @@ export default {
         AttributeName: "id",
         AttributeType: "S"
       }
-      // Attributes.createdDate,
-      // Attributes.updatedDate,
-      // {
-      //   AttributeName: "other",
-      //   KeyType: "HASH"
-      // }
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 1,
@@ -36,3 +36,4 @@ export default {
     }
   }
 };
+export default Model;

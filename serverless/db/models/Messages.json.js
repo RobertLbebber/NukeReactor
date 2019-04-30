@@ -6,8 +6,23 @@
  */
 import Attributes from "./common/Attributes";
 import env from "../../config/env";
+import Account from "./Account.json";
 
-export default {
+export const Model = {
+  primaryKey: "id",
+  props: {
+    ...Attributes.id,
+    ...Attributes.createdDate,
+    ...Attributes.updatedDate,
+    mainMessage: { ...type.STRING },
+    extraMessage: { ...type.STRING },
+    likes: { ...type.NUMBER },
+    shares: { ...type.NUMBER },
+    accountId: { ...type.REF(Account) }
+  }
+};
+
+export const Table = {
   // /**
   //  * Increment or Decrement the an action of the message
   //  * @param {Boolean} incDec -
@@ -32,32 +47,6 @@ export default {
         AttributeName: "id",
         AttributeType: "S"
       }
-      // Attributes.createdDate,
-      // Attributes.updatedDate,
-      // {
-      //   AttributeName: "other",
-      //   KeyType: "HASH"
-      // },
-      // {
-      //   AttributeName: "mainMessage",
-      //   AttributeType: "S"
-      // },
-      // {
-      //   AttributeName: "extraMessage",
-      //   AttributeType: "S"
-      // },
-      // {
-      //   AttributeName: "likes",
-      //   AttributeType: "N"
-      // },
-      // {
-      //   AttributeName: "shares",
-      //   AttributeType: "N"
-      // },
-      // {
-      //   AttributeName: "accountId",
-      //   AttributeType: "account"
-      // }
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 1,
@@ -65,3 +54,4 @@ export default {
     }
   }
 };
+export default Model;
