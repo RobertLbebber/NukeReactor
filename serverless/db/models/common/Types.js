@@ -5,23 +5,23 @@ export class Ref {
    * @param {String} connection - prop being used for connecting the models
    */
   constructor(foreigner, connection) {
-    let model = foreigner;
-    let prop = connection;
-    if (_.isNil(prop)) {
-      prop = foreigner.primaryKey;
+    this.model = foreigner;
+    this.prop = connection;
+    if (_.isNil(this.prop)) {
+      this.prop = foreigner.primaryKey;
     }
-    if (_.isNil(model)) {
+    if (_.isNil(this.model)) {
       throw new Error("No foriegn Model provided for Reference");
     }
   }
 
   async validator(refId) {
-    if (_.isNil(model)) {
+    if (_.isNil(this.model)) {
       throw new Error("No foriegn Model provided for Reference");
     } else if (_.isNil(refId)) {
       throw new Error("Foreign Model lacks identification for Reference");
     }
-    let result = await model.get({ [prop]: refId });
+    let result = await this.model.get({ [this.prop]: refId });
     return result;
   }
 }
