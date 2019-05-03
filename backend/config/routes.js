@@ -23,11 +23,12 @@ module.exports.routes = {
   //    PAGE BUILDER CONTROLLER
   "GET /createDefaultTemplate": { action: "PageBuilder/createDefaultTemplate" },
   "GET /getDefaultTemplate": { action: "PageBuilder/getDefaultTemplate" },
+  "POST /createPost": { action: "feed/Feed/savePost" },
 
   //    ACCOUNTS CONTROLLER
-  "GET /account/:id": { action: "account/Account/getAccount" },
+  "GET /account/:id": { action: "account/Account/getAccountPage" },
+  "POST /account/update/:accountID": { action: "account/Account/setAccountPage" },
   "GET /feed/:id": { action: "account/Account/getFeed" },
-  "POST /account/update/:accountID": { action: "account/Account/saveUserData" },
   "POST /account/addAccount": { action: "account/Account/addAccount" },
   "GET /account/getAll": { action: "account/Account/getAll" },
 

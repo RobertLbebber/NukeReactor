@@ -7,15 +7,6 @@
 
 let content = require("../../assets/sampleData/content.js");
 
-var inputs = {
-  sample: {
-    description:
-      "This will act as an example for Restful Connections to show that the connections are made and can product further testing",
-    raw: "Its Somthing"
-  },
-  item: "things"
-};
-
 module.exports = {
   createDefaultTemplate: function(req, res) {
     PageTemplates.create(
@@ -45,10 +36,7 @@ module.exports = {
   },
 
   getDefaultTemplate: function(req, res) {
-    PageTemplates.findOne({ designName: "Default" }).then(function(
-      err,
-      result
-    ) {
+    PageTemplates.findOne({ designName: "Default" }).then(function(err, result) {
       if (err) {
         return res.serverError(err);
       } else if (!result) {

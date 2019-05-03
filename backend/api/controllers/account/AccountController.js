@@ -114,7 +114,15 @@ module.exports = {
     }
   },
 
-  getAccount: function(req, res) {
+  /**
+   *
+   * @param {*} req
+   * @param {*} res
+   * @returns @typedef {AccountPage}
+   *  @property {JSON} - jsx representation of the account's page
+   *  @property {HTML} - HTML representation of the account's page
+   */
+  getAccountPage: function(req, res) {
     Account.findOne({ id: req.param("id") })
       .populate("pageContent")
       .exec(function(err, result) {
@@ -125,7 +133,7 @@ module.exports = {
           });
         } else {
           if (!_.isNil(result.pageContent[0])) {
-            res.json(result.pageContent[0].pageLayout);
+            res.json({ jsx: result.pageContent[0].pageLayout, html: null });
           } else {
             res.sendStatus(404, {
               errorMessage: "Account Data Not Found"
@@ -133,6 +141,20 @@ module.exports = {
           }
         }
       });
+  },
+
+  setAccountPage: function(req, res) {
+    let body = req.body;
+    PageTemplates.create({
+      // Account.create({
+      designName: "Blank",
+      designCategory: "Basic",
+      pageLayout: body
+    }).exec(function(err, newOrExistingRecord) {
+      return res.ok({
+        message: "Element was Affected"
+      });
+    });
   },
 
   getFeed: function(req, res) {
@@ -158,20 +180,6 @@ module.exports = {
           }
         });
     }
-  },
-
-  saveUserData: function(req, res) {
-    let body = req.body;
-    PageTemplates.create({
-      // Account.create({
-      designName: "Blank",
-      designCategory: "Basic",
-      pageLayout: body
-    }).exec(function(err, newOrExistingRecord) {
-      return res.ok({
-        message: "Element was Affected"
-      });
-    });
   },
 
   /**
@@ -244,10 +252,11 @@ module.exports = {
    * @Debug
    */
   runQuery: function(req, res) {
-    Account.find({ ...req.body.json }).exec((err, result) => {
-      console.log(err, result);
-      res.status(200);
-      res.json({ message: "look At the Server logs" });
-    });
+    console.log(...req.body.json);
+    // Account.find({ ...req.body.json }).exec((err, result) => {
+    //   console.log(err, result);
+    //   res.status(200);
+    //   res.json({ message: "look At the Server logs" });
+    // });
   }
 };

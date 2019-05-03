@@ -1,3 +1,5 @@
+const DEVSERVER = true;
+//DEVSERVER ? "http://localhost:1338/" :
 var devvar = {
   DOMAIN: "http://localhost:1337/",
   LOCAL: "http://localhost:3000/",
@@ -7,7 +9,7 @@ var devvar = {
 };
 
 var Debug = {
-  enforceAccount: false
+  enforceAccount: true
 };
 
 module.exports = {

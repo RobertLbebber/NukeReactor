@@ -6,23 +6,43 @@
  */
 
 let content = require("../../assets/sampleData/content.js");
+const globals = require("../../config/globals").globals;
 
 module.exports = {
+  updateOrCreate: function(criteria, values) {
+    var self = this; // reference for use by callbacks
+    // If no values were specified, use criteria
+    if (!values) values = criteria.where ? criteria.where : criteria;
+
+    return this.findOne(criteria).then(async function(result) {
+      if (result) {
+        let response = await self.update(criteria, values).fetch();
+        return {
+          wasCreated: false,
+          response: response
+        };
+      } else {
+        let response = await self.create(values).fetch();
+        return { wasCreated: true, response: response };
+      }
+    });
+  },
+
   createDefaultTemplate: async function(accountId) {
+    if (globals.dev.dev_mode) {
+      sails.log("Dropping Default Template For Replacement");
+    }
+    await this.destroy({ designName: "Default" });
     await this.create({
       designName: "Default",
       designCategory: "Basic",
       pageLayout: content,
       accountId: accountId ? accountId : null
-    }).tolerate("E_UNIQUE", () => {
-      sails.log(
-        "There was a Duplicate Default Page Template Error that we ignore"
-      );
     });
   },
 
   getDefaultTemplate: async function() {
-    return await this.findOne({ designName: "Default" });
+    return await this.find({ designName: "Default" }).limit(1);
   },
 
   attributes: {

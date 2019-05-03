@@ -51,6 +51,12 @@ module.exports.globals = {
   dev: {
     react_server: "localhost:1337",
     sails_server: "localhost:3000",
-    dev_mode: true
+    dev_mode: true,
+    defaultAccount: {
+      email: "bebber@electr.net",
+      firstName: "Robert",
+      lastName: "Bebber",
+      password: "q"
+    }
   }
 };

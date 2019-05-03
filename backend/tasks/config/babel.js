@@ -10,23 +10,23 @@
  *
  */
 module.exports = function(grunt) {
-
-  grunt.config.set('babel', {
+  grunt.config.set("babel", {
     dist: {
       options: {
-        presets: [require('sails-hook-grunt/accessible/babel-preset-env')]
+        presets: [require("sails-hook-grunt/accessible/babel-preset-env")]
       },
       files: [
         {
           expand: true,
-          cwd: '.tmp/public',
-          src: ['js/**/*.js'],
-          dest: '.tmp/public'
+          cwd: ".tmp/public",
+          src: ["js/**/*.js"],
+          dest: ".tmp/public"
         }
       ]
     }
   });
 
+  grunt.loadNpmTasks("grunt-babel");
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // This Grunt plugin is part of the default asset pipeline in Sails,
   // so it's already been automatically loaded for you at this point.
@@ -50,5 +50,4 @@ module.exports = function(grunt) {
   // grunt.loadNpmTasks('grunt-babel');
   // ```
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 };
