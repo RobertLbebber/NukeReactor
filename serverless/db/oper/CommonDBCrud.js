@@ -1,5 +1,6 @@
 import _ from "lodash";
-const dynamodb = require("./dynamodb");
+import AWS from "aws-sdk";
+let dynamodb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
 
 const checkProps = item => {
   if (_.isNil(item)) {
@@ -71,16 +72,16 @@ export const query = tableName => (item, dynoExpression) => {
     TableName: tableName,
     Key: {
       id: event.pathParameters.id
-    }
+    },
     ...dynoExpression
   };
 
   let documentClient = new AWS.DynamoDB.DocumentClient();
 
-documentClient.get(params, function(err, data) {
-  if (err) console.log(err);
-  else console.log(data);
-});
+  documentClient.get(params, function(err, data) {
+    if (err) console.log(err);
+    else console.log(data);
+  });
 };
 
 export const get = tableName => (item, dynoExpression) => {
@@ -94,3 +95,5 @@ export const get = tableName => (item, dynoExpression) => {
     ...dynoExpression
   };
 };
+
+export default { get, query, create, crement, update, createUpdate, remove };

@@ -5,7 +5,8 @@
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
 import env from "../../config/env";
-import Attributes, { type, required, unique } from "./common/Attributes";
+import Attributes, { TYPES, required, unique } from "./common/Attributes";
+import CommonDBCrud from "../oper/CommonDBCrud";
 
 export const Model = {
   primaryKey: "id",
@@ -13,22 +14,23 @@ export const Model = {
     ...Attributes.createdDate,
     ...Attributes.updatedDate,
     ...Attributes.id,
-    email: { ...type.STRING, ...required, ...unique },
-    password: { ...type.STRING, ...required },
-    firstName: { ...type.STRING, ...required },
-    middleName: { ...type.STRING, ...required },
-    lastName: { ...type.STRING, ...required },
+    email: { type: TYPES.STRING, ...required, ...unique },
+    password: { type: TYPES.STRING, ...required },
+    firstName: { type: TYPES.STRING, ...required },
+    middleName: { type: TYPES.STRING, ...required },
+    lastName: { type: TYPES.STRING, ...required },
 
-    profile_img: { ...type.STRING },
+    profile_img: { type: TYPES.STRING },
     pageContent: { collection: "pageTemplates", via: "accountId" },
     messages: { collection: "messages", via: "accountId" },
     creditCard: { collection: "creditCards", via: "accountId" }
-  }
+  },
+  func: { ...CommonDBCrud }
 };
 
 export const Table = {
   Type: env.mainDB,
-  DeletionPolicy: "Retain",
+  DeletionPolicy: env.deletionPolicy,
   Properties: {
     TableName: env.tableName("CreditCards"),
     KeySchema: [

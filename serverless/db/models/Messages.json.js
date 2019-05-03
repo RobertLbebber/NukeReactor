@@ -7,6 +7,7 @@
 import Attributes from "./common/Attributes";
 import env from "../../config/env";
 import Account from "./Account.json";
+import { TYPES } from "./common/Attributes";
 
 export const Model = {
   primaryKey: "id",
@@ -14,11 +15,11 @@ export const Model = {
     ...Attributes.id,
     ...Attributes.createdDate,
     ...Attributes.updatedDate,
-    mainMessage: { ...type.STRING },
-    extraMessage: { ...type.STRING },
-    likes: { ...type.NUMBER },
-    shares: { ...type.NUMBER },
-    accountId: { ...type.REF(Account) }
+    mainMessage: { type: TYPES.STRING },
+    extraMessage: { type: TYPES.STRING },
+    likes: { type: TYPES.NUMBER },
+    shares: { type: TYPES.NUMBER },
+    accountId: { type: new TYPES.REF(Account) }
   }
 };
 
@@ -33,7 +34,7 @@ export const Table = {
   //   this.update({ [action]: incDec ? 1 : -1 });
   // },
   Type: env.mainDB,
-  DeletionPolicy: "Retain",
+  DeletionPolicy: env.deletionPolicy,
   Properties: {
     TableName: env.tableName("Messages"),
     KeySchema: [

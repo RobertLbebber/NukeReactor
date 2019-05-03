@@ -6,22 +6,26 @@
  */
 import Attributes from "./common/Attributes";
 import env from "../../config/env";
+import CommonDBCrud from "../oper/CommonDBCrud";
 
-export const Model= {
-  ...Attributes.id,
-  ...Attributes.createdDate,
-  ...Attributes.updatedDate,
-}
-export const Table= {
+export const Model = {
+  primaryKey: "id",
+  props: {
+    ...Attributes.id,
+    ...Attributes.createdDate,
+    ...Attributes.updatedDate
+  },
+  func: { ...CommonDBCrud }
+};
+export const Table = {
   Type: env.mainDB,
-  DeletionPolicy: "Retain",
+  DeletionPolicy: env.deletionPolicy,
   Properties: {
     AttributeDefinitions: [
       {
         AttributeName: "id",
         AttributeType: "S"
       }
-      /
     ],
     KeySchema: [
       {

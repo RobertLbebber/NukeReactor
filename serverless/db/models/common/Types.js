@@ -1,18 +1,28 @@
+import _ from "lodash";
 export class Ref {
   /**
    * @param {Model} foreigner - reference to an instance of a foreign model
-   * @param {Model} self - reference to the calling model
+   * @param {String} connection - prop being used for connecting the models
    */
-  constructor(foreigner, self) {
-    if (_.isNil(foreigner)) {
-      throw new Error("No foriegn Model provided for Reference");
-    } else if (_.isNil(foreigner.primaryId)) {
-      throw new Error("Foriegn Model lacks identification for Reference");
-      // } else if (_.isNil(self)) {
-      //   throw new Error("");
+  constructor(foreigner, connection) {
+    let model = foreigner;
+    let prop = connection;
+    if (_.isNil(prop)) {
+      prop = foreigner.primaryKey;
     }
-    let type = foreigner.primaryId.type;
-    let id = foreigner.primaryId;
+    if (_.isNil(model)) {
+      throw new Error("No foriegn Model provided for Reference");
+    }
+  }
+
+  async validator(refId) {
+    if (_.isNil(model)) {
+      throw new Error("No foriegn Model provided for Reference");
+    } else if (_.isNil(refId)) {
+      throw new Error("Foreign Model lacks identification for Reference");
+    }
+    let result = await model.get({ [prop]: refId });
+    return result;
   }
 }
 

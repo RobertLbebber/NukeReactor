@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.437.0",
+    "dynamodb": "^1.2.0",
     "lodash": "^4.17.11",
     "npm": "^6.9.0",
     "serverless-dynamodb-local": "^0.2.35",

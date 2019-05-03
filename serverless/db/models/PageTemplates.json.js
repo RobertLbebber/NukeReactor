@@ -4,21 +4,23 @@
  * @description :: A model definition.  Represents a database table/collection/etc.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
-import Attributes, { type } from "./common/Attributes";
+import Attributes, { TYPES } from "./common/Attributes";
 import Account from "./Account.json";
 import env from "../../config/env";
+import CommonDBCrud from "../oper/CommonDBCrud";
 
 export const Model = {
   primaryKey: "id",
   props: {
     ...Attributes.createdDate,
     ...Attributes.updatedDate,
-    serial: { ...type.STRING },
-    designName: { ...type.STRING },
-    designCategory: { ...type.STRING },
-    pageLayout: { ...type.STRING },
-    accountId: { ...type.REF(Account) }
-  }
+    serial: { type: TYPES.STRING },
+    designName: { type: TYPES.STRING },
+    designCategory: { type: TYPES.STRING },
+    pageLayout: { type: TYPES.STRING },
+    accountId: { type: new TYPES.REF(Account) }
+  },
+  func: { ...CommonDBCrud }
 };
 
 export const Table = {
@@ -58,7 +60,7 @@ export const Table = {
   //   return await this.find({ designName: "Default" }).limit(1);
   // },
   Type: env.mainDB,
-  DeletionPolicy: "Retain",
+  DeletionPolicy: env.deletionPolicy,
   Properties: {
     TableName: env.tableName("PageTemplates"),
     KeySchema: [

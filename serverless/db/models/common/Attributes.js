@@ -1,5 +1,5 @@
 import _ from "lodash";
-import {Collection,Ref} from "./Types"
+import { Collection, Ref } from "./Types";
 
 export const unique = {
   unique: true
@@ -7,17 +7,28 @@ export const unique = {
 export const required = {
   required: true
 };
-export const type = {
-  STRING: { type: new String() },
-  NUMBER: { type: new Number() },
-  FUNCTION: { type: new Function() },
-  JSON: { type: {} },
-  ARRAY: { type: new Array() },
-  DATE: { type: new Date() },
-  REGEXP: { type: new RegExp() },
-  SET: { type: new Set() },
-  REF: { type: new Ref() }
-  COLLECTION: { type: new Collection() }
+export const TYPES = {
+  STRING: String,
+  NUMBER: Number,
+  FUNCTION: Function,
+  JSON: Object,
+  ARRAY: Array,
+  DATE: Date,
+  REGEXP: RegExp,
+  SET: Set,
+  REF: Ref,
+  COLLECTION: Collection
+};
+
+/**
+ *
+ */
+export const type = (type = TYPES.STRING, reference) => {
+  if (!_.isNil(reference)) {
+    return { type, reference: new type(reference, this) };
+  } else {
+    return { type };
+  }
 };
 
 /**
