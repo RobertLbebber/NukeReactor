@@ -1,12 +1,8 @@
-/**
- * CreditCards.js
- *
- * @description :: A model definition.  Represents a database table/collection/etc.
- * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
- */
 import Attributes from "./common/Attributes";
 import env from "../../config/env";
 import CommonDBCrud from "../oper/CommonDBCrud";
+
+const tableName = env.tableName("TodoTable");
 
 export const Model = {
   primaryKey: "id",
@@ -15,7 +11,7 @@ export const Model = {
     ...Attributes.createdDate,
     ...Attributes.updatedDate
   },
-  func: { ...CommonDBCrud }
+  func: { ...CommonDBCrud(tableName) }
 };
 export const Table = {
   Type: env.mainDB,
@@ -37,7 +33,7 @@ export const Table = {
       ReadCapacityUnits: 1,
       WriteCapacityUnits: 1
     },
-    TableName: env.tableName("TodoTable")
+    TableName: tableName
   }
 };
 export default Model;

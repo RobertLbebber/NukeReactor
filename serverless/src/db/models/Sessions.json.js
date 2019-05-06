@@ -3,6 +3,19 @@ import CommonDBCrud from "../oper/CommonDBCrud";
 import env from "../../config/env";
 import Account from "./Account.json";
 
+let tableName = env.tableName("Sessions");
+
+export const Utils = {
+  stillActive: dataResult => {
+    //          hrs mins secs millis
+    activeSpan = 2 * 60 * 60 * 1000;
+    if (dataResult.updatedDate > activeSpan) {
+      return false;
+    }
+    return true;
+  }
+};
+
 export const Model = {
   primaryKey: "id",
   props: {
@@ -11,13 +24,14 @@ export const Model = {
     ...Attributes.updatedDate,
     accountId: { type: new TYPES.REF(Account) }
   },
-  func: { ...CommonDBCrud }
+  func: { ...CommonDBCrud(tableName) }
 };
+
 export const Table = {
   Type: env.mainDB,
   DeletionPolicy: env.deletionPolicy,
   Properties: {
-    TableName: env.tableName("Sessions"),
+    TableName: tableName,
     KeySchema: [
       {
         AttributeName: "id",

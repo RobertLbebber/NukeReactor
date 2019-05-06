@@ -1,12 +1,8 @@
-/**
- * CreditCards.js
- *
- * @description :: A model definition.  Represents a database table/collection/etc.
- * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
- */
 import env from "../../config/env";
 import Attributes, { TYPES, required, unique } from "./common/Attributes";
 import CommonDBCrud from "../oper/CommonDBCrud";
+
+const tableName = env.tableName("Account");
 
 export const Model = {
   primaryKey: "id",
@@ -25,14 +21,14 @@ export const Model = {
     messages: { collection: "messages", via: "accountId" },
     creditCard: { collection: "creditCards", via: "accountId" }
   },
-  func: { ...CommonDBCrud }
+  func: { ...CommonDBCrud(tableName) }
 };
 
 export const Table = {
   Type: env.mainDB,
   DeletionPolicy: env.deletionPolicy,
   Properties: {
-    TableName: env.tableName("CreditCards"),
+    TableName: tableName,
     KeySchema: [
       {
         AttributeName: "id",

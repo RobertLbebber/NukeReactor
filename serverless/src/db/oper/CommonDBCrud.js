@@ -1,8 +1,9 @@
 import _ from "lodash";
 import AWS from "aws-sdk";
-let dynamodb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
+// let dynamodb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
+let documentClient = new AWS.DynamoDB.DocumentClient();
 
-const checkProps = item => {
+const checkProps = async tableName => async item => {
   if (_.isNil(item)) {
     throw new Error("No query item provided for the Crud Action.");
   }
@@ -21,19 +22,19 @@ const checkProps = item => {
 /**
  * Updated
  */
-export const create = item => {
+export const create = async tableName => async item => {
   checkProps(item);
 };
-export const crement = item => {
+export const crement = async tableName => async item => {
   checkProps(item);
 };
-export const update = item => {
+export const update = async tableName => async item => {
   checkProps(item);
 };
-export const createUpdate = item => {
+export const createUpdate = async tableName => async item => {
   checkProps(item);
 };
-export const remove = item => {
+export const remove = async tableName => async item => {
   checkProps(item);
 
   documentClient.delete(params, function(err, data) {
@@ -45,7 +46,7 @@ export const remove = item => {
 /**
  * Select
  */
-export const query = tableName => (item, dynoExpression) => {
+export const query = async tableName => async (item, dynoExpression) => {
   checkProps(item);
   let marshalling = { KeyConditionExpression: [], ExpressionAttributeValues: {} };
   for (key in item) {
@@ -76,17 +77,11 @@ export const query = tableName => (item, dynoExpression) => {
     ...dynoExpression
   };
 
-  let documentClient = new AWS.DynamoDB.DocumentClient();
-
-  documentClient.get(params, function(err, data) {
-    if (err) console.log(err);
-    else console.log(data);
-  });
+  return await documentClient.get(params);
 };
 
-export const get = tableName => (item, dynoExpression) => {
+export const get = async tableName => async (item, dynoExpression) => {
   checkProps(item);
-  marshalling.KeyConditionExpression = marshalling.KeyConditionExpression.join(" and ");
   let params = {
     TableName: tableName,
     Key: {
@@ -94,6 +89,14 @@ export const get = tableName => (item, dynoExpression) => {
     },
     ...dynoExpression
   };
+  return await documentClient.get(params);
 };
 
-export default { get, query, create, crement, update, createUpdate, remove };
+const exportable = name => {
+  let functions = { get, query, create, crement, update, createUpdate, remove };
+  for (let func in functions) {
+    functions[func] = functions[func](name);
+  }
+  return functions;
+};
+export default exportable;

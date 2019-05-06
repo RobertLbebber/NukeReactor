@@ -1,10 +1,10 @@
 import fs from "graceful-fs";
 import { dump } from "node-yaml";
-import routes from "./config/routes.json";
-import server from "./config/server.json";
-import db from "./config/db.json";
-import custom from "./config/custom.json";
-import provider from "./config/provider.json";
+import routes from "./src/config/routes.json.js";
+import server from "./src/config/server.json.js";
+import db from "./src/config/db.json.js";
+import custom from "./src/config/custom.json.js";
+import provider from "./src/config/provider.json.js";
 
 let full = {
   ...server,

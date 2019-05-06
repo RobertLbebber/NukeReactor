@@ -1,13 +1,10 @@
-/**
- * Subscription.js
- *
- * @description :: A model definition represents a database table/collection.
- * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
- */
-import Attributes, { TYPES } from "./common/Attributes";
+import Attributes from "./common/Attributes";
 import env from "../../config/env";
 import Account from "./Account.json";
 import CommonDBCrud from "../oper/CommonDBCrud";
+import { TYPES } from "./common/Attributes";
+
+const tableName = env.tableName("Messages");
 
 export const Model = {
   primaryKey: "id",
@@ -15,17 +12,20 @@ export const Model = {
     ...Attributes.id,
     ...Attributes.createdDate,
     ...Attributes.updatedDate,
-    serial: { type: TYPES.STRING },
-    accountId: { type: new TYPES.REF(Account) },
-    subscribeTo: { type: new TYPES.REF(Account) }
+    mainMessage: { type: TYPES.STRING },
+    extraMessage: { type: TYPES.STRING },
+    likes: { type: TYPES.NUMBER },
+    shares: { type: TYPES.NUMBER },
+    accountId: { type: new TYPES.REF(Account) }
   },
-  func: { ...CommonDBCrud }
+  func: { ...CommonDBCrud(tableName) }
 };
+
 export const Table = {
   Type: env.mainDB,
   DeletionPolicy: env.deletionPolicy,
   Properties: {
-    TableName: env.tableName("Subscription"),
+    TableName: tableName,
     KeySchema: [
       {
         AttributeName: "id",
@@ -44,5 +44,13 @@ export const Table = {
     }
   }
 };
-
+// /**
+//  * Increment or Decrement the an action of the message
+//  * @param {Boolean} incDec -
+//  * @param {String} action -
+//  * TODO @-param User ID
+//  */
+// crementAction: async function(incDec, action = "likes") {
+//   this.update({ [action]: incDec ? 1 : -1 });
+// },
 export default Model;
