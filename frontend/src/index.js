@@ -10,6 +10,8 @@ import "./assets/css/demo.css";
 import "./assets/css/generic.css";
 import "./assets/css/global.css";
 import "./assets/css/pe-icon-7-stroke.css";
+import "./assets/css/fa-regular.min.css";
+import "./assets/css/fa-solid.min.css";
 
 ReactDOM.render(<Index />, document.getElementById("root"));
 module.hot.accept();
