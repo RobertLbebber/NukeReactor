@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import { HeartbeatProvider } from "../components/Context/HeartbeatContext";
 import { Routes } from "./Routes.jsx";
 import { GlobalInputsProvider } from "../components/Context/GlobalInputsContext";
+import { theme } from "../components/Context/ThemeContext";
+import { MuiThemeProvider } from "@material-ui/core";
 
 export class Index extends Component {
   constructor(props) {
@@ -25,11 +27,13 @@ export class Index extends Component {
   render() {
     return (
       <div className={this.state._tag}>
-        <GlobalInputsProvider>
-          <HeartbeatProvider>
-            <Routes />
-          </HeartbeatProvider>
-        </GlobalInputsProvider>
+        <MuiThemeProvider theme={theme}>
+          <GlobalInputsProvider>
+            <HeartbeatProvider>
+              <Routes />
+            </HeartbeatProvider>
+          </GlobalInputsProvider>
+        </MuiThemeProvider>
       </div>
     );
   }

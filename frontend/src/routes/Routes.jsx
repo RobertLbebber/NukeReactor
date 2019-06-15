@@ -1,15 +1,14 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import _ from "lodash";
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
-import Sidebar from "../components/Sidebar/Sidebar";
-import Footer from "../components/Footer/Footer";
+import Header from "../components/Sections/Navibars/Header/Header";
 import { Debug, devvar } from "../util/devvar/devvar";
 import { Switch } from "react-router-dom";
 import { HeartbeatContext } from "../components/Context/HeartbeatContext";
 import { LandingPage } from "../components/Pages/Public/LandingPage";
 import indexRoutes from "./routes.js";
+import RouteContextProvider from "../components/Context/RouteContext";
 
 export class Routes extends Component {
   constructor(props) {
@@ -42,7 +41,6 @@ export class Routes extends Component {
               ) : (
                 <React.Fragment>
                   <div>
-                    <Sidebar displayType={"standard"} routes={indexRoutes} account={heart.account} />
                     <div className={"main-content"}>
                       <Switch>
                         {indexRoutes.map(indexRoute => (
@@ -51,10 +49,17 @@ export class Routes extends Component {
                             key={indexRoute.name}
                             path={indexRoute.path}
                             render={props => (
-                              <React.Fragment>
-                                <Footer componentName={indexRoute.name} />
+                              <RouteContextProvider
+                                value={{ renderInfo: indexRoute, routeInfo: props, routesInfo: indexRoutes }}
+                              >
+                                <Header
+                                  componentName={indexRoute.name}
+                                  displayType={"standard"}
+                                  routes={indexRoutes}
+                                  account={heart.account}
+                                />
                                 <indexRoute.component {...props} {...heart.account} />
-                              </React.Fragment>
+                              </RouteContextProvider>
                             )}
                           />
                         ))}

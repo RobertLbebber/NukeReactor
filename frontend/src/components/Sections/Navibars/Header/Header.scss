@@ -1,0 +1,10 @@
+// @import "../_standards.scss";
+
+.Header {
+  position: initial;
+  z-index: 100;
+  .Header-nav {
+    background-color: $brand-grey;
+    width: 100%;
+  }
+}
