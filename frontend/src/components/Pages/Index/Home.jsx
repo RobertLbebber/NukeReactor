@@ -1,16 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-
 import gibberish from "../../../assets/data/GibberishText.json";
-//import func from '/frontend/src/util/func/func'
 
 export class Home extends Component {
   constructor(props) {
     super(props);
-    // var id = func.generateSerial(9, 36);
     this.state = {
       _tag: this.constructor.name
-      //   _id: id
     };
     this._isMounted = false;
   }

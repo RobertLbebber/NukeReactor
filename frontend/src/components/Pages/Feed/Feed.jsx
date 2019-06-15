@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import { get } from "../../../util/io/restful";
+import { get } from "../../../util/io/Restful";
 import FeedCard from "../../Sections/MaterialWrappers/FeedCard";
 import PostCreator from "../../Inputs/PostCreator";
-import {
-  GlobalInputsConsumer,
-  GlobalInputsProvider
-} from "../../Context/GlobalInputsContext";
+import { GlobalInputsConsumer, GlobalInputsProvider } from "../../Context/GlobalInputsContext";
 //import func from '/frontend/src/util/func/func'
 
 const sampleData = [
@@ -132,14 +129,10 @@ export class Feed extends Component {
     return (
       <div className={this.state._tag}>
         {_.isNil(this.state.feedDate)
-          ? _.map(this.state.feedData, (feedElement, i) => (
-              <FeedCard content={feedElement.content} key={i} />
-            ))
+          ? _.map(this.state.feedData, (feedElement, i) => <FeedCard content={feedElement.content} key={i} />)
           : this.getEmptyFeed()}
         <GlobalInputsConsumer>
-          {input => (
-            <PostCreator context={input} active={input.activePostEvent} />
-          )}
+          {input => <PostCreator context={input} active={input.activePostEvent} />}
         </GlobalInputsConsumer>
       </div>
     );

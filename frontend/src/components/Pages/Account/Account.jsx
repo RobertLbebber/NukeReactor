@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import restful from "../../../util/io/restful";
+import Restful from "../../../util/io/Restful";
 import PageCreator from "../../PageCreator/PageCreator";
 import Loading from "../../Util/Loading";
 import { GlobalInputsConsumer } from "../../Context/GlobalInputsContext";
@@ -20,8 +20,7 @@ export class Account extends Component {
 
   componentDidMount() {
     this._isMount = true;
-    restful
-      .get(`account/${this.state.account.id}`, false)
+    Restful.get(`account/${this.state.account.id}`, false)
       .then(object => {
         if (this._isMount) {
           this.setState({
@@ -40,8 +39,7 @@ export class Account extends Component {
 
   saveChanges(newAccount) {
     this.setState({ account: newAccount });
-    restful
-      .post(`account/update/${this.state.account.id}`, newAccount)
+    Restful.post(`account/update/${this.state.account.id}`, newAccount)
       .then(object => {
         if (this._isMount) {
           console.log(object);

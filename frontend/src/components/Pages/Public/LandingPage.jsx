@@ -1,19 +1,11 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
-import {
-  Alert,
-  Button,
-  Card,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  Form
-} from "react-bootstrap";
+import { Alert, Button, Card, CardBody, CardTitle, CardSubtitle, Form } from "react-bootstrap";
 import _ from "lodash";
 import ECrown from "../../Util/Icons/ECrown";
 
-import restful from "../../../util/io/restful";
+import Restful from "../../../util/io/Restful";
 
 export class LandingPage extends Component {
   constructor(props) {
@@ -49,8 +41,7 @@ export class LandingPage extends Component {
   onFormSubmit(e) {
     e.preventDefault();
     let url = "entrance/" + (this.state.toggleRegister ? "signup" : "login");
-    restful
-      .post(url, this.state.form)
+    Restful.post(url, this.state.form)
       .then(response => {
         if (this._isMount && response.status === 200) {
           this.props.updateUserDataFn(response);
@@ -131,11 +122,7 @@ export class LandingPage extends Component {
 
   getRegister() {
     return (
-      <Card
-        className={
-          "shadow" + (this.state.toggleRegister ? " adjustHeight" : "")
-        }
-      >
+      <Card className={"shadow" + (this.state.toggleRegister ? " adjustHeight" : "")}>
         <Card.Title className="text-center" tag="h3">
           Register
         </Card.Title>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import restful from "../../util/io/restful";
+import Restful from "../../util/io/Restful";
 import { switchBox } from "../../util/func/func";
 import { Button, ButtonToolbar, Form, Image } from "react-bootstrap";
 import ModalWrap from "../Sections/BootstrapWrappers/ModalWrap";
@@ -19,8 +19,10 @@ export class PostCreator extends Component {
     this.state = {
       showModal: this.props.context.activePostEvent,
       //_id: id
+      showMoreText: false,
       form: {
-        text: "",
+        mainText: "",
+        extraText: "",
         attachments: { image: [], file: [], video: [], link: [] }
       }
     };
@@ -51,7 +53,7 @@ export class PostCreator extends Component {
   }
 
   handleSubmit() {
-    restful.post("createPost", this.state.form).then(result => {
+    Restful.post("createPost", this.state.form).then(result => {
       if (this._isMount) {
         console.log(result);
       }
@@ -148,7 +150,7 @@ export class PostCreator extends Component {
               rows="3"
               placeholder="Have something to say?"
               onChange={e => {
-                this.setState({ form: { ...this.state.form, mainMessage: e.currentTarget.value } });
+                this.setState({ form: { ...this.state.form, mainText: e.currentTarget.value } });
               }}
             />
           </Form.Group>
@@ -186,6 +188,27 @@ export class PostCreator extends Component {
                 ))
               )}
             </ItemBar>
+          ) : null}
+          <Button
+            className="w-100"
+            variant="link"
+            onClick={() => {
+              this.setState(prevState => {
+                return { showMoreText: !prevState.showMoreText };
+              });
+            }}
+          >
+            Have More to Say?
+          </Button>
+          {this.state.showMoreText ? (
+            <Form.Control
+              as="textarea"
+              rows="3"
+              placeholder="There's No limit here!"
+              onChange={e => {
+                this.setState({ form: { ...this.state.form, extraText: e.currentTarget.value } });
+              }}
+            />
           ) : null}
         </Form>
       </div>
