@@ -3,7 +3,7 @@ import _ from "lodash";
 import Cookies from "js-cookie";
 import Redirect from "react-router-dom/Redirect";
 
-import restful from "../../util/io/restful";
+import Restful from "../../util/io/Restful";
 import { LandingPage } from "../Pages/Public/LandingPage";
 import { Debug, devvar } from "../../util/devvar/devvar";
 
@@ -34,8 +34,7 @@ export class HeartbeatProvider extends React.Component {
   }
 
   destroyCookies() {
-    restful
-      .get("logout")
+    Restful.get("logout")
       .then(response => {
         this.setState({ account: null });
       })
@@ -48,8 +47,7 @@ export class HeartbeatProvider extends React.Component {
   }
 
   heartbeat() {
-    restful
-      .get("getMe", false)
+    Restful.get("getMe", false)
       .then(response => {
         if (this._mounted) {
           if (!_.isNil(response)) {
@@ -77,11 +75,7 @@ export class HeartbeatProvider extends React.Component {
   }
 
   render() {
-    return (
-      <HeartbeatContext.Provider value={this.state}>
-        {this.props.children}
-      </HeartbeatContext.Provider>
-    );
+    return <HeartbeatContext.Provider value={this.state}>{this.props.children}</HeartbeatContext.Provider>;
   }
 }
 export default HeartbeatProvider;

@@ -3,6 +3,7 @@ import { ViewDay, AccountCircle, Home as HomeIcon, HighlightOff, Code } from "@m
 
 import { HeartbeatContext } from "../components/Context/HeartbeatContext";
 import Feed from "../components/Pages/Feed/Feed";
+import PageBuilder from "../components/Pages/PageBuilder/PageBuilder";
 import Account from "../components/Pages/Account/Account";
 import Home from "../components/Pages/Index/Home";
 import LogOut from "../components/Pages/Public/LogOut";
@@ -22,6 +23,14 @@ export default Object.freeze([
     path: "/acc/",
     name: "Account",
     component: Account,
+    dynamic: true,
+    exact: false,
+    iconComponent: <AccountCircle />
+  },
+  {
+    path: "/page-builder/",
+    name: "Page Builder",
+    component: PageBuilder,
     dynamic: true,
     exact: false,
     iconComponent: <AccountCircle />
@@ -48,11 +57,8 @@ export default Object.freeze([
     exact: true,
     className: "fixed-bottom",
     component: () => {
-      console.log("functions");
       return (
-        <HeartbeatContext.Consumer>
-          {heart => <LogOut logOutFn={heart.destroyCookies} />}
-        </HeartbeatContext.Consumer>
+        <HeartbeatContext.Consumer>{heart => <LogOut logOutFn={heart.destroyCookies} />}</HeartbeatContext.Consumer>
       );
     },
     dynamic: false,

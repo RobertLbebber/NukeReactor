@@ -1,6 +1,7 @@
 import { devvar } from "../devvar/devvar";
-// import func from "../func/func";
 import _ from "lodash";
+
+import ResponseData from "./ResponseDate";
 
 /**
  * This method is responsible for sending get requests to the server and returning a response
@@ -9,19 +10,10 @@ import _ from "lodash";
  * @returns {object} @property status - status code from the server
  *                   @property body - response information from the server
  */
-export var get = uri => {
-  return fetch(devvar.DOMAIN + uri, {
-    credentials: "include"
-  })
-    .then(async response => {
-      return { status: response.status, body: await response.json() };
-    })
-    .then(response => {
-      if (response.status === 415) {
-        return { status: response.status, body: "Unknown Error" };
-      }
-      return { status: response.status, body: response.body };
-    });
+export var get = (uri, options, execution) => {
+  options = _.defaultsDeep(options, { method: "GET", credentials: "include" });
+
+  return fetchResolve(uri, options, execution);
 };
 
 /**
@@ -32,58 +24,63 @@ export var get = uri => {
  * @returns {object} @property status - status code from the server
  *                   @property body - response information from the server
  */
-export var getM = (uri, flatMap) => {
-  let message = "?";
+export var getWithQuery = (uri, flatMap, options, execution) => {
+  let query = "?";
   for (let key in flatMap) {
     if (!flatMap.hasOwnProperty(key)) continue;
     let value = flatMap[key];
-    message += key + "=" + value + "&";
+    query += key + "=" + value + "&";
   }
-  message = encodeURI(message.substring(0, message.length - 1));
-  return fetch(devvar.DOMAIN + uri + message)
-    .then(async response => {
-      return await response.json();
-    })
-    .then(response => {
-      if (response.status === 410) {
-        return { status: response.status, body: response };
-      } else if (response.status !== 200) {
-        return { status: response.status, message: "Unknown Failure" };
-      }
-      return { status: response.status, body: response };
-    });
+  query = encodeURI(query.substring(0, query.length - 1));
+
+  return get(uri + query, options, execution);
 };
 
 /**
  * This method is responsible for sending post requests to the server and returning a response
  *
  * @param {String} uri - Non-domain endpoint for the server
- * @param {String} message - Information to be sent to the server
+ * @param {String} body - Information to be sent to the server
+ * @param {String} execution - Response Callback to interpret the response stream
  * @returns {object} @property status - status code from the server
  *                   @property body - response information from the server
  */
-export var post = (uri, message) => {
-  return fetch(devvar.DOMAIN + uri, {
-    method: "POST",
-    headers: {
+export var post = async (uri, body, options, execution = "json") => {
+  options = _.defaultsDeep(options, { method: "POST", credentials: "include" });
+  if (body.constructor === String) {
+    options.body = body;
+    options.headers = {
+      Accept: "text/plain",
+      "Content-Type": "text/plain"
+    };
+  } else if (body.constructor === Object) {
+    options.body = JSON.stringify(body);
+    options.headers = {
       Accept: "application/json",
       "Content-Type": "application/json"
-    },
-    credentials: "include",
-    body: JSON.stringify(message)
-  })
-    .then(async response => {
-      return { status: response.status, body: await response.json() };
-    })
-    .then(response => {
-      if (response.status === 415) {
-        return { status: response.status, body: "Unknown Error" };
-      }
-      return { status: response.status, body: response.body };
-    });
+    };
+  }
+
+  return await fetchResolve(uri, options, execution);
 };
+
+const fetchResolve = async (uri, options, execution) => {
+  try {
+    let data;
+    let response = await fetch(devvar.DOMAIN + uri, options);
+    if (execution.constructor === String) {
+      data = await response[execution];
+    } else if (execution.constructor === Function) {
+      data = await execution(response);
+    }
+    return new ResponseData(response.ok, response.status, data);
+  } catch (err) {
+    return new ResponseData(false, NaN, null);
+  }
+};
+
 export default (module.export = {
   get,
-  getM,
+  getWithQuery,
   post
 });

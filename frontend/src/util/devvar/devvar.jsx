@@ -1,6 +1,6 @@
 const DEVSERVER = true;
 //DEVSERVER ? "http://localhost:1338/" :
-var devvar = {
+const devvar = {
   DOMAIN: "http://localhost:1337/",
   LOCAL: "http://localhost:3000/",
   SLOGAN: "A True Political Connection",
@@ -8,8 +8,8 @@ var devvar = {
   COMPANY_NAME: "Electr"
 };
 
-var Debug = {
-  enforceAccount: true
+const Debug = {
+  enforceAccount: false
 };
 
 module.exports = {
