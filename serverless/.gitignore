@@ -6,3 +6,4 @@ jspm_packages
 .serverless
 credentials.csv
 dist/
+logs/*.log
