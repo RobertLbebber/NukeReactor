@@ -5,7 +5,6 @@ function routeBuilder() {
   let functions = {};
   for (let controllerName in Controllers) {
     let controller = Controllers[controllerName];
-    console.log(controller[controllerName]);
     for (let handlerName in controller[controllerName]) {
       let handlerGroup = controller[controllerName][handlerName];
       if (handlerGroup.constructor != Object) {
@@ -24,7 +23,7 @@ function routeBuilder() {
         }
       }
       if (!_.isEmpty(http)) {
-        http.cors = true;
+        //http.//cors = true;
         functions[handlerPathName].events = [{ http }];
       }
     }
@@ -34,67 +33,67 @@ function routeBuilder() {
 
 let routes = {
   functions: {
-    ...routeBuilder(),
-    create: {
-      handler: "oper/todos/create.create",
-      events: [
-        {
-          http: {
-            path: "todos",
-            method: "post",
-            cors: true
-          }
-        }
-      ]
-    },
-    list: {
-      handler: "oper/todos/list.list",
-      events: [
-        {
-          http: {
-            path: "todos",
-            method: "get",
-            cors: true
-          }
-        }
-      ]
-    },
-    get: {
-      handler: "oper/todos/get.get",
-      events: [
-        {
-          http: {
-            path: "todos/{id}",
-            method: "get",
-            cors: true
-          }
-        }
-      ]
-    },
-    update: {
-      handler: "oper/todos/update.update",
-      events: [
-        {
-          http: {
-            path: "todos/{id}",
-            method: "put",
-            cors: true
-          }
-        }
-      ]
-    },
-    delete: {
-      handler: "oper/todos/delete.delete",
-      events: [
-        {
-          http: {
-            path: "oper/todos/{id}",
-            method: "delete",
-            cors: true
-          }
-        }
-      ]
-    }
+    ...routeBuilder()
+    //   create: {
+    //     handler: "oper/todos/create.create",
+    //     events: [
+    //       {
+    //         http: {
+    //           path: "todos",
+    //           method: "post"
+    //           //cors: true
+    //         }
+    //       }
+    //     ]
+    //   },
+    //   list: {
+    //     handler: "oper/todos/list.list",
+    //     events: [
+    //       {
+    //         http: {
+    //           path: "todos",
+    //           method: "get"
+    //           //cors: true
+    //         }
+    //       }
+    //     ]
+    //   },
+    //   get: {
+    //     handler: "oper/todos/get.get",
+    //     events: [
+    //       {
+    //         http: {
+    //           path: "todos/{id}",
+    //           method: "get"
+    //           //cors: true
+    //         }
+    //       }
+    //     ]
+    //   },
+    //   update: {
+    //     handler: "oper/todos/update.update",
+    //     events: [
+    //       {
+    //         http: {
+    //           path: "todos/{id}",
+    //           method: "put"
+    //           //cors: true
+    //         }
+    //       }
+    //     ]
+    //   },
+    //   delete: {
+    //     handler: "oper/todos/delete.delete",
+    //     events: [
+    //       {
+    //         http: {
+    //           path: "oper/todos/{id}",
+    //           method: "delete"
+    //           //cors: true
+    //         }
+    //       }
+    //     ]
+    //   }
   }
 };
 

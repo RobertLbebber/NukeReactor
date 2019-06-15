@@ -18,8 +18,6 @@ const target = "serverless.yml";
 const verbose = false;
 
 async function appender(jsonYaml, name) {
-  console.log(JSON.stringify(jsonYaml));
-  // let data = dump(jsonYaml);
   await new Promise(resolve =>
     fs.appendFile(target, JSON.stringify(), async function(err) {
       if (err) throw err;

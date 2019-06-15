@@ -5,6 +5,7 @@ const ResponseStatus = (ok = true, payload = "Successful", statusCode = ok ? 200
   } else {
     response.body = payload;
   }
+  return response;
 };
 
 export const GET = "get";

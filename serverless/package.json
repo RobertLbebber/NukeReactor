@@ -6,10 +6,10 @@
   "main": "build.js",
   "scripts": {
     "start": "babel-node build.js && npm run create-dist && serverless deploy",
-    "deploy": "serverless deploy",
+    "deploy": "serverless deploy ",
     "create-dist": "babel src --out-dir dist/",
     "build": "babel-node build.js && npm run create-dist",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\"  && exit 1",
     "watch": "webpack --watch"
   },
   "author": "Robert Bebber",

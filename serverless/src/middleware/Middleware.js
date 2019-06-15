@@ -1,22 +1,25 @@
 import _ from "lodash";
 import Policy from "./Policy";
 import Session from "./Session";
-import ResponseStatus from "../io/ResponseStatus";
+import GenerateHandler from "../endpoints/common/GenerateHandler";
 
-export const prep = (event, context, rules) => {
+export const prep = async (event, context, rules) => {
   try {
     let result = { fails: 0 };
+    let shortName = GenerateHandler.baseFnName(context.functionName, rules.tag);
+    console.log("Middleware.prep 1", shortName, rules);
+    let currentRules = rules[shortName];
 
-    console.log(context.function_name);
-    let currentRules = rules[context.function_name];
-
-    console.log(currentRules);
     if (!_.isNil(currentRules)) {
       //Handle Sessions
       if (currentRules.session) {
-        result.session = Session.handleSession(event, currentRules);
+        console.log("Start Session");
+        result.session = await Session.handleSession(event, currentRules);
+        console.log("End Session", result);
+        console.log(!_.isNil(result.session.status), !result.session.status);
         if (!_.isNil(result.session.status) && !result.session.status) {
           result.fails++;
+          console.log("Fail Increase", result.fails);
         }
       }
 
@@ -27,11 +30,13 @@ export const prep = (event, context, rules) => {
           result.fails++;
         }
       }
+    } else {
+      throw new Error("Functions not found");
     }
 
     return result;
-  } catch (error) {
-    return { fails: 1, error: error };
+  } catch (err) {
+    return { fails: 1, error: err };
   }
 };
 
