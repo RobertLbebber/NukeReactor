@@ -11,6 +11,8 @@ custom:
       migrate: true
     migration:
       dir: offline/migrations
+    serverless-offline:
+      port: 4000
 functions:
   AccountController-getMe:
     handler: dist/endpoints/AccountController.getMe

@@ -23,6 +23,9 @@ export class Fa extends Component {
   }
 
   size(size) {
+    if (size.length == 0) {
+      return "";
+    }
     switch (size) {
       case "xs":
         size = " fa-lg";
@@ -47,7 +50,11 @@ export class Fa extends Component {
     }
     return size;
   }
+
   rotation(rotate) {
+    if (rotate.length == 0) {
+      return "";
+    }
     switch (rotate) {
       case "90":
       case "180":
@@ -64,7 +71,11 @@ export class Fa extends Component {
     }
     return rotate;
   }
+
   animation(simpleAnimation) {
+    if (simpleAnimation.length == 0) {
+      return "";
+    }
     if (simpleAnimation === true) {
       return "fa-spin";
     }
@@ -92,19 +103,19 @@ export class Fa extends Component {
     );
   }
 }
-Fa.PropTypes = {
+Fa.propTypes = {
   className: PropTypes.string,
   fa: PropTypes.string.isRequired,
-  rotate: PropTypes.oneOf(["90", "180", "270", "x", "y"]),
-  size: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl", "fixed"]),
-  simpleAnimation: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(["spin", "pulse"])])
+  rotate: PropTypes.oneOf(["90", "180", "270", "x", "y", ""]),
+  size: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl", "fixed", ""]),
+  simpleAnimation: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(["spin", "pulse", ""])])
 };
 
 Fa.defaultProps = {
   className: "",
   fa: "chess-board",
-  rotate: " ",
-  size: " ",
-  simpleAnimation: " "
+  rotate: "",
+  size: "",
+  simpleAnimation: ""
 };
 export default Fa;

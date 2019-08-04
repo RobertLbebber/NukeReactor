@@ -25,7 +25,8 @@ export const theme = createMuiTheme({
     primary: genInteractions(cyan, baseTone),
     secondary: genInteractions(lightGreen, baseTone),
     default: "#eee",
-    white: "#fff"
+    white: "#fff",
+    debug: genInteractions(brown, baseTone)
   },
   status: {
     success: genInteractions(green, baseTone),
@@ -34,5 +35,11 @@ export const theme = createMuiTheme({
     danger: genInteractions(red, baseTone),
     debug: genInteractions(brown, baseTone),
     emergency: genInteractions(red, baseTone + 200)
+  },
+  debugObject: {
+    color: brown[baseTone],
+    backgroundColor: brown[baseTone * strongMod],
+    "&:hover": { color: grey[baseTone * boldMod] },
+    "&:focus": { color: brown[baseTone * strongMod] }
   }
 });

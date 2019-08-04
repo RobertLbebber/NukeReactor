@@ -2,9 +2,22 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import Restful from "../../../util/io/Restful";
-import PageCreator from "../../PageCreator/PageCreator";
+// import PageCreator from "../../PageCreator/PageCreator";
 import Loading from "../../Util/Loading";
-import { GlobalInputsConsumer } from "../../Context/GlobalInputsContext";
+import { withStyles } from "@material-ui/core";
+import PageBuilder from "../PageBuilder/PageBuilder";
+// import { GlobalInputsConsumer } from "../../Context/GlobalInputsContext";
+
+const styles = theme => {
+  console.log(theme);
+  return {
+    loading: {
+      backgroundColor: theme.palette.primary.hvr,
+      top: "auto",
+      bottom: 0
+    }
+  };
+};
 
 export class Account extends Component {
   constructor(props) {
@@ -14,7 +27,7 @@ export class Account extends Component {
       account: { ...this.props.body },
       subscribed: false
     };
-    this.saveChanges = this.saveChanges.bind(this);
+    // this.saveChanges = this.saveChanges.bind(this);
     this._isMount = false;
   }
 
@@ -37,33 +50,34 @@ export class Account extends Component {
     this._isMount = false;
   }
 
-  saveChanges(newAccount) {
-    this.setState({ account: newAccount });
-    Restful.post(`account/update/${this.state.account.id}`, newAccount)
-      .then(object => {
-        if (this._isMount) {
-          console.log(object);
-          this.setState({
-            page: object
-          });
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
+  // saveChanges(newAccount) {
+  //   this.setState({ account: newAccount });
+  //   Restful.post(`account/update/${this.state.account.id}`, newAccount)
+  //     .then(object => {
+  //       if (this._isMount) {
+  //         console.log(object);
+  //         this.setState({
+  //           page: object
+  //         });
+  //       }
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // }
 
-  subscribeEvents(globalInput) {
-    if (!this.state.subscribed) {
-      globalInput.subscribeTo(this.saveChanges, ["accountEditor", "save"]);
-      this.setState({ subscribed: true });
-    }
-  }
+  // subscribeEvents(globalInput) {
+  //   if (!this.state.subscribed) {
+  //     globalInput.subscribeTo(this.saveChanges, ["accountEditor", "save"]);
+  //     this.setState({ subscribed: true });
+  //   }
+  // }
 
   render() {
     return (
       <div className={this.state._tag}>
-        {!_.isNil(this.state.account) ? (
+        <PageBuilder />
+        {/* {!_.isNil(this.state.account) ? (
           <GlobalInputsConsumer>
             {globalInput => {
               this.subscribeEvents(globalInput);
@@ -76,9 +90,9 @@ export class Account extends Component {
               );
             }}
           </GlobalInputsConsumer>
-        ) : (
-          <Loading className="center-container" />
-        )}
+        ) : ( */}
+        <Loading className="center-container" />
+        {/* )} */}
       </div>
     );
   }
@@ -96,4 +110,4 @@ export class Account extends Component {
 
   static defaultProps = {};
 }
-export default Account;
+export default withStyles(styles)(Account);

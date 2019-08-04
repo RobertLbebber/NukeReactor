@@ -2,5 +2,6 @@ div.center-container > div {
   width: 250px !important;
   height: 250px !important;
   position: fixed;
-  left: 50%;
+  left: calc(50% - 125px);
+  top: calc(50% - 125px);
 }

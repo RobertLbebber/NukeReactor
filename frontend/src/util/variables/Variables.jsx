@@ -1,10 +1,13 @@
+/**
+ * Check for @deprecated
+ */
+
 //
 // //
 // // // For notifications
 // //
 //
-var defaultWidth =
-  window.screen.width > 768 ? window.screen.width * 1 / 3 : window.screen.width;
+var defaultWidth = window.screen.width > 768 ? (window.screen.width * 1) / 3 : window.screen.width;
 
 var style = {
   Wrapper: {},
@@ -484,16 +487,7 @@ var legendPie = {
 
 // Data for Line Chart
 var dataSales = {
-  labels: [
-    "9:00AM",
-    "12:00AM",
-    "3:00PM",
-    "6:00PM",
-    "9:00PM",
-    "12:00PM",
-    "3:00AM",
-    "6:00AM"
-  ],
+  labels: ["9:00AM", "12:00AM", "3:00PM", "6:00PM", "9:00PM", "12:00PM", "3:00AM", "6:00AM"],
   series: [
     [287, 385, 490, 492, 554, 586, 698, 695],
     [67, 152, 143, 240, 287, 335, 435, 437],
@@ -535,20 +529,7 @@ var legendSales = {
 
 // Data for Bar Chart
 var dataBar = {
-  labels: [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "Mai",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec"
-  ],
+  labels: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
   series: [
     [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
     [412, 243, 280, 580, 453, 353, 300, 364, 368, 410, 636, 695]

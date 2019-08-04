@@ -3,10 +3,12 @@ import { GET } from "../../io/ResponseStatus";
 import { SERVICE_NAME, DEVELOPMENT, PRODUCTION } from "../../config/constants";
 import env from "../../config/env";
 
+//genFn
 export const lamdbaHandler = (controller, name, path, session = true, rest = GET, debug = false, other) => fn => {
   controller[name] = { fn, path, session, rest, debug, ...other };
 };
 
+//expFn
 export const handlerExporter = controller => {
   let ends = {};
   for (let endpointName in controller) {
@@ -18,6 +20,7 @@ export const handlerExporter = controller => {
   return ends;
 };
 
+//baseFnName
 export const functionName = (fullName, tag) => {
   let serviceName = env.mode === DEVELOPMENT ? DEVELOPMENT : PRODUCTION;
   console.log(SERVICE_NAME + "-" + serviceName, fullName);

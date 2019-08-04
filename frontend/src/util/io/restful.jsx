@@ -1,7 +1,7 @@
 import { devvar } from "../devvar/devvar";
 import _ from "lodash";
 
-import ResponseData from "./ResponseDate";
+import ResponseData from "./ResponseData";
 
 /**
  * This method is responsible for sending get requests to the server and returning a response
@@ -45,8 +45,46 @@ export var getWithQuery = (uri, flatMap, options, execution) => {
  * @returns {object} @property status - status code from the server
  *                   @property body - response information from the server
  */
-export var post = async (uri, body, options, execution = "json") => {
+export let post = async (uri, body, options, execution = "json") => {
   options = _.defaultsDeep(options, { method: "POST", credentials: "include" });
+  options = bodyBuilder(body, options);
+
+  return await fetchResolve(uri, options, execution);
+};
+
+/**
+ * This method is responsible for sending post requests to the server and returning a response
+ *
+ * @param {String} uri - Non-domain endpoint for the server
+ * @param {String} body - Information to be sent to the server
+ * @param {String} execution - Response Callback to interpret the response stream
+ * @returns {object} @property status - status code from the server
+ *                   @property body - response information from the server
+ */
+export let put = async (uri, body, options, execution = "json") => {
+  options = _.defaultsDeep(options, { method: "PUT", credentials: "include" });
+  options = bodyBuilder(body, options);
+
+  return await fetchResolve(uri, options, execution);
+};
+
+/**
+ * This method is responsible for sending post requests to the server and returning a response
+ *
+ * @param {String} uri - Non-domain endpoint for the server
+ * @param {String} body - Information to be sent to the server
+ * @param {String} execution - Response Callback to interpret the response stream
+ * @returns {object} @property status - status code from the server
+ *                   @property body - response information from the server
+ */
+export let deleter = async (uri, body, options, execution = "json") => {
+  options = _.defaultsDeep(options, { method: "DELETE", credentials: "include" });
+  options = bodyBuilder(body, options);
+
+  return await fetchResolve(uri, options, execution);
+};
+
+let bodyBuilder = (body, options) => {
   if (body.constructor === String) {
     options.body = body;
     options.headers = {
@@ -60,8 +98,7 @@ export var post = async (uri, body, options, execution = "json") => {
       "Content-Type": "application/json"
     };
   }
-
-  return await fetchResolve(uri, options, execution);
+  return options;
 };
 
 const fetchResolve = async (uri, options, execution) => {

@@ -5,21 +5,19 @@ import GenerateHandler from "../endpoints/common/GenerateHandler";
 
 export const prep = async (event, context, rules) => {
   try {
-    let result = { fails: 0 };
+    let result = { fails: 0, messages: [] };
     let shortName = GenerateHandler.baseFnName(context.functionName, rules.tag);
-    console.log("Middleware.prep 1", shortName, rules);
     let currentRules = rules[shortName];
 
     if (!_.isNil(currentRules)) {
       //Handle Sessions
       if (currentRules.session) {
-        console.log("Start Session");
         result.session = await Session.handleSession(event, currentRules);
-        console.log("End Session", result);
-        console.log(!_.isNil(result.session.status), !result.session.status);
         if (!_.isNil(result.session.status) && !result.session.status) {
           result.fails++;
-          console.log("Fail Increase", result.fails);
+        }
+        if (!_.isNil(result.session.message)) {
+          result.messages.push(result.session.message);
         }
       }
 
@@ -29,14 +27,17 @@ export const prep = async (event, context, rules) => {
         if (!_.isNil(result.policy.status) && !result.policy.status) {
           result.fails++;
         }
+        if (!_.isNil(result.policy.message)) {
+          result.messages.push(result.policy.message);
+        }
       }
     } else {
       throw new Error("Functions not found");
     }
 
     return result;
-  } catch (err) {
-    return { fails: 1, error: err };
+  } catch (error) {
+    return { fails: 1, error };
   }
 };
 

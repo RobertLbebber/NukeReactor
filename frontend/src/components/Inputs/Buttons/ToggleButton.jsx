@@ -20,8 +20,9 @@ export class ToggleButton extends Component {
   }
 
   render() {
+    const { children, className, component, scope, onClick, path } = this.props;
     if (
-      _(this.props.scope)
+      _(scope)
         .chain()
         .get(this.state.path)
         .isNil()
@@ -30,21 +31,23 @@ export class ToggleButton extends Component {
     ) {
       throw new Error("Path of scope was not provided correct, button will fail to change state. ");
     }
+    let ProxyComponent = component;
     return (
-      <Button
-        className={this._tag + " " + this.props.className}
+      <ProxyComponent
+        className={this._tag + " " + className}
         {...this.props}
-        onClick={() => {
-          let localPath = this.props.path;
-          this.props.scope.setState(prevState => {
+        onClick={e => {
+          let localPath = path;
+          scope.setState(prevState => {
             let safeState = _.cloneDeep(prevState);
             let value = _.get(safeState, localPath);
             return _.set(prevState, localPath, !value);
           });
+          onClick(e);
         }}
       >
-        {this.props.children}
-      </Button>
+        {children}
+      </ProxyComponent>
     );
   }
 
@@ -56,7 +59,8 @@ export class ToggleButton extends Component {
   };
 
   static defaultProps = {
-    className: ""
+    className: "",
+    component: Button
   };
 }
 export default ToggleButton;

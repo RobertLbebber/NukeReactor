@@ -8,28 +8,22 @@ import gjsPresetWebpage from "grapesjs-preset-webpage";
 import gjsPresetNewsletter from "grapesjs-preset-newsletter";
 import gjsBasicBlocks from "grapesjs-blocks-basic";
 // Components
-import GComponent from "./GComponent";
+// import GComponent from "./GComponent";
 import GBlock from "./GBlock";
-import type, { GrapesPluginType } from "../types/grapes";
+// import type, { GrapesPluginType } from "../types/grapes";
 
 const { useEffect, useState } = React;
 
-type PropsType = {
-  id: string,
-  // Preset and plugin options
-  webpage: boolean,
-  newsletter: boolean,
-  plugins: Array<GrapesPluginType>,
-  // Components
-  components: Array<GComponent>,
-  blocks: Array<GBlock>,
-  // Editor configurations
-  storageManager: {},
-  blockManager: {}
-};
-
-function GEditor(props: PropsType) {
-  const { id = "grapesjs-react-editor", storageManager, blockManager, components, blocks, webpage, newsletter } = props;
+function GEditor(props) {
+  const {
+    id = "grapesjs-react-editor",
+    storageManager = {},
+    blockManager = {},
+    components,
+    blocks,
+    webpage,
+    newsletter
+  } = props;
   const [editor, setEditor] = useState(null);
   useEffect(() => {
     if (!editor) {
@@ -55,7 +49,7 @@ function GEditor(props: PropsType) {
       const defaultType = editor.DomComponents.getType("default");
       const defaultModel = defaultType.model;
       const defaultView = defaultType.view;
-      components.forEach((component: GComponent) => {
+      components.forEach(component => {
         editor.DomComponents.addType(component.type, {
           model: defaultModel.extend(
             {

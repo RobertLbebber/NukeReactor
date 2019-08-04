@@ -9,6 +9,9 @@ let custom = {
       },
       migration: {
         dir: "offline/migrations"
+      },
+      "serverless-offline": {
+        port: 4000
       }
     }
   }

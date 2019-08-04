@@ -12,6 +12,22 @@
       "runtimeArgs": ["run-script", "build"],
       "program": "${workspaceFolder}",
       "port": 9229
+    },
+    {
+      "name": "Debug Serverless",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run-script", "build", "&&", "serverless", "offline"],
+      "port": 9229
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Serverless2",
+      "program": "${workspaceFolder}/node_modules/.bin/sls",
+      "runtimeArgs": ["invoke", "local", "-f", "getMe", "--data", "{}"],
+      "port": 9229
     }
   ]
 }

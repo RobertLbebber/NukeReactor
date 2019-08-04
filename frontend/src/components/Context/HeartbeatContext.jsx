@@ -1,11 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
 import _ from "lodash";
 import Cookies from "js-cookie";
-import Redirect from "react-router-dom/Redirect";
 
 import Restful from "../../util/io/Restful";
-import { LandingPage } from "../Pages/Public/LandingPage";
-import { Debug, devvar } from "../../util/devvar/devvar";
+import { devvar, Debug } from "../../util/devvar/devvar";
 
 export const HeartbeatContext = React.createContext();
 
@@ -47,23 +46,36 @@ export class HeartbeatProvider extends React.Component {
   }
 
   heartbeat() {
-    Restful.get("getMe", false)
-      .then(response => {
-        if (this._mounted) {
-          if (!_.isNil(response)) {
-            this.setState({ ...this.state, ...response });
-          }
-        }
-      })
-      .catch(error => {
-        if (error.status === 410) {
-          this.setState({ account: null });
+    if (Debug.ACTIVE) {
+      this.setState({
+        account: {
+          id: "-1",
+          email: "fake@email.com",
+          firstName: "Bob",
+          lastName: "Hert",
+          profile_img: "src/assets/img/faces/face-0.jpg"
         }
       });
+    } else {
+      Restful.get("getMe", false)
+        .then(response => {
+          if (this._mounted) {
+            if (!_.isNil(response)) {
+              this.setState({ ...this.state, ...response });
+            }
+          }
+        })
+        .catch(error => {
+          if (error.status === 410) {
+            this.setState({ account: null });
+          }
+        });
+    }
   }
 
   componentDidMount() {
     this._mounted = true;
+    this.heartbeat();
   }
 
   componentWillUnmount() {
@@ -79,3 +91,10 @@ export class HeartbeatProvider extends React.Component {
   }
 }
 export default HeartbeatProvider;
+export const AccountShape = PropTypes.shape({
+  id: PropTypes.string,
+  email: PropTypes.string,
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
+  profile_img: PropTypes.string
+});

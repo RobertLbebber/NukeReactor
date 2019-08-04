@@ -1,5 +1,5 @@
 {
-  "name": "serverless",
+  "name": "serverSide",
   "version": "1.0.0",
   "description": "Description",
   "repository": "repository",
@@ -9,6 +9,7 @@
     "deploy": "serverless deploy ",
     "create-dist": "babel src --out-dir dist/",
     "build": "babel-node build.js && npm run create-dist",
+    "start-local": "export SLS_DEBUG=* && node --inspect ~\\AppData\\Roaming\\npm\\serverless offline -s dev",
     "test": "echo \"Error: no test specified\"  && exit 1",
     "watch": "webpack --watch"
   },
@@ -42,6 +43,7 @@
     "graceful-fs": "^4.1.15",
     "json-loader": "^0.5.7",
     "node-yaml": "^3.2.0",
+    "serverless": "^1.49.0",
     "serverless-dynamodb-local": "^0.2.37",
     "serverless-offline": "^3.8.3",
     "webpack": "^4.30.0",

@@ -7,8 +7,9 @@ import { Debug, devvar } from "../util/devvar/devvar";
 import { Switch } from "react-router-dom";
 import { HeartbeatContext } from "../components/Context/HeartbeatContext";
 import { LandingPage } from "../components/Pages/Public/LandingPage";
-import indexRoutes from "./routes.js";
+import routes from "./routes.js";
 import RouteContextProvider from "../components/Context/RouteContext";
+import { Container } from "@material-ui/core";
 
 export class Routes extends Component {
   constructor(props) {
@@ -43,22 +44,28 @@ export class Routes extends Component {
                   <div>
                     <div className={"main-content"}>
                       <Switch>
-                        {indexRoutes.map(indexRoute => (
+                        {routes.map(route => (
                           <Route
-                            exact={indexRoute.exact}
-                            key={indexRoute.name}
-                            path={indexRoute.path}
+                            exact={route.exact}
+                            key={route.name}
+                            path={route.path}
                             render={props => (
-                              <RouteContextProvider
-                                value={{ renderInfo: indexRoute, routeInfo: props, routesInfo: indexRoutes }}
-                              >
-                                <Header
-                                  componentName={indexRoute.name}
-                                  displayType={"standard"}
-                                  routes={indexRoutes}
-                                  account={heart.account}
-                                />
-                                <indexRoute.component {...props} {...heart.account} />
+                              <RouteContextProvider value={{ currentRoute: route, currentInfo: props, routes: routes }}>
+                                {Boolean(route.nonStandardNavbar) ? (
+                                  <route.component {...props} {...heart.account} />
+                                ) : (
+                                  <React.Fragment>
+                                    <Header
+                                      componentName={route.name}
+                                      displayType={"standard"}
+                                      routes={route}
+                                      account={heart.account}
+                                    />
+                                    <Container fixed>
+                                      <route.component {...props} {...heart.account} />
+                                    </Container>
+                                  </React.Fragment>
+                                )}
                               </RouteContextProvider>
                             )}
                           />

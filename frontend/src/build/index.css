@@ -61,7 +61,8 @@ div.center-container > div {
   width: 250px !important;
   height: 250px !important;
   position: fixed;
-  left: 50%; }
+  left: calc(50% - 125px);
+  top: calc(50% - 125px); }
 
 .Feed div {
   margin: auto; }
@@ -161,4 +162,5 @@ div.center-container > div {
       height: 40px; }
 
 .main-content {
-  background-color: aliceblue; }
+  background-color: aliceblue;
+  height: 100%; }

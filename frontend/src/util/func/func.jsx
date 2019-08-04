@@ -11,6 +11,10 @@ export let ifNil = (operator, alternative = null) => {
   return _.isNil(operator) ? alternative : operator;
 };
 
+export let ifThenNil = (operator, result, alternative = null) => {
+  return _.isNil(operator) ? alternative : result;
+};
+
 export const switchCase = key => cases => defaultCase => {
   return cases.hasOwnProperty(key) ? cases[key] : defaultCase;
 };
@@ -26,5 +30,6 @@ export const switchBox = (key, cases, defaultCase) => {
 export default (module.export = {
   generateSerial,
   ifNil,
+  ifThenNil,
   switchBox
 });
