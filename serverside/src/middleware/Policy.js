@@ -1,5 +1,5 @@
 import env from "../config/env";
-import { DEVELOPMENT } from "../config/constants";
+import { DEVELOPMENT } from "../config/env";
 
 export const handlePolicies = currentRule => {
   if (currentRule.debug && !env.mode === DEVELOPMENT) {

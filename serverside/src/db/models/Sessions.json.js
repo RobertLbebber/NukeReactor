@@ -5,11 +5,12 @@ import Account from "./Account.json";
 
 let tableName = env.tableName("Sessions");
 
+//Active for 2 Hours.hrs mins secs millis
+const ACTIVE_TIME = 2 * 60 * 60 * 1000;
+
 export const Utils = {
   stillActive: dataResult => {
-    //          hrs mins secs millis
-    activeSpan = 2 * 60 * 60 * 1000;
-    if (dataResult.updatedDate > activeSpan) {
+    if (dataResult.updatedDate > ACTIVE_TIME) {
       return false;
     }
     return true;
@@ -24,7 +25,7 @@ export const Model = {
     ...Attributes.updatedDate,
     accountId: { type: new TYPES.REF(Account) }
   },
-  func: { ...CommonDBCrud(tableName) }
+  func: CommonDBCrud(tableName)
 };
 
 export const Table = {

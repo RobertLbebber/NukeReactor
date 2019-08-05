@@ -1,7 +1,6 @@
 import _ from "lodash";
 import { GET } from "../../io/ResponseStatus";
-import { SERVICE_NAME, DEVELOPMENT, PRODUCTION } from "../../config/constants";
-import env from "../../config/env";
+import env, { SERVICE_NAME, DEVELOPMENT, PRODUCTION } from "../../config/env";
 
 //genFn
 export const lamdbaHandler = (controller, name, path, session = true, rest = GET, debug = false, other) => fn => {
@@ -21,10 +20,10 @@ export const handlerExporter = controller => {
 };
 
 //baseFnName
-export const functionName = (fullName, tag) => {
+export const functionName = (fullName, controllerName) => {
   let serviceName = env.mode === DEVELOPMENT ? DEVELOPMENT : PRODUCTION;
   console.log(SERVICE_NAME + "-" + serviceName, fullName);
-  return fullName.replace(SERVICE_NAME + "-" + serviceName + "-" + tag + "-", "");
+  return fullName.replace(SERVICE_NAME + "-" + serviceName + "-" + controllerName + "-", "");
 };
 
 export default { genFn: lamdbaHandler, expFn: handlerExporter, baseFnName: functionName };

@@ -3,11 +3,11 @@ import Policy from "./Policy";
 import Session from "./Session";
 import GenerateHandler from "../endpoints/common/GenerateHandler";
 
-export const prep = async (event, context, rules) => {
+export const prep = async (event, context, controller) => {
   try {
     let result = { fails: 0, messages: [] };
-    let shortName = GenerateHandler.baseFnName(context.functionName, rules.tag);
-    let currentRules = rules[shortName];
+    let shortName = GenerateHandler.baseFnName(context.functionName, controller.constructor.name);
+    let currentRules = controller[shortName];
 
     if (!_.isNil(currentRules)) {
       //Handle Sessions
@@ -32,12 +32,14 @@ export const prep = async (event, context, rules) => {
         }
       }
     } else {
-      throw new Error("Functions not found");
+      console.log("Error Being thown", { Look: 1 });
+      throw new Error("Functions not found", { Look: 1 });
     }
 
     return result;
   } catch (error) {
-    return { fails: 1, error };
+    console.log("Error Being Catched", error);
+    return { fails: 1, error: error.message };
   }
 };
 

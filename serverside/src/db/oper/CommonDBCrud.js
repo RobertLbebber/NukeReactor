@@ -1,9 +1,10 @@
 import _ from "lodash";
 import AWS from "aws-sdk";
+import env, { DEVELOPMENT } from "../../config/env";
 // let dynamodb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
 let documentClient = new AWS.DynamoDB.DocumentClient();
 
-const checkProps = async tableName => async item => {
+const checkProps = tableName => async item => {
   if (_.isNil(item)) {
     throw new Error("No query item provided for the Crud Action.");
   }
@@ -22,20 +23,25 @@ const checkProps = async tableName => async item => {
 /**
  * Updated
  */
-export const create = async tableName => async item => {
+export const create = TableName => async Item => {
+  checkProps(Item);
+  let params = { TableName, Item };
+  documentClient.put(params);
+};
+
+export const crement = TableName => async item => {
   checkProps(item);
 };
-export const crement = async tableName => async item => {
-  checkProps(item);
+export const update = TableName => async (Key, Item) => {
+  checkProps(Item);
+  let params = { TableName, Key, Item };
+  documentClient.update(params);
 };
-export const update = async tableName => async item => {
-  checkProps(item);
+export const createUpdate = tableName => async Item => {
+  checkProps(Item);
 };
-export const createUpdate = async tableName => async item => {
-  checkProps(item);
-};
-export const remove = async tableName => async item => {
-  checkProps(item);
+export const remove = tableName => async Item => {
+  checkProps(Item);
 
   documentClient.delete(params, function(err, data) {
     if (err) console.log(err);
@@ -46,7 +52,7 @@ export const remove = async tableName => async item => {
 /**
  * Select
  */
-export const query = async tableName => async (item, dynoExpression) => {
+export const query = tableName => async (item, dynoExpression) => {
   checkProps(item);
   let marshalling = { KeyConditionExpression: [], ExpressionAttributeValues: {} };
   for (key in item) {
@@ -80,22 +86,27 @@ export const query = async tableName => async (item, dynoExpression) => {
   return await documentClient.get(params);
 };
 
-export const get = async tableName => async (item, dynoExpression) => {
-  checkProps(item);
+export const get = TableName => async (Key, dynoExpression) => {
   let params = {
-    TableName: tableName,
-    Key: {
-      ...item
-    },
+    TableName,
+    Key,
     ...dynoExpression
   };
   return await documentClient.get(params);
 };
 
+export const scan = tableName => async () => {
+  let params = { TableName: tableName };
+  return await documentClient.scan(params);
+};
+
 const exportable = name => {
-  let functions = { get, query, create, crement, update, createUpdate, remove };
+  let functions = { get, query, create, crement, update, createUpdate, remove, scan };
   for (let func in functions) {
     functions[func] = functions[func](name);
+  }
+  if (env.mode === DEVELOPMENT) {
+    //Put methods that should be for Development only here
   }
   return functions;
 };
