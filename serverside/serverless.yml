@@ -80,6 +80,54 @@ functions:
       - http:
           path: runQuery
           method: post
+  DebugController-SessionsModel_get:
+    handler: dist/endpoints/DebugController.SessionsModel_get
+    events:
+      - http:
+          path: /SessionsModel/debug/get
+          method: get
+  DebugController-SessionsModel_query:
+    handler: dist/endpoints/DebugController.SessionsModel_query
+    events:
+      - http:
+          path: /SessionsModel/debug/query
+          method: post
+  DebugController-SessionsModel_create:
+    handler: dist/endpoints/DebugController.SessionsModel_create
+    events:
+      - http:
+          path: /SessionsModel/debug/create
+          method: post
+  DebugController-SessionsModel_crement:
+    handler: dist/endpoints/DebugController.SessionsModel_crement
+    events:
+      - http:
+          path: /SessionsModel/debug/crement
+          method: get
+  DebugController-SessionsModel_update:
+    handler: dist/endpoints/DebugController.SessionsModel_update
+    events:
+      - http:
+          path: /SessionsModel/debug/update
+          method: post
+  DebugController-SessionsModel_createUpdate:
+    handler: dist/endpoints/DebugController.SessionsModel_createUpdate
+    events:
+      - http:
+          path: /SessionsModel/debug/createUpdate
+          method: post
+  DebugController-SessionsModel_remove:
+    handler: dist/endpoints/DebugController.SessionsModel_remove
+    events:
+      - http:
+          path: /SessionsModel/debug/remove
+          method: delete
+  DebugController-SessionsModel_scan:
+    handler: dist/endpoints/DebugController.SessionsModel_scan
+    events:
+      - http:
+          path: /SessionsModel/debug/scan
+          method: get
 provider:
   name: aws
   runtime: nodejs8.10

@@ -11,6 +11,7 @@ export const lamdbaHandler = (controller, name, path, session = true, rest = GET
 export const handlerExporter = controller => {
   let ends = {};
   for (let endpointName in controller) {
+    // let controllerName = controller.getName();
     let endpoint = controller[endpointName];
     if (_.isObject(endpoint) && !_.isNil(endpoint)) {
       ends[endpointName] = endpoint.fn;
@@ -22,7 +23,6 @@ export const handlerExporter = controller => {
 //baseFnName
 export const functionName = (fullName, controllerName) => {
   let serviceName = env.mode === DEVELOPMENT ? DEVELOPMENT : PRODUCTION;
-  console.log(SERVICE_NAME + "-" + serviceName, fullName);
   return fullName.replace(SERVICE_NAME + "-" + serviceName + "-" + controllerName + "-", "");
 };
 

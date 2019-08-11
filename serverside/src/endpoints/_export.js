@@ -1,2 +1,5 @@
 import AccountController from "./AccountController";
-export { AccountController };
+import DebugController from "./DebugController";
+
+export { AccountController, DebugController };
+// export { AccountController };

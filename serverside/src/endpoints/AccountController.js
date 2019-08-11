@@ -4,8 +4,9 @@ import Middleware from "../middleware/Middleware";
 import ResponseStatus, { GET, POST } from "../io/ResponseStatus";
 import GenerateHandler from "./common/GenerateHandler";
 import { PRECONDITION } from "../io/HttpErrors";
+import { GenericController } from "./common/GenericController";
 
-class AccountController {}
+class AccountController extends GenericController {}
 let init = new AccountController();
 
 GenerateHandler.genFn(init, "getMe", "account/getMe")(async (event, context) => {
