@@ -6,8 +6,7 @@ import GenerateHandler from "../endpoints/common/GenerateHandler";
 export const prep = async (event, context, controller) => {
   try {
     let result = { fails: 0, messages: [] };
-    constructorName = _.isNil(controller.name) ? controller.name : controller.constructor.name;
-    let shortName = GenerateHandler.baseFnName(context.functionName, controller.constructor.name);
+    let shortName = GenerateHandler.baseFnName(context.functionName, controller.getName());
     let currentRules = controller[shortName];
 
     if (!_.isNil(currentRules)) {

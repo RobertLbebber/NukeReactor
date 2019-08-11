@@ -7,50 +7,50 @@ import env, { DEVELOPMENT } from "../config/env.js";
 const postGets = {
   get: {
     method: GET,
-    crud: (event, fn) => {
-      return fn(event.Key, event.other);
+    crud: async (event, fn) => {
+      return await fn(event.Key, event.other);
     }
   },
   query: {
     method: POST,
-    crud: (event, fn) => {
-      return fn(event.Item, event.other);
+    crud: async (event, fn) => {
+      return await fn(event.Item, event.other);
     }
   },
   create: {
     method: POST,
-    crud: (event, fn) => {
-      return fn(event.Item, event.other);
+    crud: async (event, fn) => {
+      return await fn(event.Item, event.other);
     }
   },
   crement: {
     method: GET,
-    crud: (event, fn) => {
-      return fn(event.Key, event.other);
+    crud: async (event, fn) => {
+      return await fn(event.Key, event.other);
     }
   },
   update: {
     method: POST,
-    crud: (event, fn) => {
-      return fn(event.Key, event.Item, event.other);
+    crud: async (event, fn) => {
+      return await fn(event.Key, event.Item, event.other);
     }
   },
   createUpdate: {
     method: POST,
-    crud: (event, fn) => {
-      return fn(event.Item, event.other);
+    crud: async (event, fn) => {
+      return await fn(event.Item, event.other);
     }
   },
   remove: {
     method: DELETE,
-    crud: (event, fn) => {
-      return fn(event.Item, event.other);
+    crud: async (event, fn) => {
+      return await fn(event.Item, event.other);
     }
   },
   scan: {
     method: GET,
-    crud: (event, fn) => {
-      return fn();
+    crud: async (event, fn) => {
+      return await fn();
     }
   }
 };
@@ -70,9 +70,10 @@ for (let controllerName in RawModels) {
       "/" + controllerName + "/debug/" + funcName,
       false,
       postGets[funcName].method
-    )((event, context, callback) => {
-      let result = postGets[funcName].crud(event, funcName[funcName]);
-      return ResponseStatus(true, result, 300);
+    )(async (event, context, callback) => {
+      let result = await postGets[funcName].crud(event, functions[funcName]);
+      console.log("informations:::::", result.response.httpResponse.statusCode, result.response.data);
+      return ResponseStatus(true, result);
     });
     controllers[publicFuncName] = init[publicFuncName];
   }

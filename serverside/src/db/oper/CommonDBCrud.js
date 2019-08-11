@@ -6,10 +6,18 @@ let documentClient = new AWS.DynamoDB.DocumentClient();
 
 const checkProps = tableName => async item => {
   if (_.isNil(item)) {
+    console.log("No query item provided for the Crud Action.");
     throw new Error("No query item provided for the Crud Action.");
   }
   for (key in item) {
     if (this.props[key].type.constructor != item[key].constructor) {
+      console.log(
+        "Malformed query. Provided query type mismatches expected: '" +
+          this.props[key].type.constructor +
+          "' != '" +
+          item[key].constructor +
+          "'."
+      );
       throw new Error(
         "Malformed query. Provided query type mismatches expected: '" +
           this.props[key].type.constructor +
@@ -24,36 +32,42 @@ const checkProps = tableName => async item => {
  * Updated
  */
 export const create = TableName => async Item => {
-  checkProps(Item);
+  checkProps(TableName)(Item);
   let params = { TableName, Item };
-  documentClient.put(params);
+  console.log(params);
+  return await documentClient.put(params);
 };
 
-export const crement = TableName => async item => {
-  checkProps(item);
+export const crement = TableName => async Item => {
+  checkProps(TableName)(Item);
 };
 export const update = TableName => async (Key, Item) => {
-  checkProps(Item);
+  checkProps(TableName)(Item);
   let params = { TableName, Key, Item };
-  documentClient.update(params);
+  return await documentClient.update(params);
 };
-export const createUpdate = tableName => async Item => {
-  checkProps(Item);
+export const createUpdate = TableName => async (Key, Item) => {
+  checkProps(TableName)(Item);
+  let params = { TableName, Key, Item };
+  let dbObj = await documentClient.get(params);
+  if (!_.isNil(dbObj)) {
+    return await documentClient.update(params);
+  } else {
+    return await documentClient.create(params);
+  }
 };
 export const remove = tableName => async Item => {
-  checkProps(Item);
+  checkProps(TableName)(Item);
 
-  documentClient.delete(params, function(err, data) {
-    if (err) console.log(err);
-    else console.log(data);
-  });
+  let params = { TableName, Item };
+  return await documentClient.delete(params);
 };
 
 /**
  * Select
  */
 export const query = tableName => async (item, dynoExpression) => {
-  checkProps(item);
+  checkProps(TableName)(item);
   let marshalling = { KeyConditionExpression: [], ExpressionAttributeValues: {} };
   for (key in item) {
     let value = item[key];

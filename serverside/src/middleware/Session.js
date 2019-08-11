@@ -12,7 +12,6 @@ export const handleSession = async event => {
     key = event.headers.seesionId;
   }
   let resultSet = await Sessions.func.get({ [Sessions.primaryKey]: key });
-  console.log(resultSet.data);
   if (_.isNil(resultSet.data)) {
     return StatusObject(false, "No Session found with that key");
   } else if (!Utils.stillActive(resultSet.data)) {

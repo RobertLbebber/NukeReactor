@@ -5,7 +5,6 @@ function routeBuilder() {
   let functions = {};
   for (let controllerName in Controllers) {
     let controller = Controllers[controllerName];
-    console.log(controller);
     for (let handlerName in controller[controllerName]) {
       let handlerGroup = controller[controllerName][handlerName];
       if (handlerGroup.constructor != Object) {
@@ -33,7 +32,6 @@ function routeBuilder() {
   return functions;
 }
 
-console.log(routeBuilder());
 let routes = {
   functions: routeBuilder()
 };
