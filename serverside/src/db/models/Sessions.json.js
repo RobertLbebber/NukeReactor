@@ -1,9 +1,9 @@
-import Attributes, { TYPES } from "./common/Attributes";
+import CommonAttributes, { TYPES } from "./common/Attributes";
 import CommonDBCrud from "../oper/CommonDBCrud";
 import env from "../../config/env";
 import Account from "./Account.json";
 
-let tableName = env.tableName("Sessions");
+let TableName = env.tableName("Sessions");
 
 //Active for 2 Hours.hrs mins secs millis
 const ACTIVE_TIME = 2 * 60 * 60 * 1000;
@@ -20,19 +20,17 @@ export const Utils = {
 export const Model = {
   primaryKey: "id",
   props: {
-    ...Attributes.id,
-    ...Attributes.createdDate,
-    ...Attributes.updatedDate,
-    accountId: { type: new TYPES.REF(Account) }
-  },
-  func: CommonDBCrud(tableName)
+    ...CommonAttributes
+  }
 };
+Model.props.accountId = { type: new TYPES.REF(Account, Model) };
+Model.func = CommonDBCrud(Model, TableName);
 
 export const Table = {
   Type: env.mainDB,
   DeletionPolicy: env.deletionPolicy,
   Properties: {
-    TableName: tableName,
+    TableName,
     KeySchema: [
       {
         AttributeName: "id",

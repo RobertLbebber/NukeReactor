@@ -18,7 +18,7 @@ export const handleSession = async event => {
     return StatusObject(false, "No Session found with that key", 2);
   } else {
     //update the timestamp
-    await Sessions.func.update({ id: key });
+    await Sessions.func.update({ [Sessions.primaryKey]: key });
     return StatusObject(true);
   }
 };

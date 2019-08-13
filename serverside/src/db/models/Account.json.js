@@ -1,15 +1,13 @@
 import env from "../../config/env";
-import Attributes, { TYPES, required, unique } from "./common/Attributes";
+import CommonAttributes, { TYPES, required, unique } from "./common/Attributes";
 import CommonDBCrud from "../oper/CommonDBCrud";
 
-const tableName = env.tableName("Account");
+const TableName = env.tableName("Account");
 
 export const Model = {
   primaryKey: "id",
   props: {
-    ...Attributes.createdDate,
-    ...Attributes.updatedDate,
-    ...Attributes.id,
+    ...CommonAttributes,
     email: { type: TYPES.STRING, ...required, ...unique },
     password: { type: TYPES.STRING, ...required },
     firstName: { type: TYPES.STRING, ...required },
@@ -20,15 +18,15 @@ export const Model = {
     pageContent: { collection: "pageTemplates", via: "accountId" },
     messages: { collection: "messages", via: "accountId" },
     creditCard: { collection: "creditCards", via: "accountId" }
-  },
-  func: { ...CommonDBCrud(tableName) }
+  }
 };
+Model.func = CommonDBCrud(Model, TableName);
 
 export const Table = {
   Type: env.mainDB,
   DeletionPolicy: env.deletionPolicy,
   Properties: {
-    TableName: tableName,
+    TableName,
     KeySchema: [
       {
         AttributeName: "id",

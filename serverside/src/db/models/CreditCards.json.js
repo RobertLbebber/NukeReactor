@@ -3,28 +3,27 @@ import Attributes, { TYPES } from "./common/Attributes";
 import CommonDBCrud from "../oper/CommonDBCrud";
 import Account from "./Account.json";
 
-const tableName = env.tableName("CreditCards");
+const TableName = env.tableName("CreditCards");
 
 export const Model = {
   primaryKey: "id",
   props: {
-    ...Attributes.createdDate,
-    ...Attributes.updatedDate,
+    ...Attributes,
     serial: { type: TYPES.STRING },
     cardNumber: { type: TYPES.NUMBER },
     expMonth: { type: TYPES.NUMBER },
     expYear: { type: TYPES.NUMBER },
-    cvv: { type: TYPES.NUMBER },
-    accountId: { type: new TYPES.REF(Account) }
-  },
-  func: { ...CommonDBCrud(tableName) }
+    cvv: { type: TYPES.NUMBER }
+  }
 };
+Model.props.accountId = { type: new TYPES.REF(Account, Model) };
+Model.func = CommonDBCrud(Model, TableName);
 
 export const Table = {
   Type: env.mainDB,
   DeletionPolicy: env.deletionPolicy,
   Properties: {
-    TableName: tableName,
+    TableName,
     KeySchema: [
       {
         AttributeName: "id",
@@ -43,3 +42,5 @@ export const Table = {
     }
   }
 };
+
+export default Model;

@@ -4,28 +4,26 @@ import Account from "./Account.json";
 import CommonDBCrud from "../oper/CommonDBCrud";
 import { TYPES } from "./common/Attributes";
 
-const tableName = env.tableName("Messages");
+const TableName = env.tableName("Messages");
 
 export const Model = {
   primaryKey: "id",
   props: {
-    ...Attributes.id,
-    ...Attributes.createdDate,
-    ...Attributes.updatedDate,
+    ...Attributes,
     mainMessage: { type: TYPES.STRING },
     extraMessage: { type: TYPES.STRING },
     likes: { type: TYPES.NUMBER },
-    shares: { type: TYPES.NUMBER },
-    accountId: { type: new TYPES.REF(Account) }
-  },
-  func: { ...CommonDBCrud(tableName) }
+    shares: { type: TYPES.NUMBER }
+  }
 };
+Model.props.accountId = { type: new TYPES.REF(Account, Model) };
+Model.func = CommonDBCrud(Model, TableName);
 
 export const Table = {
   Type: env.mainDB,
   DeletionPolicy: env.deletionPolicy,
   Properties: {
-    TableName: tableName,
+    TableName,
     KeySchema: [
       {
         AttributeName: "id",

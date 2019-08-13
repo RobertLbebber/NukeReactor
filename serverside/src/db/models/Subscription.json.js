@@ -3,25 +3,24 @@ import env from "../../config/env";
 import Account from "./Account.json";
 import CommonDBCrud from "../oper/CommonDBCrud";
 
-let tableName = env.tableName("Subscription");
+let TableName = env.tableName("Subscription");
 
 export const Model = {
   primaryKey: "id",
   props: {
-    ...Attributes.id,
-    ...Attributes.createdDate,
-    ...Attributes.updatedDate,
+    ...Attributes,
     serial: { type: TYPES.STRING },
     accountId: { type: new TYPES.REF(Account) },
     subscribeTo: { type: new TYPES.REF(Account) }
-  },
-  func: { ...CommonDBCrud(tableName) }
+  }
 };
+Model.func = CommonDBCrud(Model, TableName);
+
 export const Table = {
   Type: env.mainDB,
   DeletionPolicy: env.deletionPolicy,
   Properties: {
-    TableName: tableName,
+    TableName,
     KeySchema: [
       {
         AttributeName: "id",

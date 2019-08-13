@@ -3,27 +3,26 @@ import Account from "./Account.json";
 import env from "../../config/env";
 import CommonDBCrud from "../oper/CommonDBCrud";
 
-const tableName = env.tableName("PageTemplates");
+const TableName = env.tableName("PageTemplates");
 
 export const Model = {
   primaryKey: "id",
   props: {
-    ...Attributes.createdDate,
-    ...Attributes.updatedDate,
+    ...Attributes,
     serial: { type: TYPES.STRING },
     designName: { type: TYPES.STRING },
     designCategory: { type: TYPES.STRING },
     pageLayout: { type: TYPES.STRING },
     accountId: { type: new TYPES.REF(Account) }
-  },
-  func: { ...CommonDBCrud(tableName) }
+  }
 };
+Model.func = CommonDBCrud(Model, TableName);
 
 export const Table = {
   Type: env.mainDB,
   DeletionPolicy: env.deletionPolicy,
   Properties: {
-    TableName: tableName,
+    TableName,
     KeySchema: [
       {
         AttributeName: "id",

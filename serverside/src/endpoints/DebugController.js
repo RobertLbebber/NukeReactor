@@ -20,7 +20,7 @@ const postGets = {
   create: {
     method: POST,
     crud: async (event, fn) => {
-      return await fn(event.Item, event.other);
+      return await fn(JSON.parse(event.body).Item, event.other);
     }
   },
   crement: {
@@ -70,9 +70,8 @@ for (let controllerName in RawModels) {
       "/" + controllerName + "/debug/" + funcName,
       false,
       postGets[funcName].method
-    )(async (event, context, callback) => {
+    )(async event => {
       let result = await postGets[funcName].crud(event, functions[funcName]);
-      console.log("informations:::::", result.response.httpResponse.statusCode, result.response.data);
       return ResponseStatus(true, result);
     });
     controllers[publicFuncName] = init[publicFuncName];

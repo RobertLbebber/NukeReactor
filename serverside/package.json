@@ -10,7 +10,8 @@
     "create-dist": "babel src --out-dir dist/",
     "build": "babel-node build.js && npm run create-dist",
     "local": "sls offline --port 3000 &&  sls dynamodb start ",
-    "lstart": "babel-node build.js && npm run create-dist && sls offline --port 3000 &&  sls dynamodb start ",
+    "lstart": "babel-node build.js && npm run create-dist && sls offline --port 3000",
+    "db": " sls dynamodb start",
     "test": "echo \"Error: no test specified\"  && exit 1",
     "watch": "webpack --watch"
   },

@@ -3,7 +3,15 @@ import { GET } from "../../io/ResponseStatus";
 import env, { SERVICE_NAME, DEVELOPMENT, PRODUCTION } from "../../config/env";
 
 //genFn
-export const lamdbaHandler = (controller, name, path, session = true, rest = GET, debug = false, other) => fn => {
+export const lamdbaHandler = (
+  controller,
+  name,
+  path = name,
+  session = true,
+  rest = GET,
+  debug = false,
+  other
+) => fn => {
   controller[name] = { fn, path, session, rest, debug, ...other };
 };
 

@@ -4,70 +4,64 @@ import env, { DEVELOPMENT } from "../../config/env";
 // let dynamodb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
 let documentClient = new AWS.DynamoDB.DocumentClient();
 
-const checkProps = tableName => async item => {
+const checkProps = (model, tableName, item) => {
   if (_.isNil(item)) {
-    console.log("No query item provided for the Crud Action.");
     throw new Error("No query item provided for the Crud Action.");
   }
-  for (key in item) {
-    if (this.props[key].type.constructor != item[key].constructor) {
-      console.log(
-        "Malformed query. Provided query type mismatches expected: '" +
-          this.props[key].type.constructor +
-          "' != '" +
-          item[key].constructor +
-          "'."
-      );
+  for (let field in item) {
+    if (model.props[field].type.constructor != item[field].constructor) {
       throw new Error(
         "Malformed query. Provided query type mismatches expected: '" +
-          this.props[key].type.constructor +
+          model.props[field].type.constructor +
           "' != '" +
-          item[key].constructor +
+          item[field].constructor +
           "'."
       );
     }
   }
 };
+
 /**
  * Updated
  */
-export const create = TableName => async Item => {
-  checkProps(TableName)(Item);
+export const create = (Model, TableName) => async Item => {
+  checkProps(Model, TableName, Item);
   let params = { TableName, Item };
-  console.log(params);
-  return await documentClient.put(params);
+  return await documentClient.put(params).promise();
 };
 
-export const crement = TableName => async Item => {
-  checkProps(TableName)(Item);
+export const crement = (Model, TableName) => async Item => {
+  checkProps(Model, TableName, Item);
+  let params = { TableName, Item };
+  return await documentClient.update(params).promise();
 };
-export const update = TableName => async (Key, Item) => {
-  checkProps(TableName)(Item);
+export const update = (Model, TableName) => async (Key, Item) => {
+  checkProps(Model, TableName, Item);
   let params = { TableName, Key, Item };
-  return await documentClient.update(params);
+  return await documentClient.update(params).promise();
 };
-export const createUpdate = TableName => async (Key, Item) => {
-  checkProps(TableName)(Item);
+export const createUpdate = (Model, TableName) => async (Key, Item) => {
+  checkProps(Model, TableName, Item);
   let params = { TableName, Key, Item };
-  let dbObj = await documentClient.get(params);
+  let dbObj = await documentClient.get(params).promise();
   if (!_.isNil(dbObj)) {
-    return await documentClient.update(params);
+    return await documentClient.update(params).promise();
   } else {
-    return await documentClient.create(params);
+    return await documentClient.create(params).promise();
   }
 };
-export const remove = tableName => async Item => {
-  checkProps(TableName)(Item);
+export const remove = TableName => async Item => {
+  checkProps(Model, TableName, Item);
 
   let params = { TableName, Item };
-  return await documentClient.delete(params);
+  return await documentClient.delete(params).promise();
 };
 
 /**
  * Select
  */
-export const query = tableName => async (item, dynoExpression) => {
-  checkProps(TableName)(item);
+export const query = (Model, TableName) => async (item, dynoExpression) => {
+  checkProps(Model, TableName, item);
   let marshalling = { KeyConditionExpression: [], ExpressionAttributeValues: {} };
   for (key in item) {
     let value = item[key];
@@ -90,38 +84,33 @@ export const query = tableName => async (item, dynoExpression) => {
   }
   marshalling.KeyConditionExpression = marshalling.KeyConditionExpression.join(" and ");
   let params = {
-    TableName: tableName,
+    TableName,
     Key: {
       id: event.pathParameters.id
     },
     ...dynoExpression
   };
 
-  return await documentClient.get(params);
+  return await documentClient.get(params).promise();
 };
 
-export const get = TableName => async (Key, dynoExpression) => {
-  let params = {
-    TableName,
-    Key,
-    ...dynoExpression
-  };
-  return await documentClient.get(params);
+export const get = (Model, TableName) => async (Key, dynoExpression) => {
+  let params = { TableName, Key, ...dynoExpression };
+  return await documentClient.get(params).promise();
 };
 
-export const scan = tableName => async () => {
-  let params = { TableName: tableName };
-  return await documentClient.scan(params);
+export const scan = (Model, TableName) => async () => {
+  let params = { TableName };
+  return await documentClient.scan(params).promise();
 };
 
-const exportable = name => {
+export default (Model, TableName) => {
   let functions = { get, query, create, crement, update, createUpdate, remove, scan };
   for (let func in functions) {
-    functions[func] = functions[func](name);
+    functions[func] = functions[func](Model, TableName);
   }
   if (env.mode === DEVELOPMENT) {
     //Put methods that should be for Development only here
   }
   return functions;
 };
-export default exportable;

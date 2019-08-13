@@ -23,9 +23,14 @@ export const TYPES = {
 /**
  *
  */
-export const type = (type = TYPES.STRING, reference) => {
+export const type = (type = new TYPES.STRING(), reference, self) => {
   if (!_.isNil(reference)) {
-    return { type, reference: new type(reference, this) };
+    if (_.isNil(self)) {
+      throw new Error("Missing 'self' Parameter for Type Definition");
+    }
+    return { type, reference: new type(reference, self) };
+  } else if (!_.isNil(self)) {
+    throw new Error("Missing 'reference' Parameter for Type Definition");
   } else {
     return { type };
   }
@@ -34,18 +39,8 @@ export const type = (type = TYPES.STRING, reference) => {
 /**
  * Props
  */
-export const createdDate = {
-  createdDate: { ...type.DATE }
-};
-export const updatedDate = {
-  updatedDate: { ...type.DATE }
-};
-export const id = {
-  id: { ...type.STRING }
-};
+export const createdDate = type(new TYPES.DATE());
+export const updatedDate = type(new TYPES.DATE());
+export const id = type();
 
-export default {
-  createdDate,
-  updatedDate,
-  id
-};
+export default { createdDate, updatedDate, id };
