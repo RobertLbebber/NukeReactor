@@ -2,24 +2,6 @@
   "name": "Electr",
   "version": "0.2.5",
   "private": true,
-  "port": 1337,
-  "jest": {
-    "verbose": true,
-    "moduleFileExtensions": [
-      "js",
-      "t.jsx",
-      "jsx"
-    ],
-    "modulePaths": [
-      "**/*.{t.jsx,js,jsx}"
-    ],
-    "coverageDirectory": "src/coverage",
-    "collectCoverageFrom": [
-      "**/*.{js,jsx}",
-      "!**/node_modules/**",
-      "!**/vendor/**"
-    ]
-  },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.3.3",
     "@babel/preset-env": "^7.3.1",
@@ -47,15 +29,12 @@
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.11",
     "material-components-web": "^0.41.0",
+    "moment": "2.24.0",
     "node-gyp": "^3.8.0",
     "node-sass": "^4.12.0",
     "node-sass-chokidar": "0.0.3",
-    "npm": "^6.9.0",
     "npm-install-peers": "^1.2.1",
-    "ory-editor": "^0.4.4",
-    "ory-editor-plugins-background": "^0.4.4",
-    "ory-editor-plugins-html5-video": "^0.4.4",
-    "ory-editor-plugins-slate": "^0.4.4",
+    "qrcode.react": "^0.9.3",
     "react": "^16.8.2",
     "react-bootstrap": "^1.0.0-beta.5",
     "react-chartist": "0.13.1",
@@ -65,8 +44,8 @@
     "react-dropzone": "^8.1.0",
     "react-google-maps": "9.4.5",
     "react-icons": "^3.3.0",
-    "react-jss": "^8.6.1",
-    "react-jsx-parser": "^1.5.1",
+    "react-intl": "^3.3.2",
+    "react-native": "^0.61.2",
     "react-notification-system": "0.2.17",
     "react-router-dom": "4.2.2",
     "react-scripts": "1.1.1",
@@ -83,6 +62,7 @@
     "webpack-manifest-plugin": "1.3.2"
   },
   "scripts": {
+    "build-lang": "babel-node ./src/assets/locale/generateLang.js",
     "build-css": "node-sass-chokidar src/index.scss -o src/build/",
     "ignore-watch-css": "npm run build-css && node-sass-chokidar src/ -o src/build/ --watch --recursive",
     "watch-css": "echo css building is de-activated",
@@ -91,7 +71,10 @@
     "build": "npm run build-css"
   },
   "devDependencies": {
+    "@babel/node": "^7.6.3",
+    "babel-node": "0.0.1-security",
     "css-loader": "^2.1.1",
+    "graceful-fs": "^4.2.2",
     "npm-run-all": "^4.1.2"
   }
 }

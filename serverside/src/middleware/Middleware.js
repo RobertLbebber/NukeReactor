@@ -1,7 +1,7 @@
 import _ from "lodash";
 import Policy from "./Policy";
 import Session from "./Session";
-import GenerateHandler from "../endpoints/common/GenerateHandler";
+import GenerateHandler from "../endpoints/_common/GenerateHandler";
 
 export const prep = async (event, context, controller) => {
   try {

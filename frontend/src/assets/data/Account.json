@@ -1,0 +1,14 @@
+[
+  {
+    "accountPage": "/acc/-2",
+    "id": "-2",
+    "email": "fake@user.1",
+    "firstName": "fake",
+    "lastName": "user1",
+    "profileImg": "/assets/img/tim_80x80.png",
+    "reputation": {
+      "donations": "3",
+      "presige": "4"
+    }
+  }
+]

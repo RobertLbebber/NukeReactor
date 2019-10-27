@@ -1,0 +1,16 @@
+{
+  "folders": [
+    {
+      "path": "frontend"
+    }
+  ],
+  "settings": {
+    "git.ignoreLimitWarning": true,
+    "workbench.colorTheme": "Tomorrow Night Blue",
+    "typescript.format.semicolons": "insert",
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "typescript.format.insertSpaceAfterConstructor": true,
+    "typescript.suggest.autoImports": false,
+    "typescript.format.placeOpenBraceOnNewLineForControlBlocks": true
+  }
+}

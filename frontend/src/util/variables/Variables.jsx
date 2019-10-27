@@ -1,7 +1,3 @@
-/**
- * Check for @deprecated
- */
-
 //
 // //
 // // // For notifications

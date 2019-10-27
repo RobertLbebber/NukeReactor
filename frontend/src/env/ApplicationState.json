@@ -1,0 +1,6 @@
+{
+  "Runtime": "Development",
+  "Debug": true,
+  "ReactoTron": true,
+  "enforceAccount": false
+}

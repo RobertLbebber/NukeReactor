@@ -1,6 +1,7 @@
 import _ from "lodash";
+
 export const findKey = (rec, key) => {
-  if (rec === undefined) return;
+  if (_.isNil(rec)) return;
   else if (rec[key]) return rec;
   else if (rec instanceof Object) {
     for (let i = 0; i < Object.keys(rec).length; i++) {
@@ -13,7 +14,7 @@ export const findKey = (rec, key) => {
   return;
 };
 
-export const pop = (array, index) => _.remove(array, (n, i) => index == i);
+export const pop = (array, index) => _.remove(array, (n, i) => index === i);
 
 export const isJson = str => {
   try {
@@ -23,9 +24,27 @@ export const isJson = str => {
   }
 };
 
-export default (module.export = {
-  isJson
-});
+export function flatten(json) {
+  var result = {};
+
+  function recurse(cur, prop) {
+    if (Object(cur) !== cur) {
+      result[prop] = cur;
+    } else if (Array.isArray(cur)) {
+      for (var i = 0, l = cur.length; i < l; i++) recurse(cur[i], prop + "[" + i + "]");
+      if (l === 0) result[prop] = [];
+    } else {
+      var isEmpty = true;
+      for (var p in cur) {
+        isEmpty = false;
+        recurse(cur[p], prop ? prop + "." + p : p);
+      }
+      if (isEmpty && prop) result[prop] = {};
+    }
+  }
+  recurse(json, "");
+  return result;
+}
 
 export const isNilDeep = (item, path) => {
   let descent = item;
@@ -59,4 +78,9 @@ export const isNilGetDeep = (item, path) => {
     }
   }
   return null;
+};
+
+export default {
+  isJson,
+  flatten
 };

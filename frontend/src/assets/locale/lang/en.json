@@ -1,0 +1,81 @@
+{
+  "_id": "en",
+  "common": {
+    "Buttons": {
+      "Cancel": "Cancel",
+      "Submit": "Submit",
+      "Close": "Close",
+      "Open": "Open"
+    },
+    "Directions": {
+      "ClickMe": "Click Me",
+      "ClickHere": "click here"
+    },
+    "money": {
+      "currencySymbol": "$"
+    }
+  },
+  "pages": {
+    "Home": { "name": "Home" },
+    "Account": { "name": "Account", "SubPages": { "AccountSettings": { "name": "AccountSettings" } } },
+    "Electee": { "name": "Electee" },
+    "Electr": { "name": "Electr" },
+    "Feed": { "name": "Feed" },
+    "PageBuilder": { "name": "Page Builder" },
+    "Public": {
+      "Pages": {
+        "LandingPage": {
+          "name": "Landing Page",
+          "form": {
+            "Email": { "label": "Email", "placeholder": "Email", "title": "" },
+            "FirstName": { "label": "First Name", "placeholder": "First Name", "title": "" },
+            "LastName": { "label": "Last Name", "placeholder": "Last Name", "title": "" },
+            "Password": { "label": "Password", "placeholder": "Password", "title": "" },
+            "Confirmation": { "label": "Confirm Password", "placeholder": "Confirmation", "title": "" },
+            "RememberMe": { "label": "Remember Me", "title": "" }
+          },
+          "SignIn": { "Switch": "Already have an account?" },
+          "SignUp": { "Switch": "Don't have an account?" },
+          "Register": "Register",
+          "Login": "Login"
+        },
+        "Page404": {
+          "name": "Page Not Found",
+          "title": "Sorry, No Page Found",
+          "message": "The Page you were looking for doesn't exist or can be accessed at this time.",
+          "back": "Return"
+        }
+      }
+    },
+    "Navibars": {
+      "Footer": {
+        "About": "About",
+        "CopyRight": "CopyRight",
+        "ContactUs": "Contact Us",
+        "Ads": "Advertisements"
+      },
+      "Header": {
+        "Menu": {
+          "Actions": {
+            "LogOut": { "name": "Log Out" }
+          }
+        },
+        "Reputation": {
+          "Donations": { "name": "Donations" },
+          "Presige": { "name": "Presige" }
+        }
+      }
+    }
+  },
+  "general.stateful.searchbar.input.placeholder": "Search...",
+  "general": {
+    "stateless": {},
+    "stateful": {
+      "searchbar": {
+        "input": {
+          "placeholder": "Search..."
+        }
+      }
+    }
+  }
+}

@@ -20,7 +20,11 @@ export const Utils = {
 export const Model = {
   primaryKey: "id",
   props: {
-    ...CommonAttributes
+    ...CommonAttributes,
+    fName: { type: TYPES.STRING },
+    lName: { type: TYPES.STRING },
+    password: { type: TYPES.STRING },
+    email: { type: TYPES.STRING }
   }
 };
 Model.props.accountId = { type: new TYPES.REF(Account, Model) };

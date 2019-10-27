@@ -15,359 +15,365 @@ custom:
       port: 4000
 functions:
   AccountController-getMe:
-    handler: dist/endpoints/AccountController.getMe
+    handler: dist/endpoints/Account/AccountController.getMe
     events:
       - http:
           path: account/getMe
           method: get
-  AccountController-signup:
-    handler: dist/endpoints/AccountController.signup
-    events:
-      - http:
-          path: signup
-          method: get
-  AccountController-login:
-    handler: dist/endpoints/AccountController.login
-    events:
-      - http:
-          path: login
-          method: get
-  AccountController-logout:
-    handler: dist/endpoints/AccountController.logout
-    events:
-      - http:
-          path: logout
-          method: get
   AccountController-getAccountPage:
-    handler: dist/endpoints/AccountController.getAccountPage
+    handler: dist/endpoints/Account/AccountController.getAccountPage
     events:
       - http:
           path: account/getAccountPage
           method: get
   AccountController-setAccountPage:
-    handler: dist/endpoints/AccountController.setAccountPage
+    handler: dist/endpoints/Account/AccountController.setAccountPage
     events:
       - http:
           path: account/setAccountPage
           method: post
   AccountController-getFeed:
-    handler: dist/endpoints/AccountController.getFeed
+    handler: dist/endpoints/Account/AccountController.getFeed
     events:
       - http:
           path: account/getFeed
           method: get
   AccountController-createDefaultAccount:
-    handler: dist/endpoints/AccountController.createDefaultAccount
+    handler: dist/endpoints/Account/AccountController.createDefaultAccount
     events:
       - http:
           path: account/createDefaultAccount
           method: get
   AccountController-addAccount:
-    handler: dist/endpoints/AccountController.addAccount
+    handler: dist/endpoints/Account/AccountController.addAccount
     events:
       - http:
           path: account/addAccount
           method: post
   AccountController-getAll:
-    handler: dist/endpoints/AccountController.getAll
+    handler: dist/endpoints/Account/AccountController.getAll
     events:
       - http:
           path: account/getAll
           method: get
   AccountController-runQuery:
-    handler: dist/endpoints/AccountController.runQuery
+    handler: dist/endpoints/Account/AccountController.runQuery
     events:
       - http:
           path: runQuery
           method: post
   DebugController-CreditCardsModel_get:
-    handler: dist/endpoints/DebugController.CreditCardsModel_get
+    handler: dist/endpoints/undefined.CreditCardsModel_get
     events:
       - http:
           path: /CreditCardsModel/debug/get
           method: get
   DebugController-CreditCardsModel_query:
-    handler: dist/endpoints/DebugController.CreditCardsModel_query
+    handler: dist/endpoints/undefined.CreditCardsModel_query
     events:
       - http:
           path: /CreditCardsModel/debug/query
           method: post
   DebugController-CreditCardsModel_create:
-    handler: dist/endpoints/DebugController.CreditCardsModel_create
+    handler: dist/endpoints/undefined.CreditCardsModel_create
     events:
       - http:
           path: /CreditCardsModel/debug/create
           method: post
   DebugController-CreditCardsModel_crement:
-    handler: dist/endpoints/DebugController.CreditCardsModel_crement
+    handler: dist/endpoints/undefined.CreditCardsModel_crement
     events:
       - http:
           path: /CreditCardsModel/debug/crement
           method: get
   DebugController-CreditCardsModel_update:
-    handler: dist/endpoints/DebugController.CreditCardsModel_update
+    handler: dist/endpoints/undefined.CreditCardsModel_update
     events:
       - http:
           path: /CreditCardsModel/debug/update
           method: post
   DebugController-CreditCardsModel_createUpdate:
-    handler: dist/endpoints/DebugController.CreditCardsModel_createUpdate
+    handler: dist/endpoints/undefined.CreditCardsModel_createUpdate
     events:
       - http:
           path: /CreditCardsModel/debug/createUpdate
           method: post
   DebugController-CreditCardsModel_remove:
-    handler: dist/endpoints/DebugController.CreditCardsModel_remove
+    handler: dist/endpoints/undefined.CreditCardsModel_remove
     events:
       - http:
           path: /CreditCardsModel/debug/remove
           method: delete
   DebugController-CreditCardsModel_scan:
-    handler: dist/endpoints/DebugController.CreditCardsModel_scan
+    handler: dist/endpoints/undefined.CreditCardsModel_scan
     events:
       - http:
           path: /CreditCardsModel/debug/scan
           method: get
   DebugController-MessagesModel_get:
-    handler: dist/endpoints/DebugController.MessagesModel_get
+    handler: dist/endpoints/undefined.MessagesModel_get
     events:
       - http:
           path: /MessagesModel/debug/get
           method: get
   DebugController-MessagesModel_query:
-    handler: dist/endpoints/DebugController.MessagesModel_query
+    handler: dist/endpoints/undefined.MessagesModel_query
     events:
       - http:
           path: /MessagesModel/debug/query
           method: post
   DebugController-MessagesModel_create:
-    handler: dist/endpoints/DebugController.MessagesModel_create
+    handler: dist/endpoints/undefined.MessagesModel_create
     events:
       - http:
           path: /MessagesModel/debug/create
           method: post
   DebugController-MessagesModel_crement:
-    handler: dist/endpoints/DebugController.MessagesModel_crement
+    handler: dist/endpoints/undefined.MessagesModel_crement
     events:
       - http:
           path: /MessagesModel/debug/crement
           method: get
   DebugController-MessagesModel_update:
-    handler: dist/endpoints/DebugController.MessagesModel_update
+    handler: dist/endpoints/undefined.MessagesModel_update
     events:
       - http:
           path: /MessagesModel/debug/update
           method: post
   DebugController-MessagesModel_createUpdate:
-    handler: dist/endpoints/DebugController.MessagesModel_createUpdate
+    handler: dist/endpoints/undefined.MessagesModel_createUpdate
     events:
       - http:
           path: /MessagesModel/debug/createUpdate
           method: post
   DebugController-MessagesModel_remove:
-    handler: dist/endpoints/DebugController.MessagesModel_remove
+    handler: dist/endpoints/undefined.MessagesModel_remove
     events:
       - http:
           path: /MessagesModel/debug/remove
           method: delete
   DebugController-MessagesModel_scan:
-    handler: dist/endpoints/DebugController.MessagesModel_scan
+    handler: dist/endpoints/undefined.MessagesModel_scan
     events:
       - http:
           path: /MessagesModel/debug/scan
           method: get
   DebugController-PageTemplatesModel_get:
-    handler: dist/endpoints/DebugController.PageTemplatesModel_get
+    handler: dist/endpoints/undefined.PageTemplatesModel_get
     events:
       - http:
           path: /PageTemplatesModel/debug/get
           method: get
   DebugController-PageTemplatesModel_query:
-    handler: dist/endpoints/DebugController.PageTemplatesModel_query
+    handler: dist/endpoints/undefined.PageTemplatesModel_query
     events:
       - http:
           path: /PageTemplatesModel/debug/query
           method: post
   DebugController-PageTemplatesModel_create:
-    handler: dist/endpoints/DebugController.PageTemplatesModel_create
+    handler: dist/endpoints/undefined.PageTemplatesModel_create
     events:
       - http:
           path: /PageTemplatesModel/debug/create
           method: post
   DebugController-PageTemplatesModel_crement:
-    handler: dist/endpoints/DebugController.PageTemplatesModel_crement
+    handler: dist/endpoints/undefined.PageTemplatesModel_crement
     events:
       - http:
           path: /PageTemplatesModel/debug/crement
           method: get
   DebugController-PageTemplatesModel_update:
-    handler: dist/endpoints/DebugController.PageTemplatesModel_update
+    handler: dist/endpoints/undefined.PageTemplatesModel_update
     events:
       - http:
           path: /PageTemplatesModel/debug/update
           method: post
   DebugController-PageTemplatesModel_createUpdate:
-    handler: dist/endpoints/DebugController.PageTemplatesModel_createUpdate
+    handler: dist/endpoints/undefined.PageTemplatesModel_createUpdate
     events:
       - http:
           path: /PageTemplatesModel/debug/createUpdate
           method: post
   DebugController-PageTemplatesModel_remove:
-    handler: dist/endpoints/DebugController.PageTemplatesModel_remove
+    handler: dist/endpoints/undefined.PageTemplatesModel_remove
     events:
       - http:
           path: /PageTemplatesModel/debug/remove
           method: delete
   DebugController-PageTemplatesModel_scan:
-    handler: dist/endpoints/DebugController.PageTemplatesModel_scan
+    handler: dist/endpoints/undefined.PageTemplatesModel_scan
     events:
       - http:
           path: /PageTemplatesModel/debug/scan
           method: get
   DebugController-AccountModel_get:
-    handler: dist/endpoints/DebugController.AccountModel_get
+    handler: dist/endpoints/undefined.AccountModel_get
     events:
       - http:
           path: /AccountModel/debug/get
           method: get
   DebugController-AccountModel_query:
-    handler: dist/endpoints/DebugController.AccountModel_query
+    handler: dist/endpoints/undefined.AccountModel_query
     events:
       - http:
           path: /AccountModel/debug/query
           method: post
   DebugController-AccountModel_create:
-    handler: dist/endpoints/DebugController.AccountModel_create
+    handler: dist/endpoints/undefined.AccountModel_create
     events:
       - http:
           path: /AccountModel/debug/create
           method: post
   DebugController-AccountModel_crement:
-    handler: dist/endpoints/DebugController.AccountModel_crement
+    handler: dist/endpoints/undefined.AccountModel_crement
     events:
       - http:
           path: /AccountModel/debug/crement
           method: get
   DebugController-AccountModel_update:
-    handler: dist/endpoints/DebugController.AccountModel_update
+    handler: dist/endpoints/undefined.AccountModel_update
     events:
       - http:
           path: /AccountModel/debug/update
           method: post
   DebugController-AccountModel_createUpdate:
-    handler: dist/endpoints/DebugController.AccountModel_createUpdate
+    handler: dist/endpoints/undefined.AccountModel_createUpdate
     events:
       - http:
           path: /AccountModel/debug/createUpdate
           method: post
   DebugController-AccountModel_remove:
-    handler: dist/endpoints/DebugController.AccountModel_remove
+    handler: dist/endpoints/undefined.AccountModel_remove
     events:
       - http:
           path: /AccountModel/debug/remove
           method: delete
   DebugController-AccountModel_scan:
-    handler: dist/endpoints/DebugController.AccountModel_scan
+    handler: dist/endpoints/undefined.AccountModel_scan
     events:
       - http:
           path: /AccountModel/debug/scan
           method: get
   DebugController-SessionsModel_get:
-    handler: dist/endpoints/DebugController.SessionsModel_get
+    handler: dist/endpoints/undefined.SessionsModel_get
     events:
       - http:
           path: /SessionsModel/debug/get
           method: get
   DebugController-SessionsModel_query:
-    handler: dist/endpoints/DebugController.SessionsModel_query
+    handler: dist/endpoints/undefined.SessionsModel_query
     events:
       - http:
           path: /SessionsModel/debug/query
           method: post
   DebugController-SessionsModel_create:
-    handler: dist/endpoints/DebugController.SessionsModel_create
+    handler: dist/endpoints/undefined.SessionsModel_create
     events:
       - http:
           path: /SessionsModel/debug/create
           method: post
   DebugController-SessionsModel_crement:
-    handler: dist/endpoints/DebugController.SessionsModel_crement
+    handler: dist/endpoints/undefined.SessionsModel_crement
     events:
       - http:
           path: /SessionsModel/debug/crement
           method: get
   DebugController-SessionsModel_update:
-    handler: dist/endpoints/DebugController.SessionsModel_update
+    handler: dist/endpoints/undefined.SessionsModel_update
     events:
       - http:
           path: /SessionsModel/debug/update
           method: post
   DebugController-SessionsModel_createUpdate:
-    handler: dist/endpoints/DebugController.SessionsModel_createUpdate
+    handler: dist/endpoints/undefined.SessionsModel_createUpdate
     events:
       - http:
           path: /SessionsModel/debug/createUpdate
           method: post
   DebugController-SessionsModel_remove:
-    handler: dist/endpoints/DebugController.SessionsModel_remove
+    handler: dist/endpoints/undefined.SessionsModel_remove
     events:
       - http:
           path: /SessionsModel/debug/remove
           method: delete
   DebugController-SessionsModel_scan:
-    handler: dist/endpoints/DebugController.SessionsModel_scan
+    handler: dist/endpoints/undefined.SessionsModel_scan
     events:
       - http:
           path: /SessionsModel/debug/scan
           method: get
   DebugController-SubscriptionModel_get:
-    handler: dist/endpoints/DebugController.SubscriptionModel_get
+    handler: dist/endpoints/undefined.SubscriptionModel_get
     events:
       - http:
           path: /SubscriptionModel/debug/get
           method: get
   DebugController-SubscriptionModel_query:
-    handler: dist/endpoints/DebugController.SubscriptionModel_query
+    handler: dist/endpoints/undefined.SubscriptionModel_query
     events:
       - http:
           path: /SubscriptionModel/debug/query
           method: post
   DebugController-SubscriptionModel_create:
-    handler: dist/endpoints/DebugController.SubscriptionModel_create
+    handler: dist/endpoints/undefined.SubscriptionModel_create
     events:
       - http:
           path: /SubscriptionModel/debug/create
           method: post
   DebugController-SubscriptionModel_crement:
-    handler: dist/endpoints/DebugController.SubscriptionModel_crement
+    handler: dist/endpoints/undefined.SubscriptionModel_crement
     events:
       - http:
           path: /SubscriptionModel/debug/crement
           method: get
   DebugController-SubscriptionModel_update:
-    handler: dist/endpoints/DebugController.SubscriptionModel_update
+    handler: dist/endpoints/undefined.SubscriptionModel_update
     events:
       - http:
           path: /SubscriptionModel/debug/update
           method: post
   DebugController-SubscriptionModel_createUpdate:
-    handler: dist/endpoints/DebugController.SubscriptionModel_createUpdate
+    handler: dist/endpoints/undefined.SubscriptionModel_createUpdate
     events:
       - http:
           path: /SubscriptionModel/debug/createUpdate
           method: post
   DebugController-SubscriptionModel_remove:
-    handler: dist/endpoints/DebugController.SubscriptionModel_remove
+    handler: dist/endpoints/undefined.SubscriptionModel_remove
     events:
       - http:
           path: /SubscriptionModel/debug/remove
           method: delete
   DebugController-SubscriptionModel_scan:
-    handler: dist/endpoints/DebugController.SubscriptionModel_scan
+    handler: dist/endpoints/undefined.SubscriptionModel_scan
     events:
       - http:
           path: /SubscriptionModel/debug/scan
           method: get
+  SessionsController-createSession:
+    handler: dist/endpoints/Sessions/SessionsController.createSession
+    events:
+      - http:
+          path: session
+          method: post
+  SessionsController-checkSession:
+    handler: dist/endpoints/Sessions/SessionsController.checkSession
+    events:
+      - http:
+          path: session
+          method: get
+  SessionsController-destroySession:
+    handler: dist/endpoints/Sessions/SessionsController.destroySession
+    events:
+      - http:
+          path: session
+          method: delete
+  SessionsController-newUser:
+    handler: dist/endpoints/Sessions/SessionsController.newUser
+    events:
+      - http:
+          path: session
+          method: put
 provider:
   name: aws
   runtime: nodejs8.10

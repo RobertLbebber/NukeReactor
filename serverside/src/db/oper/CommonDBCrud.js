@@ -6,17 +6,20 @@ let documentClient = new AWS.DynamoDB.DocumentClient();
 
 const checkProps = (model, tableName, item) => {
   if (_.isNil(item)) {
-    throw new Error("No query item provided for the Crud Action.");
+    let error = "No query item provided for the Crud Action.";
+    throw new Error(error);
   }
   for (let field in item) {
-    if (model.props[field].type.constructor != item[field].constructor) {
-      throw new Error(
+    if (!_.isNil(model.props[field])) {
+    } else if (model.props[field].type.constructor != item[field].constructor) {
+      let error =
         "Malformed query. Provided query type mismatches expected: '" +
-          model.props[field].type.constructor +
-          "' != '" +
-          item[field].constructor +
-          "'."
-      );
+        model.props[field].type.constructor +
+        "' != '" +
+        item[field].constructor +
+        "'.";
+      console.error(error);
+      throw new Error(error);
     }
   }
 };

@@ -3,8 +3,8 @@
  */
 export default class ResponseData {
   constructor(ok, status, data) {
-    this.data = data;
-    this.status = status;
+    this.data = this.json = data;
+    this.status = this.code = status;
     this.ok = ok;
   }
 }

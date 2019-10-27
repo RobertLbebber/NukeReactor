@@ -1,4 +1,4 @@
-import * as Controllers from "../endpoints/_export";
+import Controllers, { paths } from "../endpoints/_export";
 import _ from "lodash";
 
 function routeBuilder() {
@@ -12,7 +12,7 @@ function routeBuilder() {
       }
       let handlerPathName = controllerName + "-" + handlerName;
       functions[handlerPathName] = {
-        handler: "dist/endpoints/" + controllerName + "." + handlerName
+        handler: "dist/endpoints/" + paths[controllerName] + "." + handlerName
       };
       let http = {
         path: handlerGroup.path,

@@ -55,6 +55,7 @@
     "@babel/runtime": "^7.4.4",
     "aws-sdk": "^2.437.0",
     "dynamodb": "^1.2.0",
+    "jsonschema": "^1.2.4",
     "lodash": "^4.17.11",
     "uuid": "^2.0.3"
   }

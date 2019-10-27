@@ -10,6 +10,7 @@ export const FORBIDDEN = 403;
 export const NOT_FOUND = 404;
 export const CONFLICT = 409;
 export const PRECONDITION = 412;
+export const UNPROCESSABLE_ENTITY = 422;
 export const CLIENT_DEFAULT = 495;
 //Server-side Error
 export const SERVER_GENERIC = 500;

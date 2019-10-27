@@ -8,14 +8,14 @@ export const required = {
   required: true
 };
 export const TYPES = {
-  STRING: String,
-  NUMBER: Number,
-  FUNCTION: Function,
-  JSON: Object,
-  ARRAY: Array,
-  DATE: Date,
-  REGEXP: RegExp,
-  SET: Set,
+  STRING: new String(),
+  NUMBER: new Number(),
+  FUNCTION: new Function(),
+  JSON: new Object(),
+  ARRAY: new Array(),
+  DATE: new Date(),
+  REGEXP: new RegExp(),
+  SET: new Set(),
   REF: Ref,
   COLLECTION: Collection
 };
@@ -23,14 +23,17 @@ export const TYPES = {
 /**
  *
  */
-export const type = (type = new TYPES.STRING(), reference, self) => {
-  if (!_.isNil(reference)) {
-    if (_.isNil(self)) {
-      throw new Error("Missing 'self' Parameter for Type Definition");
+export const typeGn = (type = TYPES.STRING, reference /*, self*/) => {
+  if (type == TYPES.REF || type == TYPES.COLLECTION) {
+    if (!_.isNil(reference)) {
+      throw new Error("Missing 'reference' Parameter for Type Definition on " + new type().constructor.name);
     }
-    return { type, reference: new type(reference, self) };
-  } else if (!_.isNil(self)) {
-    throw new Error("Missing 'reference' Parameter for Type Definition");
+    // if (_.isNil(self)) {
+    //   throw new Error("Missing 'self' Parameter for Type Definition");
+    // }
+    return { type, reference: new type(reference /*, self*/) };
+    // } else if (!_.isNil(self)) {
+    //   throw new Error("Missing 'reference' Parameter for Type Definition");
   } else {
     return { type };
   }
@@ -39,8 +42,8 @@ export const type = (type = new TYPES.STRING(), reference, self) => {
 /**
  * Props
  */
-export const createdDate = type(new TYPES.DATE());
-export const updatedDate = type(new TYPES.DATE());
-export const id = type();
+export const createdDate = typeGn(TYPES.DATE);
+export const updatedDate = typeGn(TYPES.DATE);
+export const id = typeGn();
 
 export default { createdDate, updatedDate, id };

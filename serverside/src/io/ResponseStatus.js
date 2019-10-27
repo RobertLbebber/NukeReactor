@@ -16,7 +16,7 @@ export const StatusObject = (status, message, code = status ? 0 : 1) => {
  * @param {*} payload
  * @param {*} statusCode
  */
-const ResponseStatus = (ok = true, payload = "Successful", statusCode = ok ? 200 : 495) => {
+const ResponseStatus = (ok = true, payload = ok ? "Successful" : "Failure", statusCode = ok ? 200 : 495) => {
   let response = { ok, statusCode };
   // response.constructor.name = "ResponseStatus";
 

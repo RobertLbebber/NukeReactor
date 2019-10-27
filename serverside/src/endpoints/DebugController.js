@@ -1,7 +1,7 @@
 import { Models as RawModels } from "../db/models/_export.json";
 import ResponseStatus, { POST, GET, DELETE } from "../io/ResponseStatus";
-import GenerateHandler from "./common/GenerateHandler";
-import { GenericController } from "./common/GenericController.js";
+import GenerateHandler from "./_common/GenerateHandler";
+import { GenericController } from "./_common/GenericController.js";
 import env, { DEVELOPMENT } from "../config/env.js";
 
 const postGets = {

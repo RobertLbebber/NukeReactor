@@ -4,6 +4,13 @@ import CommonDBCrud from "../oper/CommonDBCrud";
 
 const TableName = env.tableName("Account");
 
+export const AccountGn = (firstName, lastName, email, password) => ({
+  firstName,
+  email,
+  password,
+  lastName
+});
+
 export const Model = {
   primaryKey: "id",
   props: {
@@ -11,10 +18,10 @@ export const Model = {
     email: { type: TYPES.STRING, ...required, ...unique },
     password: { type: TYPES.STRING, ...required },
     firstName: { type: TYPES.STRING, ...required },
-    middleName: { type: TYPES.STRING, ...required },
+    // middleName: { type: TYPES.STRING, ...required },
     lastName: { type: TYPES.STRING, ...required },
 
-    profile_img: { type: TYPES.STRING },
+    profileImg: { type: TYPES.STRING },
     pageContent: { collection: "pageTemplates", via: "accountId" },
     messages: { collection: "messages", via: "accountId" },
     creditCard: { collection: "creditCards", via: "accountId" }

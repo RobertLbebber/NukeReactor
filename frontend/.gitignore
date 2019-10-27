@@ -5,3 +5,5 @@ src/bin/**
 build
 src/build/**
 src/build/*.*
+src/assets/img/*
+public/assets

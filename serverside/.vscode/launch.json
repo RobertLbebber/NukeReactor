@@ -7,31 +7,41 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch via node",
-      "type": "node",
+      "name": "Chrome",
+      "type": "chrome",
       "request": "launch",
-      "runtimeExecutable": "${workspaceRoot}\\node_modules\\serverless\\bin\\serverless",
-      "runtimeArgs": ["offline", "--port", "3001"],
-      "port": 9229
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Launch Serverless Offline",
-      "program": "${workspaceRoot}/node_modules/serverless/bin/serverless",
-      "args": ["offline", "--noTimeout", "--dontPrintOutput", "--port", "4000"],
-      "sourceMaps": true,
-      "runtimeArgs": ["--lazy"],
-      "outFiles": ["${workspaceFolder}\\**\\*.js"],
-      "protocol": "inspector",
-      "runtimeExecutable": "node",
-      "env": {},
-      "windows": {
-        "program": "${workspaceRoot}\\node_modules\\serverless\\bin\\serverless"
-      },
+      "url": "http://localhost:3005",
+      "webRoot": "${workspaceRoot}/src",
       "sourceMapPathOverrides": {
-        "*": "${webRoot}\\*"
+        "webpack:///src/*": "${workspaceRoot}/*"
       }
     }
+    // {
+    //   "name": "Launch via node",
+    //   "type": "node",
+    //   "request": "launch",
+    //   "runtimeExecutable": "${workspaceRoot}\\node_modules\\serverless\\bin\\serverless",
+    //   "runtimeArgs": ["offline", "--port", "3001"],
+    //   "port": 9229
+    // },
+    // {
+    //   "type": "node",
+    //   "request": "launch",
+    //   "name": "Launch Serverless Offline",
+    //   "program": "${workspaceRoot}/node_modules/serverless/bin/serverless",
+    //   "args": ["offline", "--noTimeout", "--dontPrintOutput", "--port", "4000"],
+    //   "sourceMaps": true,
+    //   "runtimeArgs": ["--lazy"],
+    //   "outFiles": ["${workspaceFolder}\\**\\*.js"],
+    //   "protocol": "inspector",
+    //   "runtimeExecutable": "node",
+    //   "env": {},
+    //   "windows": {
+    //     "program": "${workspaceRoot}\\node_modules\\serverless\\bin\\serverless"
+    //   },
+    //   "sourceMapPathOverrides": {
+    //     "*": "${webRoot}\\*"
+    //   }
+    // }
   ]
 }

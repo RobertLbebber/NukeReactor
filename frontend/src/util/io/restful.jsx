@@ -1,7 +1,49 @@
-import { devvar } from "../devvar/devvar";
 import _ from "lodash";
 
 import ResponseData from "./ResponseData";
+import { Details } from "../../env/InterpretedEnvironment";
+
+let bodyBuilder = (body, options) => {
+  if (_.isNil(body) || body.constructor === String) {
+    options.body = body;
+    options.headers = {
+      Accept: "text/plain",
+      "Content-Type": "text/plain"
+    };
+  } else if (body.constructor === Object || body.constructor === Array) {
+    options.body = JSON.stringify(body);
+    options.headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    };
+  }
+  if (!_.isNil(navigator)) {
+    options.headers = {
+      ...options.headers,
+      language: navigator.language,
+      appVersion: navigator.appVersion,
+      userAgent: navigator.userAgent,
+      vendor: navigator.vendor,
+      platform: navigator.platform
+    };
+  }
+  return options;
+};
+
+const fetchResolve = async (uri, options, execution) => {
+  try {
+    let data;
+    let response = await fetch(Details.DOMAIN + uri, options);
+    if (execution.constructor === String) {
+      data = await response[execution];
+    } else if (execution.constructor === Function) {
+      data = await execution(response);
+    }
+    return new ResponseData(response.ok, response.status, data);
+  } catch (err) {
+    return new ResponseData(false, NaN, null);
+  }
+};
 
 /**
  * This method is responsible for sending get requests to the server and returning a response
@@ -10,7 +52,7 @@ import ResponseData from "./ResponseData";
  * @returns {object} @property status - status code from the server
  *                   @property body - response information from the server
  */
-export var get = (uri, options, execution) => {
+export const get = (uri, options, execution) => {
   options = _.defaultsDeep(options, { method: "GET", credentials: "include" });
 
   return fetchResolve(uri, options, execution);
@@ -20,14 +62,14 @@ export var get = (uri, options, execution) => {
  * This method is responsible for sending gest requests to the server and returning a response with a json object in URL
  *
  * @param {String} uri - Non-domain endpoint for the server
- * @param {String} flatMap - shallow flattens json to a url
+ * @param {{key:value}} flatMap - shallow flattens json to a url
  * @returns {object} @property status - status code from the server
  *                   @property body - response information from the server
  */
-export var getWithQuery = (uri, flatMap, options, execution) => {
+export const getWithQuery = (uri, flatMap, options, execution) => {
   let query = "?";
   for (let key in flatMap) {
-    if (!flatMap.hasOwnProperty(key)) continue;
+    if (!_.isNil(flatMap[key])) continue;
     let value = flatMap[key];
     query += key + "=" + value + "&";
   }
@@ -45,7 +87,7 @@ export var getWithQuery = (uri, flatMap, options, execution) => {
  * @returns {object} @property status - status code from the server
  *                   @property body - response information from the server
  */
-export let post = async (uri, body, options, execution = "json") => {
+export const post = async (uri, body, options, execution = "json") => {
   options = _.defaultsDeep(options, { method: "POST", credentials: "include" });
   options = bodyBuilder(body, options);
 
@@ -61,7 +103,7 @@ export let post = async (uri, body, options, execution = "json") => {
  * @returns {object} @property status - status code from the server
  *                   @property body - response information from the server
  */
-export let put = async (uri, body, options, execution = "json") => {
+export const put = async (uri, body, options, execution = "json") => {
   options = _.defaultsDeep(options, { method: "PUT", credentials: "include" });
   options = bodyBuilder(body, options);
 
@@ -77,47 +119,17 @@ export let put = async (uri, body, options, execution = "json") => {
  * @returns {object} @property status - status code from the server
  *                   @property body - response information from the server
  */
-export let deleter = async (uri, body, options, execution = "json") => {
+export const deleter = async (uri, body, options, execution = "json") => {
   options = _.defaultsDeep(options, { method: "DELETE", credentials: "include" });
   options = bodyBuilder(body, options);
 
   return await fetchResolve(uri, options, execution);
 };
 
-let bodyBuilder = (body, options) => {
-  if (body.constructor === String) {
-    options.body = body;
-    options.headers = {
-      Accept: "text/plain",
-      "Content-Type": "text/plain"
-    };
-  } else if (body.constructor === Object) {
-    options.body = JSON.stringify(body);
-    options.headers = {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    };
-  }
-  return options;
-};
-
-const fetchResolve = async (uri, options, execution) => {
-  try {
-    let data;
-    let response = await fetch(devvar.DOMAIN + uri, options);
-    if (execution.constructor === String) {
-      data = await response[execution];
-    } else if (execution.constructor === Function) {
-      data = await execution(response);
-    }
-    return new ResponseData(response.ok, response.status, data);
-  } catch (err) {
-    return new ResponseData(false, NaN, null);
-  }
-};
-
-export default (module.export = {
+export default {
   get,
   getWithQuery,
-  post
-});
+  post,
+  put,
+  deleter
+};
