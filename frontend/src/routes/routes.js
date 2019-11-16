@@ -37,7 +37,7 @@ export default locale =>
     },
     {
       key: ACCOUNT,
-      path: "/acc/",
+      path: "/account/",
       dynamicPath: ({ id }) => "/acc/" + id,
       name: _.get(locale, "pages.Account.name", "Account"),
       component: Account,

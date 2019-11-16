@@ -1,16 +1,19 @@
 import React, { Component } from "react";
-// import PropTypes from "prop-types";
-import PostData from "../../assets/data/Post.json"
-import AccountData from "../../assets/data/Account.json"
-import QRCode from "qrcode.react";
+import PropTypes from "prop-types";
 import { Paper, Grid, withStyles } from "@material-ui/core";
-import { RouteShape } from "../../routes/Routes";
 import { Container } from "react-bootstrap";
+import _ from "lodash";
+// import QRCode from "qrcode.react";
+
+import PostData from "../../assets/data/Post.json";
+import AccountData from "../../assets/data/Account.json";
+import { RouteShape } from "../../routes/Routes";
 import Post from "../../general/Stateful/Post";
 
 const styles = theme => {
   return {
-    mainContent: { overflowX: "hidden", height: "100%", width: "100%" }
+    mainContent: { height: "100%", width: "100%" },
+    post: { marginBottom: theme.spacing(1) }
   };
 };
 
@@ -43,15 +46,15 @@ export class Home extends Component {
           </Grid>
           <Grid item xs={10} sm={6} md={7} className={classes.mainContent}>
             {/* Main Content */}
-            <Paper className={classes.mainContent}>
+            {/* <Paper className={classes.mainContent}>
               {this.state._tag}
               <QRCode value="http://localhost" />
-            </Paper>
-            {_.map(PostData,(post,index)=>(
-<Post postData={post} poster={}/>
-            )
-
-            )}
+            </Paper> */}
+            <Grid container item spacing={1} direction="column" className={classes.mainContent}>
+              {_.map(PostData, (post, index) => (
+                <Post key={index} postData={post} poster={AccountData[index]} className={classes.post} />
+              ))}
+            </Grid>
           </Grid>
           <Grid item xs={1} sm={3} md={3}>
             {/* Banner */}
@@ -64,7 +67,7 @@ export class Home extends Component {
 
   static propTypes = {
     //Route Page Props
-    routeShape: RouteShape
+    routeShape: PropTypes.shape(RouteShape)
   };
 
   static defaultProps = {};

@@ -20,8 +20,8 @@ export function isAnyNil() {
 }
 
 export function prettyNumber(object, path) {
-  let number = _.get(object, path, NaN).toLocalString();
-  return _.isNaN(number) ? number : "?";
+  let number = _.get(object, path, NaN).toLocaleString();
+  return !_.isNaN(number) ? number : "?";
 }
 
 export default {

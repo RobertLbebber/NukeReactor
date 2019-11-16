@@ -14,5 +14,5 @@ export default {
   deletionPolicy: DELETION_POLICY,
   tableName: table => {
     return server.service + "-" + provider.provider.region + "-" + table;
-  }
+  },
 };

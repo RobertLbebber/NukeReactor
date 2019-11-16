@@ -3,7 +3,7 @@ import MessagesModel, { Table as Messages } from "./Messages.json";
 import PageTemplatesModel, { Table as PageTemplates } from "./PageTemplates.json";
 import SessionsModel, { Table as Sessions } from "./Sessions.json";
 import SubscriptionModel, { Table as Subscription } from "./Subscription.json";
-import AccountModel, { Table as Account } from "./Subscription.json";
+import AccountModel, { Table as Account } from "./Account.json";
 
 export default {
   CreditCards,
@@ -11,7 +11,7 @@ export default {
   PageTemplates,
   Account,
   Sessions,
-  Subscription
+  Subscription,
 };
 
 export const Models = {
@@ -20,5 +20,5 @@ export const Models = {
   PageTemplatesModel,
   AccountModel,
   SessionsModel,
-  SubscriptionModel
+  SubscriptionModel,
 };

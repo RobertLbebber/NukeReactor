@@ -5,7 +5,11 @@
       "Cancel": "Cancel",
       "Submit": "Submit",
       "Close": "Close",
-      "Open": "Open"
+      "Open": "Open",
+      "Like": "Like",
+      "Dislike": "Dislike",
+      "Donate": "Donate",
+      "Share": "Share"
     },
     "Directions": {
       "ClickMe": "Click Me",

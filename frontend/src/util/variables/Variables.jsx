@@ -501,7 +501,7 @@ var optionsSales = {
   lineSmooth: true,
   showLine: true,
   showPoint: true,
-  fullWidth: true,
+  // fullWidth: true,
   chartPadding: {
     right: 50
   }

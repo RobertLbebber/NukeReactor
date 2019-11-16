@@ -78,7 +78,9 @@ export class HeartbeatProvider extends React.Component {
 
   componentDidMount() {
     this._mounted = true;
-    this.heartbeat();
+    if (State.enforceAccount) {
+      this.heartbeat();
+    }
   }
 
   componentWillUnmount() {

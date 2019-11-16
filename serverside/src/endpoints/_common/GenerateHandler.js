@@ -10,7 +10,7 @@ export const lamdbaHandler = (
   session = true,
   rest = GET,
   debug = false,
-  other
+  other,
 ) => fn => {
   controller[name] = { fn, path, session, rest, debug, ...other };
 };
@@ -19,7 +19,6 @@ export const lamdbaHandler = (
 export const handlerExporter = controller => {
   let ends = {};
   for (let endpointName in controller) {
-    // let controllerName = controller.getName();
     let endpoint = controller[endpointName];
     if (_.isObject(endpoint) && !_.isNil(endpoint)) {
       ends[endpointName] = endpoint.fn;

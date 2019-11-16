@@ -24,37 +24,37 @@ functions:
     handler: dist/endpoints/Account/AccountController.getAccountPage
     events:
       - http:
-          path: account/getAccountPage
+          path: 'account/{accountId}/page'
           method: get
   AccountController-setAccountPage:
     handler: dist/endpoints/Account/AccountController.setAccountPage
     events:
       - http:
-          path: account/setAccountPage
+          path: 'account/{accountId}/page'
           method: post
   AccountController-getFeed:
     handler: dist/endpoints/Account/AccountController.getFeed
     events:
       - http:
-          path: account/getFeed
+          path: feed/
           method: get
   AccountController-createDefaultAccount:
     handler: dist/endpoints/Account/AccountController.createDefaultAccount
     events:
       - http:
-          path: account/createDefaultAccount
+          path: account/default
           method: get
   AccountController-addAccount:
     handler: dist/endpoints/Account/AccountController.addAccount
     events:
       - http:
-          path: account/addAccount
+          path: account/new
           method: post
   AccountController-getAll:
     handler: dist/endpoints/Account/AccountController.getAll
     events:
       - http:
-          path: account/getAll
+          path: account/all
           method: get
   AccountController-runQuery:
     handler: dist/endpoints/Account/AccountController.runQuery
@@ -350,6 +350,42 @@ functions:
       - http:
           path: /SubscriptionModel/debug/scan
           method: get
+  PostController-createPost:
+    handler: dist/endpoints/Post/PostController.createPost
+    events:
+      - http:
+          path: post
+          method: post
+  PostController-editPost:
+    handler: dist/endpoints/Post/PostController.editPost
+    events:
+      - http:
+          path: 'post/{postId}/edit'
+          method: post
+  PostController-getPost:
+    handler: dist/endpoints/Post/PostController.getPost
+    events:
+      - http:
+          path: 'post/{postId}'
+          method: get
+  PostController-reactPost:
+    handler: dist/endpoints/Post/PostController.reactPost
+    events:
+      - http:
+          path: 'post/{postId}/react'
+          method: post
+  PostController-donatePost:
+    handler: dist/endpoints/Post/PostController.donatePost
+    events:
+      - http:
+          path: 'post/{postId}/donate'
+          method: post
+  PostController-deletePost:
+    handler: dist/endpoints/Post/PostController.deletePost
+    events:
+      - http:
+          path: 'post/{postId}'
+          method: delete
   SessionsController-createSession:
     handler: dist/endpoints/Sessions/SessionsController.createSession
     events:
@@ -435,11 +471,11 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-    Account: &ref_0
+    Account:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Delete
       Properties:
-        TableName: electr-rest-us-east-1-Subscription
+        TableName: electr-rest-us-east-1-Account
         KeySchema:
           - AttributeName: id
             KeyType: HASH
@@ -463,4 +499,17 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-    Subscription: *ref_0
+    Subscription:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Delete
+      Properties:
+        TableName: electr-rest-us-east-1-Subscription
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

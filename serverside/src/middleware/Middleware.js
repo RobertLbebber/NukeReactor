@@ -2,6 +2,7 @@ import _ from "lodash";
 import Policy from "./Policy";
 import Session from "./Session";
 import GenerateHandler from "../endpoints/_common/GenerateHandler";
+import env, { DEVELOPMENT } from "../config/env";
 
 export const prep = async (event, context, controller) => {
   try {
@@ -31,11 +32,31 @@ export const prep = async (event, context, controller) => {
           result.messages.push(result.policy.message);
         }
       }
+
+      //Dynamic Path Validation
+      if (!_.isEmpty(currentRules.dynamicPath)) {
+        let hasAllDynPath = _.every(currentRules.dynamicPath, path => event.pathParameters.includes(path));
+        if (!hasAllDynPath) {
+          result.fails++;
+          result.messages.push("Dynamic URL Path(s) Not Provided");
+        }
+      }
+
+      //Handle Schema
+      if (!_.isNil(currentRules.schema) && !currentRules.schema(event).valid) {
+        result.fails++;
+        result.messages.push("Validation Failure");
+      }
     } else {
-      console.log("Error Being thown", { Look: 1 });
-      throw new Error("Functions not found", { Look: 1 });
+      let contents = {};
+      if (env.mode === DEVELOPMENT) {
+        content = { shortName, currentRules, controller };
+      }
+      console.log("Error Being thrown", contents);
+      throw new Error("Functions not found", contents);
     }
 
+    result.ok = result.fails === 0;
     return result;
   } catch (error) {
     console.log("Error Being Catched", error);

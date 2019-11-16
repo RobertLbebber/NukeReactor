@@ -1,9 +1,8 @@
 import { Validator, validate } from "jsonschema";
 import { AccountGn } from "../../db/models/Account.json";
 
-const createSession = event => {
-  const validator = new Validator();
-  let schema = {
+export default {
+  SESSION_CREATE: {
     id: "/createSession",
     type: "object",
     properties: {
@@ -11,19 +10,12 @@ const createSession = event => {
         type: "object",
         emailAddress: { type: "string" },
         password: { type: "string" },
-        rememberMe: { type: "boolean" }
-      }
+        rememberMe: { type: "boolean" },
+      },
     },
-    required: ["formData"]
-  };
-  validator.addSchema(schema);
-  console.log(validate(event.body));
-  return validate(event.body);
-};
-
-const newUser = event => {
-  let requestObj = JSON.parse(event.body);
-  let schema = {
+    required: ["formData"],
+  },
+  SESSION_NEW: {
     type: "object",
     properties: {
       formData: {
@@ -32,12 +24,22 @@ const newUser = event => {
         lName: { type: "string" },
         emailAddress: { type: "string" },
         password: { type: "string" },
-        confirmation: { type: "string" }
-      }
-    }
-  };
-  const validator = new Validator();
-  let validationScore = validator.validate(requestObj, schema);
+        confirmation: { type: "string" },
+      },
+    },
+  },
+  SESSION_DELETE: { id: "/destroySession", type: "object", properties: { sessionId: { type: "string" } } },
+};
+
+const createSession = event => {
+  new Validator().addSchema(SESSION_CREATE);
+  console.log(validate(event.body));
+  return validate(event.body);
+};
+
+const newUser = event => {
+  let requestObj = JSON.parse(event.body);
+  let validationScore = new Validator().validate(requestObj, SESSION_NEW);
   if (requestObj.formData.password !== requestObj.formData.confirmation) {
     return { ok: false, data: undefined, errors: "Invalid Password Combination" };
   }
@@ -45,21 +47,8 @@ const newUser = event => {
     requestObj.formData.fName,
     requestObj.formData.lName,
     requestObj.formData.emailAddress,
-    requestObj.formData.password
+    requestObj.formData.password,
   );
 
   return { ok: validationScore.errors.length == 0, data: accountModel, errors: validationScore.errors };
-};
-
-const destroySession = event => {
-  const validator = new validator();
-  let schema = { id: "/destroySession", type: "object", properties: { sessionId: { type: "string" } } };
-  validator.addSchema(schema);
-  return validator.validate(event.headers);
-};
-
-export default {
-  createSession,
-  destroySession,
-  newUser
 };

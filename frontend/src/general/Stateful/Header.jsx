@@ -108,7 +108,6 @@ class Header extends Component {
       setting: _.find(routes, route => route.key === SETTING),
       account: _.find(routes, route => route.key === ACCOUNT)
     };
-    console.log(_.get(account, "firstName", ["#"]));
     return (
       <Grid container item xs={3} md={2} spacing={1} justify="space-around">
         <Grid item xs={10}>
@@ -121,14 +120,15 @@ class Header extends Component {
               {_.get(account, "firstName")}
             </Link>
           </Typography>
-          <FormattedMessage id="commons.money.currencySymbol">
+          <FormattedMessage id="common.money.currencySymbol">
             {currencySymbol => (
               <FormattedMessage id="pages.Navibars.Header.Reputation.Donations.name">
                 {donations => (
-                  <Typography variant="span" component="span">
+                  <Typography variant="body2" component="span">
                     {donations} {currencySymbol}
                     {prettyNumber(account, "reputation.donations")}
                     {"  "}
+                    {/* Intentional Spacing */}
                   </Typography>
                 )}
               </FormattedMessage>
@@ -136,7 +136,7 @@ class Header extends Component {
           </FormattedMessage>
           <FormattedMessage id="pages.Navibars.Header.Reputation.Presige.name">
             {presige => (
-              <Typography variant="span" component="span">
+              <Typography variant="body2" component="span">
                 {presige} ({prettyNumber(account, "reputation.presige")})
               </Typography>
             )}
@@ -173,7 +173,7 @@ class Header extends Component {
     const { classes } = this.props;
 
     return (
-      <AppBar position="sticky" color="primary" className={this.state._tag + " " + classes.navBar}>
+      <AppBar position="sticky" className={this.state._tag + " " + classes.navBar}>
         <FormattedMessage id="_id">
           {locale => (
             <RouteContext.Consumer>

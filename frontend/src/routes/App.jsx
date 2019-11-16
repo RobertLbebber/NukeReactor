@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
 import { withStyles } from "@material-ui/core";
 
@@ -11,7 +11,7 @@ import ComponentPlus from "../general/Util/ComponentPlus";
 
 const styles = theme => {
   return {
-    App: {}
+    // App: {}
   };
 };
 
@@ -23,21 +23,21 @@ export class App extends ComponentPlus {
       locale: "en",
       isOpen: false
     };
-    this._isMounted = false;
+    // this._isMounted = false;
   }
 
-  componentDidMount() {
-    this._isMounted = true;
-  }
+  // componentDidMount() {
+  //   this._isMounted = true;
+  // }
 
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
+  // componentWillUnmount() {
+  //   this._isMounted = false;
+  // }
 
   render() {
-    let { classes } = this.props;
+    // let { classes } = this.props;
     return (
-      <div className={classes.App}>
+      <div>
         <CssBaseline />
         <div className={this.state._tag}>
           <MuiThemeProvider theme={theme}>
@@ -52,7 +52,7 @@ export class App extends ComponentPlus {
     );
   }
 
-  static propTypes = { classes: PropTypes.string };
+  // static propTypes = { classes: PropTypes.string };
 
   // static defaultProps = {};
 }

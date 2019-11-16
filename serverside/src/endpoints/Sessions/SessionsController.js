@@ -14,38 +14,40 @@ class SessionsController extends GenericController {}
 let init = new SessionsController()
   //Creates a session for user
   .create("createSession")
-  .path("session")
   .post()
+  .open()
+  .path("session")
+  .schema(Requests.SESSION_CREATE)
   .fn(async (event, context) => {
-    // let middles = await Middleware.prep(event, context, init);
-    Requests.createSession(event);
-    return ResponseStatus(middles.fails === 0, middles);
+    let middles = await Middleware.prep(event, context, init);
+    return ResponseStatus(middles.ok, middles);
   })
   //GET Check user's session
   .create("checkSession")
   .path("session")
   .fn(async (event, context) => {
     let middles = await Middleware.prep(event, context, init);
-    return ResponseStatus(middles.fails === 0, middles);
+    return ResponseStatus(middles.ok, middles);
   })
   //Destroy user's session
   .create("destroySession")
-  .path("session")
   .deleter()
+  .path("session")
+  .schema(Requests.SESSION_DELETE)
   .fn(async (event, context) => {
     // let middles = await Middleware.prep(event, context, init);
     Requests.destroySession(event);
-    return ResponseStatus(middles.fails === 0, middles);
+    return ResponseStatus(middles.ok, middles);
   })
   //Check user's session
   .create("newUser")
-  .path("session")
   .put()
+  .open()
+  .path("session")
+  .schema(Requests.SESSION_NEW)
   .fn(async (event, context) => {
-    // let middles = await Middleware.prep(event, context, init);
-    let checkResponse = Requests.newUser(event);
-    console.log(checkResponse);
-    if (checkResponse.ok) {
+    let middles = await Middleware.prep(event, context, init);
+    if (middles.ok) {
       try {
         let crudResponse = await Account.func.create(checkResponse.data);
         console.log(crudResponse);

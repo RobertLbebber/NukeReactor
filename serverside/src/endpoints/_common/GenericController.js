@@ -1,16 +1,26 @@
 import _ from "lodash";
+import { Validator, validate } from "jsonschema";
 import { GET, POST, PUT, DELETE } from "../../io/ResponseStatus";
 
 class StreamControl {
   constructor(name, controller) {
+    //Essentials
     this._controller = controller;
     this._fn = undefined;
+    this._rest = GET;
     this._name = name;
     this._path = name;
-    this._debug = false;
+    //Rules
+    this._policy = [];
     this._session = true;
+    this._dynamicPath = [];
+    this._schema = undefined;
+    //Decoration
     this._description = undefined;
-    this._rest = GET;
+    this._contentType = "application/json";
+    this._contentAccept = "application/json";
+    //Environment
+    this._debug = false;
   }
 
   static init = (name, controller) => {
@@ -19,13 +29,22 @@ class StreamControl {
 
   toJSON() {
     return {
+      //Essentials
       fn: this._fn,
+      rest: this._rest,
       name: this._name,
       path: this._path,
-      debug: this._debug,
+      //Rules
+      policy: this._policy,
+      schema: this._schema,
       session: this._session,
+      dynamicPath: this._dynamicPath,
+      //Decoration
       description: this._description,
-      rest: this._rest
+      contentType: this._contentType,
+      contentAccept: this._contentAccept,
+      //Environment
+      debug: this._debug,
     };
   }
 
@@ -40,8 +59,48 @@ class StreamControl {
     return this;
   }
 
+  //Dynamic Paths
+  dynamic(array) {
+    this._dynamicPath = array;
+    return this;
+  }
+
+  //Session
   open() {
     this._session = false;
+    return this;
+  }
+
+  //Policy
+  constraints(array) {
+    this._policy = array;
+    return this;
+  }
+
+  schema(value) {
+    this._schema = event => {
+      return new Validator().validate(event.body, value);
+    };
+    return this;
+  }
+
+  /**
+   * @todo Not current implemented to limit or validate requests @see [routes.json.js]
+   *
+   * @param {String} value - Return Content Types (deliminated by ",")
+   */
+  contentType(value) {
+    this._contentType = value;
+    return this;
+  }
+
+  /**
+   * @todo Not current implemented to limit or validate requests @see [routes.json.js]
+   *
+   * @param {String} value - Acceptible Content Types (deliminated by ",")
+   */
+  contentAccept(value) {
+    this._contentAccept = value;
     return this;
   }
 
@@ -50,6 +109,7 @@ class StreamControl {
     return this;
   }
 
+  //Delete
   deleter() {
     this._rest = DELETE;
     return this;
@@ -86,10 +146,20 @@ class StreamControl {
     }
     return this._controller;
   }
+
+  doneFn() {
+    this._controller[this._name] = this.toJSON();
+    return this._controller;
+  }
 }
 
 export class GenericController {
   constructor() {}
   getName = () => this.constructor.name;
+  /**
+   * Opens up a Stream to create a endpoint
+   *
+   * @param {String} name - Name of the Endpoint
+   */
   create = name => StreamControl.init(name, this);
 }

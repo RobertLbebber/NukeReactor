@@ -17,7 +17,7 @@ let init = new AccountController()
 
   //
   .create("getAccountPage")
-  .path("account/", true)
+  .path("account/{accountId}/page")
   .fn((event, context) => {
     let middles = Middleware.prep(event, context, init);
     console.log("TODO::", context.functionName);
@@ -26,7 +26,7 @@ let init = new AccountController()
 
   //
   .create("setAccountPage")
-  .path("account/", true)
+  .path("account/{accountId}/page")
   .post()
   .fn((event, context) => {
     let middles = Middleware.prep(event, context, init);
@@ -36,7 +36,7 @@ let init = new AccountController()
 
   //
   .create("getFeed")
-  .path("account/", true)
+  .path("feed/")
   .fn((event, context) => {
     let middles = Middleware.prep(event, context, init);
     console.log("TODO::", context.functionName);
@@ -45,7 +45,7 @@ let init = new AccountController()
 
   //
   .create("createDefaultAccount")
-  .path("account/", true)
+  .path("account/default")
   .fn((event, context) => {
     let middles = Middleware.prep(event, context, init);
     console.log("TODO::", context.functionName);
@@ -54,7 +54,7 @@ let init = new AccountController()
 
   //
   .create("addAccount")
-  .path("account/", true)
+  .path("account/new")
   .post()
   .fn((event, context) => {
     let middles = Middleware.prep(event, context, init);
@@ -64,7 +64,7 @@ let init = new AccountController()
 
   //
   .create("getAll")
-  .path("account/", true)
+  .path("account/all")
   .debug()
   .fn((event, context) => {
     let middles = Middleware.prep(event, context, init);

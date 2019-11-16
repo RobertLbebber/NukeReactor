@@ -11,6 +11,7 @@
     "@material-ui/lab": "^1.0.0-alpha.12",
     "@types/googlemaps": "^3.0.0",
     "@types/markerclustererplus": "^2.1.29",
+    "babel-7-plugin-root-import": "^5.4.0",
     "babel-jest": "^24.1.0",
     "babel-loader": "7.1.2",
     "bootstrap": "^4.2.1",
@@ -66,15 +67,17 @@
     "build-css": "node-sass-chokidar src/index.scss -o src/build/",
     "ignore-watch-css": "npm run build-css && node-sass-chokidar src/ -o src/build/ --watch --recursive",
     "watch-css": "echo css building is de-activated",
-    "start-js": "react-scripts start",
-    "start": "npm-run-all -p watch-css start-js",
+    "start": "cross-env NODE_PATH=src react-scripts start",
     "build": "npm run build-css"
   },
   "devDependencies": {
     "@babel/node": "^7.6.3",
-    "babel-node": "0.0.1-security",
+    "babel-plugin-root-import": "^6.4.1",
     "css-loader": "^2.1.1",
+    "eslint-import-resolver-babel-root-import": "0.0.2",
+    "eslint-plugin-import": "^2.18.2",
     "graceful-fs": "^4.2.2",
-    "npm-run-all": "^4.1.2"
+    "npm-run-all": "^4.1.2",
+    "path": "^0.12.7"
   }
 }
