@@ -9,7 +9,7 @@ export default {
         attachments: { type: "string" },
       },
     },
-    required: ["formData"],
+    // required: ["formData"],
   },
 
   POST_REACT: {

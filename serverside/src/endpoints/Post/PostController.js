@@ -5,6 +5,7 @@ import ResponseStatus from "../../io/ResponseStatus";
 import GH from "../_common/GenerateHandler";
 import { GenericController } from "../_common/GenericController";
 import Requests from "./Requests";
+import { CLIENT_DEFAULT } from "../../io/HttpErrors";
 
 class PostController extends GenericController {}
 
@@ -15,6 +16,10 @@ let init = new PostController()
   .schema(Requests.POST)
   .fn(async (event, context) => {
     let middles = await Middleware.prep(event, context, init);
+    if (!middles.ok) {
+      return ResponseStatus(false, middles, _.get(middles, "errorCode", CLIENT_DEFAULT));
+    }
+    console.log(middles.ok, middles);
     return ResponseStatus(middles.ok, middles);
   })
 

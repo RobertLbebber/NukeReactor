@@ -77,10 +77,8 @@ class StreamControl {
     return this;
   }
 
-  schema(value) {
-    this._schema = event => {
-      return new Validator().validate(event.body, value);
-    };
+  schema(schema) {
+    this._schema = event => new Validator().validate(JSON.parse(event.body), schema);
     return this;
   }
 

@@ -9,7 +9,7 @@ export const handleSession = async event => {
   } else if (_.isNil(event.headers.sessionId)) {
     return StatusObject(false, "No Session Id found in the Event Object");
   } else {
-    key = event.headers.seesionId;
+    key = event.headers.sessionId;
   }
   let resultSet = await Sessions.func.get({ [Sessions.primaryKey]: key });
   if (_.isNil(resultSet.data)) {

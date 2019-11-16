@@ -8,6 +8,7 @@ export const UNAUTHORIZED = 401;
 export const PAYMENT_FAILURE = 402;
 export const FORBIDDEN = 403;
 export const NOT_FOUND = 404;
+export const INVALID_INPUT = 405;
 export const CONFLICT = 409;
 export const PRECONDITION = 412;
 export const UNPROCESSABLE_ENTITY = 422;

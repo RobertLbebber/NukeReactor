@@ -6,12 +6,13 @@ import GH from "../_common/GenerateHandler";
 import { GenericController } from "../_common/GenericController";
 import Sessions from "../../db/models/Sessions.json.js";
 import Requests from "./Requests";
-import { UNPROCESSABLE_ENTITY } from "../../io/HttpErrors";
+import { INVALID_INPUT, UNPROCESSABLE_ENTITY } from "../../io/HttpErrors";
 import Account from "../../db/models/Account.json";
 
 class SessionsController extends GenericController {}
 
 let init = new SessionsController()
+
   //Creates a session for user
   .create("createSession")
   .post()
@@ -22,6 +23,7 @@ let init = new SessionsController()
     let middles = await Middleware.prep(event, context, init);
     return ResponseStatus(middles.ok, middles);
   })
+
   //GET Check user's session
   .create("checkSession")
   .path("session")
@@ -29,6 +31,7 @@ let init = new SessionsController()
     let middles = await Middleware.prep(event, context, init);
     return ResponseStatus(middles.ok, middles);
   })
+
   //Destroy user's session
   .create("destroySession")
   .deleter()
@@ -39,6 +42,7 @@ let init = new SessionsController()
     Requests.destroySession(event);
     return ResponseStatus(middles.ok, middles);
   })
+
   //Check user's session
   .create("newUser")
   .put()
@@ -48,8 +52,14 @@ let init = new SessionsController()
   .fn(async (event, context) => {
     let middles = await Middleware.prep(event, context, init);
     if (middles.ok) {
+      let formData = _.get(JSON.parse(event.body), "formData");
+      if (_.get(formData, "password") !== _.get(formData, "confirmation")) {
+        return ResponseStatus(false, "Invalid Password Combination", INVALID_INPUT);
+      }
+      let accountModel = AccountGn(formData.fName, formData.lName, formData.emailAddress, formData.password);
+
       try {
-        let crudResponse = await Account.func.create(checkResponse.data);
+        let crudResponse = await Account.func.create(accountModel);
         console.log(crudResponse);
         return ResponseStatus(true, "Creation Completion");
       } catch (error) {
