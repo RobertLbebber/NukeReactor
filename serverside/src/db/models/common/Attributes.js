@@ -1,11 +1,11 @@
 import _ from "lodash";
-import { Collection, Ref } from "./Types";
+import { Collection, Ref, SoftRef } from "./Types";
 
 export const unique = {
-  unique: true
+  unique: true,
 };
 export const required = {
-  required: true
+  required: true,
 };
 export const TYPES = {
   STRING: new String(),
@@ -16,27 +16,40 @@ export const TYPES = {
   DATE: new Date(),
   REGEXP: new RegExp(),
   SET: new Set(),
-  REF: Ref,
-  COLLECTION: Collection
+  REF: new Ref(null, false),
+  SOFT_REF: new SoftRef(null, false),
+  COLLECTION: new Collection(),
+};
+
+export const createRef = (foriegnModel, other) => {
+  return { type: new Ref(foriegnModel), ...other };
+};
+
+export const createSoftRef = (foriegnModel, other) => {
+  return { type: new SoftRef(foriegnModel), ...other };
+};
+
+export const createCollection = (foriegnModel, other) => {
+  return { type: new Collection(foriegnModel), ...other };
 };
 
 /**
  *
  */
-export const typeGn = (type = TYPES.STRING, reference /*, self*/) => {
-  if (type == TYPES.REF || type == TYPES.COLLECTION) {
-    if (!_.isNil(reference)) {
-      throw new Error("Missing 'reference' Parameter for Type Definition on " + new type().constructor.name);
-    }
-    // if (_.isNil(self)) {
-    //   throw new Error("Missing 'self' Parameter for Type Definition");
-    // }
-    return { type, reference: new type(reference /*, self*/) };
-    // } else if (!_.isNil(self)) {
-    //   throw new Error("Missing 'reference' Parameter for Type Definition");
-  } else {
-    return { type };
-  }
+export const typeGn = (type = TYPES.STRING /*, reference , self*/) => {
+  // if (type == TYPES.REF || type == TYPES.COLLECTION) {
+  //   if (!_.isNil(reference)) {
+  //     throw new Error("Missing 'reference' Parameter for Type Definition on " + new type().constructor.name);
+  //   }
+  //   // if (_.isNil(self)) {
+  //   //   throw new Error("Missing 'self' Parameter for Type Definition");
+  //   // }
+  //   return { type, reference: new type(reference /*, self*/) };
+  //   // } else if (!_.isNil(self)) {
+  //   //   throw new Error("Missing 'reference' Parameter for Type Definition");
+  // } else {
+  return { type };
+  // }
 };
 
 /**

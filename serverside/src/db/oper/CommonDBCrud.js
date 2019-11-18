@@ -1,17 +1,23 @@
 import _ from "lodash";
 import AWS from "aws-sdk";
 import env, { DEVELOPMENT } from "../../config/env";
+import { Ref, SoftRef, Collection } from "../models/common/Types";
+// import {ALL_NEW} from
 // let dynamodb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
 let documentClient = new AWS.DynamoDB.DocumentClient();
 
-const checkProps = (model, tableName, item) => {
+const checkProps = async (model, tableName, item) => {
   if (_.isNil(item)) {
     let error = "No query item provided for the Crud Action.";
     throw new Error(error);
   }
   for (let field in item) {
-    if (!_.isNil(model.props[field])) {
-    } else if (model.props[field].type.constructor != item[field].constructor) {
+    if (_.isNil(model.props[field])) {
+      // Provided more information than described in model
+      console.warn("Model didn't have provided item field:", field);
+      continue;
+    } else if (model.props[field].type.constructor !== item[field].constructor) {
+      // Confirm types of provided items
       let error =
         "Malformed query. Provided query type mismatches expected: '" +
         model.props[field].type.constructor +
@@ -21,6 +27,17 @@ const checkProps = (model, tableName, item) => {
       console.error(error);
       throw new Error(error);
     }
+    if ([Ref, SoftRef, Collection].includes(model.props[field].constructor)) {
+      let foriegnKey = item[field];
+      let existingEntry = await model.props[field].type.validator(foriegnKey);
+      console.log(existingEntry);
+      if (!_.isNil(existingEntry)) {
+        //Foriegn Entry Found
+        continue;
+      } else {
+        //Foreign Key doesn't connect to an entry in distant model
+      }
+    }
   }
 };
 
@@ -29,7 +46,8 @@ const checkProps = (model, tableName, item) => {
  */
 export const create = (Model, TableName) => async Item => {
   checkProps(Model, TableName, Item);
-  let params = { TableName, Item };
+  // console.log(AWS.DynamoDB);
+  let params = { TableName, Item, ReturnValues: "ALL_OLD" };
   return await documentClient.put(params).promise();
 };
 
@@ -89,9 +107,9 @@ export const query = (Model, TableName) => async (item, dynoExpression) => {
   let params = {
     TableName,
     Key: {
-      id: event.pathParameters.id
+      id: event.pathParameters.id,
     },
-    ...dynoExpression
+    ...dynoExpression,
   };
 
   return await documentClient.get(params).promise();

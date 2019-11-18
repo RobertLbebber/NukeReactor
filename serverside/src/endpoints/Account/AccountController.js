@@ -1,85 +1,70 @@
 import _ from "lodash";
 import Middleware from "../../middleware/Middleware";
-// import Account from "../db/models/Account.json.js";
 import ResponseStatus from "../../io/ResponseStatus";
 import GH from "../_common/GenerateHandler";
 import { GenericController } from "../_common/GenericController";
+import { NOT_IMPLEMENTED } from "../../io/HttpErrors";
 
 class AccountController extends GenericController {}
 
 let init = new AccountController()
   .create("getMe")
   .path("account/getMe")
-  .fn(async (event, context) => {
-    let middles = await Middleware.prep(event, context, init);
-    return ResponseStatus(middles.fails === 0, middles);
+  .fn(async (event, context, endpoint, globals) => {
+    return ResponseStatus(false, middles, NOT_IMPLEMENTED);
   })
 
   //
   .create("getAccountPage")
   .path("account/{accountId}/page")
-  .fn((event, context) => {
-    let middles = Middleware.prep(event, context, init);
-    console.log("TODO::", context.functionName);
-    return ResponseStatus(true, { event, context });
+  .fn(async (event, context, endpoint) => {
+    return ResponseStatus(false, { event, context }, NOT_IMPLEMENTED);
   })
 
   //
   .create("setAccountPage")
   .path("account/{accountId}/page")
   .post()
-  .fn((event, context) => {
-    let middles = Middleware.prep(event, context, init);
-    console.log("TODO::", context.functionName);
-    return ResponseStatus(true, { event, context });
+  .fn(async (event, context) => {
+    return ResponseStatus(false, { event, context }, NOT_IMPLEMENTED);
   })
 
   //
   .create("getFeed")
   .path("feed/")
-  .fn((event, context) => {
-    let middles = Middleware.prep(event, context, init);
-    console.log("TODO::", context.functionName);
-    return ResponseStatus(true, { event, context });
+  .fn(async (event, context) => {
+    return ResponseStatus(false, { event, context }, NOT_IMPLEMENTED);
   })
 
   //
   .create("createDefaultAccount")
   .path("account/default")
-  .fn((event, context) => {
-    let middles = Middleware.prep(event, context, init);
-    console.log("TODO::", context.functionName);
-    return ResponseStatus(true, { event, context });
+  .fn(async (event, context) => {
+    return ResponseStatus(false, { event, context }, NOT_IMPLEMENTED);
   })
 
   //
   .create("addAccount")
   .path("account/new")
   .post()
-  .fn((event, context) => {
-    let middles = Middleware.prep(event, context, init);
-    console.log("TODO::", context.functionName);
-    return ResponseStatus(true, { event, context });
+  .fn(async (event, context) => {
+    return ResponseStatus(false, { event, context }, NOT_IMPLEMENTED);
   })
 
   //
   .create("getAll")
   .path("account/all")
   .debug()
-  .fn((event, context) => {
-    let middles = Middleware.prep(event, context, init);
-    console.log("TODO::", context.functionName);
-    return ResponseStatus(true, { event, context });
+  .fn(async (event, context) => {
+    return ResponseStatus(false, { event, context }, NOT_IMPLEMENTED);
   })
 
   //
   .create("runQuery")
   .post()
   .debug()
-  .fn((event, context) => {
-    let middles = Middleware.prep(event, context, init);
-    console.log("TODO::", context.functionName);
-    return ResponseStatus(true, { event, context });
+  .fn(async (event, context) => {
+    return ResponseStatus(false, { event, context }, NOT_IMPLEMENTED);
   });
 
 let endpoints = GH.expFn(init);

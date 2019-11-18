@@ -3,6 +3,9 @@ import { GET } from "../../io/ResponseStatus";
 import env, { SERVICE_NAME, DEVELOPMENT, PRODUCTION } from "../../config/env";
 
 //genFn
+/**
+ * @deprecated
+ */
 export const lamdbaHandler = (
   controller,
   name,
@@ -18,8 +21,8 @@ export const lamdbaHandler = (
 //expFn
 export const handlerExporter = controller => {
   let ends = {};
-  for (let endpointName in controller) {
-    let endpoint = controller[endpointName];
+  for (let endpointName in controller.endpoints) {
+    let endpoint = controller.endpoints[endpointName];
     if (_.isObject(endpoint) && !_.isNil(endpoint)) {
       ends[endpointName] = endpoint.fn;
     }
@@ -28,6 +31,9 @@ export const handlerExporter = controller => {
 };
 
 //baseFnName
+/**
+ * @deprecated
+ */
 export const functionName = (fullName, controllerName) => {
   let serviceName = env.mode === DEVELOPMENT ? DEVELOPMENT : PRODUCTION;
   return fullName.replace(SERVICE_NAME + "-" + serviceName + "-" + controllerName + "-", "");

@@ -1,13 +1,12 @@
 import _ from "lodash";
-import Middleware from "../../middleware/Middleware";
-// import Account from "../db/models/Account.json.js";
 import ResponseStatus from "../../io/ResponseStatus";
 import GH from "../_common/GenerateHandler";
 import { GenericController } from "../_common/GenericController";
 import Sessions from "../../db/models/Sessions.json.js";
 import Requests from "./Requests";
-import { INVALID_INPUT, UNPROCESSABLE_ENTITY } from "../../io/HttpErrors";
+import { INVALID_INPUT, UNPROCESSABLE_ENTITY, NOT_IMPLEMENTED } from "../../io/HttpErrors";
 import Account from "../../db/models/Account.json";
+import env, { DEVELOPMENT } from "../../config/env";
 
 class SessionsController extends GenericController {}
 
@@ -20,16 +19,42 @@ let init = new SessionsController()
   .path("session")
   .schema(Requests.SESSION_CREATE)
   .fn(async (event, context) => {
-    let middles = await Middleware.prep(event, context, init);
-    return ResponseStatus(middles.ok, middles);
+    let parameters = JSON.parse(event.body);
+    if (env.mode === DEVELOPMENT) {
+      console.log("before", parameters.formData.emailAddress, parameters.formData);
+      let existingSession = await Sessions.func.create({ id: parameters.formData.emailAddress, accountId: null });
+      console.log("existingSession", existingSession);
+      if (!_.isNil(existingSession)) {
+        return ResponseStatus();
+      } else {
+        return ResponseStatus(false, "Unable To Create Session", DATABASE_FAILURE);
+      }
+    } else {
+      let existingAccount = await Account.func.get({
+        email: parameters.formData.emailAddress,
+        password: parameters.formData.password,
+      });
+      console.log("existingAccounte", existingAccount);
+
+      if (!_.isNil(existingAccount)) {
+        let existingSession = await Sessions.func.create({ accountId: existingAccount.id });
+        console.log("existingSession", existingSession);
+        if (!_.isNil(existingSession)) {
+          return ResponseStatus();
+        } else {
+          return ResponseStatus(false, "Unable To Create Session", DATABASE_FAILURE);
+        }
+      } else {
+        return ResponseStatus(false, "No Existing Account Found", NOT_FOUND);
+      }
+    }
   })
 
   //GET Check user's session
   .create("checkSession")
   .path("session")
   .fn(async (event, context) => {
-    let middles = await Middleware.prep(event, context, init);
-    return ResponseStatus(middles.ok, middles);
+    return ResponseStatus(false, middles, NOT_IMPLEMENTED);
   })
 
   //Destroy user's session
@@ -38,9 +63,7 @@ let init = new SessionsController()
   .path("session")
   .schema(Requests.SESSION_DELETE)
   .fn(async (event, context) => {
-    // let middles = await Middleware.prep(event, context, init);
-    Requests.destroySession(event);
-    return ResponseStatus(middles.ok, middles);
+    return ResponseStatus(false, middles, NOT_IMPLEMENTED);
   })
 
   //Check user's session
@@ -50,23 +73,18 @@ let init = new SessionsController()
   .path("session")
   .schema(Requests.SESSION_NEW)
   .fn(async (event, context) => {
-    let middles = await Middleware.prep(event, context, init);
-    if (middles.ok) {
-      let formData = _.get(JSON.parse(event.body), "formData");
-      if (_.get(formData, "password") !== _.get(formData, "confirmation")) {
-        return ResponseStatus(false, "Invalid Password Combination", INVALID_INPUT);
-      }
-      let accountModel = AccountGn(formData.fName, formData.lName, formData.emailAddress, formData.password);
+    let formData = _.get(JSON.parse(event.body), "formData");
+    if (_.get(formData, "password") !== _.get(formData, "confirmation")) {
+      return ResponseStatus(false, "Invalid Password Combination", INVALID_INPUT);
+    }
+    let accountModel = AccountGn(formData.fName, formData.lName, formData.emailAddress, formData.password);
 
-      try {
-        let crudResponse = await Account.func.create(accountModel);
-        console.log(crudResponse);
-        return ResponseStatus(true, "Creation Completion");
-      } catch (error) {
-        return ResponseStatus(false, error.message, UNPROCESSABLE_ENTITY);
-      }
-    } else {
-      return ResponseStatus(false);
+    try {
+      let crudResponse = await Account.func.create(accountModel);
+      console.log(crudResponse);
+      return ResponseStatus(true, "Creation Completion");
+    } catch (error) {
+      return ResponseStatus(false, error.message, UNPROCESSABLE_ENTITY);
     }
   });
 

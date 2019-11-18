@@ -1,55 +1,64 @@
 import env from "../../config/env";
-import CommonAttributes, { TYPES, required, unique } from "./common/Attributes";
+import CommonAttributes, { TYPES, required, unique, createRef, createCollection } from "./common/Attributes";
 import CommonDBCrud from "../oper/CommonDBCrud";
-
-const TableName = env.tableName("Account");
+import EmailAccount from "./EmailAccount.json";
 
 export const AccountGn = (firstName, lastName, email, password) => ({
   firstName,
   email,
   password,
-  lastName
+  lastName,
 });
 
-export const Model = {
-  primaryKey: "id",
-  props: {
-    ...CommonAttributes,
-    email: { type: TYPES.STRING, ...required, ...unique },
-    password: { type: TYPES.STRING, ...required },
-    firstName: { type: TYPES.STRING, ...required },
-    // middleName: { type: TYPES.STRING, ...required },
-    lastName: { type: TYPES.STRING, ...required },
+/**
+ * @singleton
+ */
+export default class Account {
+  constructor() {
+    this.primaryKey = "id";
+    this.props = {
+      ...CommonAttributes,
+      //Required
+      password: { type: TYPES.STRING, ...required },
+      firstName: { type: TYPES.STRING, ...required },
+      lastName: { type: TYPES.STRING, ...required },
 
-    profileImg: { type: TYPES.STRING },
-    pageContent: { collection: "pageTemplates", via: "accountId" },
-    messages: { collection: "messages", via: "accountId" },
-    creditCard: { collection: "creditCards", via: "accountId" }
+      //Options
+      profileImg: { type: TYPES.STRING },
+      pageContent: { collection: "pageTemplates", via: "accountId" },
+      messages: { collection: "messages", via: "accountId" },
+      creditCard: { collection: "creditCards", via: "accountId" },
+    };
+    this.func = CommonDBCrud(this, this.constructor.name);
   }
-};
-Model.func = CommonDBCrud(Model, TableName);
+
+  associate(models) {
+    //Connections
+    this.props.primaryEmail = createRef(models.EmailAccount, { ...required, ...unique });
+    this.props.emails = createCollection(models.EmailAccount);
+  }
+}
 
 export const Table = {
   Type: env.mainDB,
   DeletionPolicy: env.deletionPolicy,
   Properties: {
-    TableName,
+    TableName: env.tableName(Account.constructor.name),
     KeySchema: [
       {
         AttributeName: "id",
-        KeyType: "HASH"
-      }
+        KeyType: "HASH",
+      },
     ],
     AttributeDefinitions: [
       {
         AttributeName: "id",
-        AttributeType: "S"
-      }
+        AttributeType: "S",
+      },
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 1,
-      WriteCapacityUnits: 1
-    }
-  }
+      WriteCapacityUnits: 1,
+    },
+  },
 };
-export default Model;

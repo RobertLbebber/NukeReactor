@@ -1,45 +1,46 @@
-import Attributes, { TYPES } from "./common/Attributes";
-import Account from "./Account.json";
+import Attributes, { TYPES, createRef } from "./common/Attributes";
 import env from "../../config/env";
 import CommonDBCrud from "../oper/CommonDBCrud";
 
-const TableName = env.tableName("PageTemplates");
-
-export const Model = {
-  primaryKey: "id",
-  props: {
-    ...Attributes,
-    serial: { type: TYPES.STRING },
-    designName: { type: TYPES.STRING },
-    designCategory: { type: TYPES.STRING },
-    pageLayout: { type: TYPES.STRING },
-    accountId: { type: new TYPES.REF(Account) }
+export default class PageTemplates {
+  constructor() {
+    this.primaryKey = "id";
+    this.props = {
+      ...Attributes,
+      serial: { type: TYPES.STRING },
+      designName: { type: TYPES.STRING },
+      designCategory: { type: TYPES.STRING },
+      pageLayout: { type: TYPES.STRING },
+    };
+    this.func = CommonDBCrud(this, PageTemplates.constructor.name);
   }
-};
-Model.func = CommonDBCrud(Model, TableName);
+  associate(models) {
+    this.props.accountId = createRef(models.Account);
+  }
+}
 
 export const Table = {
   Type: env.mainDB,
   DeletionPolicy: env.deletionPolicy,
   Properties: {
-    TableName,
+    TableName: env.tableName(PageTemplates.constructor.name),
     KeySchema: [
       {
         AttributeName: "id",
-        KeyType: "HASH"
-      }
+        KeyType: "HASH",
+      },
     ],
     AttributeDefinitions: [
       {
         AttributeName: "id",
-        AttributeType: "S"
-      }
+        AttributeType: "S",
+      },
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 1,
-      WriteCapacityUnits: 1
-    }
-  }
+      WriteCapacityUnits: 1,
+    },
+  },
 };
 // updateOrCreate: function(criteria, values) {
 //   var self = this; // reference for use by callbacks
@@ -76,4 +77,3 @@ export const Table = {
 // getDefaultTemplate: async function() {
 //   return await this.find({ designName: "Default" }).limit(1);
 // },
-export default Model;

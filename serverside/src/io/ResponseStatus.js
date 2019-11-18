@@ -1,4 +1,4 @@
-import { CLIENT_DEFAULT, SUCCESS } from "./HttpErrors";
+import { CLIENT_UNKNOWN, SUCCESS } from "./HttpErrors";
 
 /**
  * For Internal Objects MultiStatus
@@ -21,7 +21,7 @@ export const StatusObject = (status, message, code = status ? 0 : 1) => {
 const ResponseStatus = (
   ok = true,
   payload = ok ? "Successful" : "Failure",
-  statusCode = ok ? SUCCESS : CLIENT_DEFAULT,
+  statusCode = ok ? SUCCESS : CLIENT_UNKNOWN,
 ) => {
   let response = { ok, statusCode };
   // response.constructor.name = "ResponseStatus";

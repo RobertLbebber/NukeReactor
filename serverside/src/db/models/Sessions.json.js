@@ -1,9 +1,6 @@
-import CommonAttributes, { TYPES } from "./common/Attributes";
+import CommonAttributes, { TYPES, createRef } from "./common/Attributes";
 import CommonDBCrud from "../oper/CommonDBCrud";
 import env from "../../config/env";
-import Account from "./Account.json";
-
-let TableName = env.tableName("Sessions");
 
 //Active for 2 Hours.hrs mins secs millis
 const ACTIVE_TIME = 2 * 60 * 60 * 1000;
@@ -14,43 +11,48 @@ export const Utils = {
       return false;
     }
     return true;
-  }
+  },
 };
 
-export const Model = {
-  primaryKey: "id",
-  props: {
-    ...CommonAttributes,
-    fName: { type: TYPES.STRING },
-    lName: { type: TYPES.STRING },
-    password: { type: TYPES.STRING },
-    email: { type: TYPES.STRING }
+export default class Sessions {
+  constructor() {
+    this.primaryKey = "id";
+    this.props = {
+      ...CommonAttributes,
+      fName: { type: TYPES.STRING },
+      lName: { type: TYPES.STRING },
+      password: { type: TYPES.STRING },
+      email: { type: TYPES.STRING },
+    };
+    this.func = CommonDBCrud(this, this.constructor.name);
   }
-};
-Model.props.accountId = { type: new TYPES.REF(Account, Model) };
-Model.func = CommonDBCrud(Model, TableName);
+  associate(models) {
+    this.props.accountId = createRef(models.Account);
+  }
+}
+// Model.props.accountId = { type: new TYPES.REF(Account, Model) };
+// console.log(new Sessions().props.accountId);
 
 export const Table = {
   Type: env.mainDB,
   DeletionPolicy: env.deletionPolicy,
   Properties: {
-    TableName,
+    TableName: env.tableName(Sessions.constructor.name),
     KeySchema: [
       {
         AttributeName: "id",
-        KeyType: "HASH"
-      }
+        KeyType: "HASH",
+      },
     ],
     AttributeDefinitions: [
       {
         AttributeName: "id",
-        AttributeType: "S"
-      }
+        AttributeType: "S",
+      },
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 1,
-      WriteCapacityUnits: 1
-    }
-  }
+      WriteCapacityUnits: 1,
+    },
+  },
 };
-export default Model;

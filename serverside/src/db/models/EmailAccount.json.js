@@ -1,20 +1,20 @@
-import Attributes, { TYPES, createRef } from "./common/Attributes";
 import env from "../../config/env";
+import { TYPES, required, unique, createSoftRef } from "./common/Attributes";
 import CommonDBCrud from "../oper/CommonDBCrud";
+import { Account } from "./Account.json";
 
-export default class Subscription {
+export default class EmailAccount {
   constructor() {
-    this.primaryKey = "id";
+    this.primaryKey = "email";
+
+    this.modalName = this.constructor.name;
     this.props = {
-      ...Attributes,
-      serial: { type: TYPES.STRING },
+      email: { type: TYPES.STRING, ...required, ...unique },
     };
     this.func = CommonDBCrud(this, this.constructor.name);
   }
-
   associate(models) {
-    this.props.subscribeTo = createRef(models.Account);
-    this.props.accountId = createRef(models.Account);
+    this.props.accountID = createSoftRef(models.Account, { ...required, ...unique });
   }
 }
 
@@ -22,16 +22,16 @@ export const Table = {
   Type: env.mainDB,
   DeletionPolicy: env.deletionPolicy,
   Properties: {
-    TableName: env.tableName(Subscription.constructor.name),
+    TableName: env.tableName(EmailAccount.constructor.name),
     KeySchema: [
       {
-        AttributeName: "id",
+        AttributeName: "email",
         KeyType: "HASH",
       },
     ],
     AttributeDefinitions: [
       {
-        AttributeName: "id",
+        AttributeName: "email",
         AttributeType: "S",
       },
     ],
