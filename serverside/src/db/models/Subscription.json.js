@@ -3,6 +3,7 @@ import env from "../../config/env";
 import SingletonGenerator from "../../endpoints/_common/SingletonGenerator";
 import CommonDBCrud from "../oper/CommonDBCrud";
 import AccountSingleton from "./Account.json";
+import CommonDoc from "./common/CommonDoc";
 
 const TableName = "Subscription";
 

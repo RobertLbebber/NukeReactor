@@ -3,6 +3,7 @@ import { TYPES, required, unique, createRef, createCollection, encrypted } from 
 import SingletonGenerator from "../../endpoints/_common/SingletonGenerator";
 import EmailAccountSingleton from "./EmailAccount.json";
 import CommonModel from "./common/CommonModel";
+import CommonDoc from "./common/CommonDoc";
 
 const TableName = "Account";
 

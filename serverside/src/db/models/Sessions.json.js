@@ -6,6 +6,7 @@ import SingletonGenerator from "../../endpoints/_common/SingletonGenerator";
 import AccountSingleton from "./Account.json";
 import CommonModel from "./common/CommonModel";
 import EmailAccountSingleton from "./EmailAccount.json";
+import CommonDoc from "./common/CommonDoc";
 
 const TableName = "Sessions";
 

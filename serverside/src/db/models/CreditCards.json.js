@@ -3,6 +3,7 @@ import Attributes, { TYPES, createRef } from "./common/Attributes";
 import CommonDBCrud from "../oper/CommonDBCrud";
 import SingletonGenerator from "../../endpoints/_common/SingletonGenerator";
 import AccountSingleton from "./Account.json";
+import CommonDoc from "./common/CommonDoc";
 
 const TableName = "CreditCards";
 

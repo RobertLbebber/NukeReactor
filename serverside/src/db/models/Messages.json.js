@@ -4,6 +4,7 @@ import CommonDBCrud from "../oper/CommonDBCrud";
 import { TYPES } from "./common/Attributes";
 import SingletonGenerator from "../../endpoints/_common/SingletonGenerator";
 import AccountSingleton from "./Account.json";
+import CommonDoc from "./common/CommonDoc";
 
 const TableName = "Messages";
 

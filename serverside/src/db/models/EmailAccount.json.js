@@ -4,6 +4,7 @@ import { TYPES, required, unique, createSoftRef } from "./common/Attributes";
 import AccountSingleton from "./Account.json";
 import SingletonGenerator from "../../endpoints/_common/SingletonGenerator";
 import CommonModel from "./common/CommonModel";
+import CommonDoc from "./common/CommonDoc";
 
 const TableName = "EmailAccount";
 

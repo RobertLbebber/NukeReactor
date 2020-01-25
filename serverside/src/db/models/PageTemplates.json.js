@@ -3,6 +3,7 @@ import env from "../../config/env";
 import CommonDBCrud from "../oper/CommonDBCrud";
 import SingletonGenerator from "../../endpoints/_common/SingletonGenerator";
 import AccountSingleton from "./Account.json";
+import CommonDoc from "./common/CommonDoc";
 
 const TableName = "PageTemplates";
 
