@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { Validator } from "jsonschema";
 import ResponseStatus, { GET, POST, PUT, DELETE } from "../../io/ResponseStatus";
-import { SERVER_UNKNOWN, SERVER_DEFAULT } from "../../io/HttpErrors";
+import WebError, { SERVER_UNKNOWN, SERVER_DEFAULT, SERVICE_NOT_AVAILABLE } from "../../io/HttpErrors";
 import Middleware from "../../middleware/Middleware";
 import env, { DEVELOPMENT } from "../../config/env";
 
@@ -52,7 +52,6 @@ export default class GenerateController {
   }
 
   /**
-   *
    * @param {Function} value
    *
    * @typedef {Function} fn - Endpoint Function to be called on
@@ -81,17 +80,15 @@ export default class GenerateController {
             return ResponseStatus(middles.ok, middles, _.get(middles, "errorCode", SERVER_DEFAULT));
           }
 
+          /**
+           * This is the function that gets called by the Controller as [fn(...)]
+           */
           return await this._fn(event, context, parsedStream, this._controller);
         } catch (error) {
           let isWebError = !_.isNil(error.code);
           //Endware Handling Errors
-          console.error(
-            `Endware Caught an Exception:[${isWebError ? error.code : SERVER_UNKNOWN}]${error.name}>${error.message}`,
-          );
-          if (env.mode === DEVELOPMENT) {
-            console.error(error.stack);
-          }
-          return new ResponseStatus(false, error.message, isWebError ? error.code : SERVER_UNKNOWN);
+          console.error(`! ${error.name}[${isWebError ? error.code : SERVER_UNKNOWN}] - ${error.message}`);
+          return ResponseStatus(false, error.message, isWebError ? error.code : SERVER_UNKNOWN);
         }
       };
     }
@@ -173,7 +170,9 @@ export default class GenerateController {
   }
 
   debug() {
-    this._debug = true;
+    if (env.mode !== DEVELOPMENT) {
+      throw new WebError(SERVICE_NOT_AVAILABLE);
+    }
     return this;
   }
 

@@ -1,27 +1,27 @@
 import env from "../../config/env";
-import CommonAttributes, { TYPES, required, unique, createRef, createCollection } from "./common/Attributes";
-import CommonDBCrud from "../oper/CommonDBCrud";
-import EmailAccount from "./EmailAccount.json";
+import { TYPES, required, unique, createRef, createCollection, encrypted } from "./common/Attributes";
+import SingletonGenerator from "../../endpoints/_common/SingletonGenerator";
+import EmailAccountSingleton from "./EmailAccount.json";
+import CommonModel from "./common/CommonModel.json";
 
-export const AccountGn = (firstName, lastName, email, password) => ({
+const TableName = "Account";
+
+export const AccountGn = (firstName, lastName, primaryEmail, password) => ({
   firstName,
-  email,
-  password,
   lastName,
+  primaryEmail,
+  password,
 });
 
-/**
- * @singleton
- */
-export default class Account {
+class Model extends CommonModel {
   constructor() {
-    this.primaryKey = "id";
+    super(TableName);
     this.props = {
-      ...CommonAttributes,
+      ...this.props,
       //Required
-      password: { type: TYPES.STRING, ...required },
-      firstName: { type: TYPES.STRING, ...required },
-      lastName: { type: TYPES.STRING, ...required },
+      password: { type: TYPES.STRING, required, encrypted },
+      firstName: { type: TYPES.STRING, required },
+      lastName: { type: TYPES.STRING, required },
 
       //Options
       profileImg: { type: TYPES.STRING },
@@ -29,13 +29,12 @@ export default class Account {
       messages: { collection: "messages", via: "accountId" },
       creditCard: { collection: "creditCards", via: "accountId" },
     };
-    this.func = CommonDBCrud(this, this.constructor.name);
   }
 
-  associate(models) {
+  init() {
     //Connections
-    this.props.primaryEmail = createRef(models.EmailAccount, { ...required, ...unique });
-    this.props.emails = createCollection(models.EmailAccount);
+    this.props.primaryEmail = createRef(EmailAccountSingleton.getInstance(), { required, unique });
+    this.props.emails = createCollection(EmailAccountSingleton.getInstance());
   }
 }
 
@@ -43,7 +42,7 @@ export const Table = {
   Type: env.mainDB,
   DeletionPolicy: env.deletionPolicy,
   Properties: {
-    TableName: env.tableName(Account.constructor.name),
+    TableName: env.tableName(TableName),
     KeySchema: [
       {
         AttributeName: "id",
@@ -62,3 +61,6 @@ export const Table = {
     },
   },
 };
+
+const AccountSingleton = new SingletonGenerator(Model);
+export default AccountSingleton;

@@ -1,10 +1,13 @@
 import env from "../../config/env";
 import Attributes, { TYPES, createRef } from "./common/Attributes";
 import CommonDBCrud from "../oper/CommonDBCrud";
-import Account from "./Account.json";
+import SingletonGenerator from "../../endpoints/_common/SingletonGenerator";
+import AccountSingleton from "./Account.json";
 
-export default class CreditCards {
-  constructor(models) {
+const TableName = "CreditCards";
+
+class Model {
+  constructor() {
     this.primaryKey = "id";
     this.props = {
       ...Attributes,
@@ -13,12 +16,16 @@ export default class CreditCards {
       expMonth: { type: TYPES.NUMBER },
       expYear: { type: TYPES.NUMBER },
       cvv: { type: TYPES.NUMBER },
+      /**
+       * Connecitions
+       * @property {Ref} accountId - Connection Reference to a given account
+       */
     };
-    this.func = CommonDBCrud(this, this.constructor.name);
+    this.fn = CommonDBCrud(this, TableName);
   }
 
-  static init = models => {
-    this.props.accountId = createRef(models.Account);
+  init = () => {
+    this.props.accountId = createRef(AccountSingleton.getInstance());
   };
 }
 
@@ -26,7 +33,7 @@ export const Table = {
   Type: env.mainDB,
   DeletionPolicy: env.deletionPolicy,
   Properties: {
-    TableName: env.tableName(CreditCards.constructor.name),
+    TableName: env.tableName(TableName),
     KeySchema: [
       {
         AttributeName: "id",
@@ -45,3 +52,6 @@ export const Table = {
     },
   },
 };
+
+const CreditCards = new SingletonGenerator(Model);
+export default CreditCards;

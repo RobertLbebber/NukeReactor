@@ -1,20 +1,24 @@
 import Attributes, { TYPES, createRef } from "./common/Attributes";
 import env from "../../config/env";
+import SingletonGenerator from "../../endpoints/_common/SingletonGenerator";
 import CommonDBCrud from "../oper/CommonDBCrud";
+import AccountSingleton from "./Account.json";
 
-export default class Subscription {
+const TableName = "Subscription";
+
+class Model {
   constructor() {
     this.primaryKey = "id";
     this.props = {
       ...Attributes,
       serial: { type: TYPES.STRING },
     };
-    this.func = CommonDBCrud(this, this.constructor.name);
+    this.fn = CommonDBCrud(this, TableName);
   }
 
-  associate(models) {
-    this.props.subscribeTo = createRef(models.Account);
-    this.props.accountId = createRef(models.Account);
+  init() {
+    this.props.subscribeTo = createRef(AccountSingleton.getInstance());
+    this.props.accountId = createRef(AccountSingleton.getInstance());
   }
 }
 
@@ -22,7 +26,7 @@ export const Table = {
   Type: env.mainDB,
   DeletionPolicy: env.deletionPolicy,
   Properties: {
-    TableName: env.tableName(Subscription.constructor.name),
+    TableName: env.tableName(TableName),
     KeySchema: [
       {
         AttributeName: "id",
@@ -41,3 +45,6 @@ export const Table = {
     },
   },
 };
+
+const Subscription = new SingletonGenerator(Model);
+export default Subscription;

@@ -1,6 +1,10 @@
 import CommonAttributes, { TYPES, createRef } from "./common/Attributes";
-import CommonDBCrud from "../oper/CommonDBCrud";
 import env from "../../config/env";
+import SingletonGenerator from "../../endpoints/_common/SingletonGenerator";
+import AccountSingleton from "./Account.json";
+import CommonModel from "./common/CommonModel.json";
+
+const TableName = "Sessions";
 
 //Active for 2 Hours.hrs mins secs millis
 const ACTIVE_TIME = 2 * 60 * 60 * 1000;
@@ -14,20 +18,20 @@ export const Utils = {
   },
 };
 
-export default class Sessions {
+class Model extends CommonModel {
   constructor() {
-    this.primaryKey = "id";
+    super(TableName);
     this.props = {
-      ...CommonAttributes,
+      ...this.props,
       fName: { type: TYPES.STRING },
       lName: { type: TYPES.STRING },
       password: { type: TYPES.STRING },
       email: { type: TYPES.STRING },
     };
-    this.func = CommonDBCrud(this, this.constructor.name);
   }
-  associate(models) {
-    this.props.accountId = createRef(models.Account);
+  /** @override*/
+  init() {
+    this.props.accountId = createRef(AccountSingleton.getInstance());
   }
 }
 // Model.props.accountId = { type: new TYPES.REF(Account, Model) };
@@ -37,7 +41,7 @@ export const Table = {
   Type: env.mainDB,
   DeletionPolicy: env.deletionPolicy,
   Properties: {
-    TableName: env.tableName(Sessions.constructor.name),
+    TableName: env.tableName(TableName),
     KeySchema: [
       {
         AttributeName: "id",
@@ -56,3 +60,6 @@ export const Table = {
     },
   },
 };
+
+const SessionsSingleton = new SingletonGenerator(Model);
+export default SessionsSingleton;

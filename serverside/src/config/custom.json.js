@@ -5,16 +5,16 @@ let custom = {
       start: {
         port: 8000,
         inMemory: true,
-        migrate: true
+        migrate: true,
       },
       migration: {
-        dir: "offline/migrations"
+        dir: "offline/migrations",
       },
       "serverless-offline": {
-        port: 4000
-      }
-    }
-  }
+        port: 4000,
+      },
+    },
+  },
 };
 
 export default custom;

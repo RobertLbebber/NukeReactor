@@ -5,15 +5,16 @@
   "repository": "repository",
   "main": "build.js",
   "scripts": {
-    "start": "babel-node build.js && npm run create-dist && serverless deploy",
+    "start": "npm run b-d && npm run deploy",
+    "sls": "sls offline --port 3000",
+    "local": "npm-run-all --parallel sls database",
+    "database": "sls dynamodb start",
     "deploy": "serverless deploy ",
-    "create-dist": "babel src --out-dir dist/",
-    "build": "babel-node build.js && npm run create-dist",
-    "local": "sls offline --port 3000 &&  sls dynamodb start ",
-    "blocal": "babel-node build.js && npm run create-dist && sls offline --port 3000",
-    "db": " sls dynamodb start",
-    "test": "echo \"Error: no test specified\"  && exit 1",
-    "watch": "webpack --watch"
+    "dist": "babel src --out-dir dist/",
+    "build-again": "chokidar src/**/*.js -c \"npm run b-d\"",
+    "build": "npm run b-d && npm run build-again",
+    "b-l": " npm-run-all --parallel build local",
+    "b-d": " babel-node build.js && npm run dist"
   },
   "author": "Robert Bebber",
   "license": "ISC",
@@ -54,6 +55,7 @@
   "dependencies": {
     "@babel/runtime": "^7.4.4",
     "aws-sdk": "^2.437.0",
+    "bcrypt": "^3.0.7",
     "dynamodb": "^1.2.0",
     "jsonschema": "^1.2.4",
     "lodash": "^4.17.11",

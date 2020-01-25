@@ -1,6 +1,3 @@
-import { Validator, validate } from "jsonschema";
-import { AccountGn } from "../../db/models/Account.json";
-
 export default {
   SESSION_CREATE: {
     id: "/createSession",
@@ -20,8 +17,8 @@ export default {
     properties: {
       formData: {
         type: "object",
-        fName: { type: "string" },
-        lName: { type: "string" },
+        firstName: { type: "string" },
+        lastName: { type: "string" },
         emailAddress: { type: "string" },
         password: { type: "string" },
         confirmation: { type: "string" },

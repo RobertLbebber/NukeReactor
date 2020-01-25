@@ -27,7 +27,7 @@ const ResponseStatus = (
   // response.constructor.name = "ResponseStatus";
 
   if (payload.constructor === String) {
-    response.message = payload;
+    response.body = payload;
     response.headers = { "Content-Type": "text/plain" };
   } else if (payload.constructor === Object) {
     response.body = JSON.stringify(payload);

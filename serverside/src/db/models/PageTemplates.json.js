@@ -1,8 +1,12 @@
 import Attributes, { TYPES, createRef } from "./common/Attributes";
 import env from "../../config/env";
 import CommonDBCrud from "../oper/CommonDBCrud";
+import SingletonGenerator from "../../endpoints/_common/SingletonGenerator";
+import AccountSingleton from "./Account.json";
 
-export default class PageTemplates {
+const TableName = "PageTemplates";
+
+class Model {
   constructor() {
     this.primaryKey = "id";
     this.props = {
@@ -12,10 +16,10 @@ export default class PageTemplates {
       designCategory: { type: TYPES.STRING },
       pageLayout: { type: TYPES.STRING },
     };
-    this.func = CommonDBCrud(this, PageTemplates.constructor.name);
+    this.fn = CommonDBCrud(this, TableName);
   }
-  associate(models) {
-    this.props.accountId = createRef(models.Account);
+  init() {
+    this.props.accountId = createRef(AccountSingleton.getInstance());
   }
 }
 
@@ -23,7 +27,7 @@ export const Table = {
   Type: env.mainDB,
   DeletionPolicy: env.deletionPolicy,
   Properties: {
-    TableName: env.tableName(PageTemplates.constructor.name),
+    TableName: env.tableName(TableName),
     KeySchema: [
       {
         AttributeName: "id",
@@ -77,3 +81,6 @@ export const Table = {
 // getDefaultTemplate: async function() {
 //   return await this.find({ designName: "Default" }).limit(1);
 // },
+
+const PageTemplatesSingleton = new SingletonGenerator(Model);
+export default PageTemplatesSingleton;

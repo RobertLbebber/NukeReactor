@@ -2,13 +2,21 @@ import _ from "lodash";
 import ResponseStatus from "../../io/ResponseStatus";
 import GH from "../_common/GenerateHandler";
 import { GenericController } from "../_common/GenericController";
-import Sessions from "../../db/models/Sessions.json.js";
 import Requests from "./Requests";
-import { INVALID_INPUT, UNPROCESSABLE_ENTITY, NOT_IMPLEMENTED } from "../../io/HttpErrors";
-import Account from "../../db/models/Account.json";
+import WebError, {
+  INVALID_INPUT,
+  UNPROCESSABLE_ENTITY,
+  NOT_IMPLEMENTED,
+  DATABASE_FAILURE,
+  NOT_FOUND,
+} from "../../io/HttpErrors";
 import env, { DEVELOPMENT } from "../../config/env";
+import AccountSingleton from "../../db/models/Account.json";
+import SessionsSingleton from "../../db/models/Sessions.json.js";
 
 class SessionsController extends GenericController {}
+
+// const Account = AccountSingleton.getInstance();
 
 let init = new SessionsController()
 
@@ -18,27 +26,28 @@ let init = new SessionsController()
   .open()
   .path("session")
   .schema(Requests.SESSION_CREATE)
-  .fn(async (event, context) => {
+  .fn(async (event, context, endpoint) => {
+    const Sessions = SessionsSingleton.getInstance();
     let parameters = JSON.parse(event.body);
     if (env.mode === DEVELOPMENT) {
-      console.log("before", parameters.formData.emailAddress, parameters.formData);
-      let existingSession = await Sessions.func.create({ id: parameters.formData.emailAddress, accountId: null });
-      console.log("existingSession", existingSession);
+      // try {
+      let existingSession = await Sessions.fn.create({
+        id: parameters.formData.emailAddress,
+        accountId: "1",
+      });
       if (!_.isNil(existingSession)) {
         return ResponseStatus();
       } else {
         return ResponseStatus(false, "Unable To Create Session", DATABASE_FAILURE);
       }
     } else {
-      let existingAccount = await Account.func.get({
+      let existingAccount = await Account.fn.get({
         email: parameters.formData.emailAddress,
         password: parameters.formData.password,
       });
-      console.log("existingAccounte", existingAccount);
 
       if (!_.isNil(existingAccount)) {
-        let existingSession = await Sessions.func.create({ accountId: existingAccount.id });
-        console.log("existingSession", existingSession);
+        let existingSession = await Sessions.fn.create({ accountId: existingAccount.id });
         if (!_.isNil(existingSession)) {
           return ResponseStatus();
         } else {
@@ -53,7 +62,9 @@ let init = new SessionsController()
   //GET Check user's session
   .create("checkSession")
   .path("session")
+  .open()
   .fn(async (event, context) => {
+    throw new WebError();
     return ResponseStatus(false, middles, NOT_IMPLEMENTED);
   })
 
@@ -80,7 +91,7 @@ let init = new SessionsController()
     let accountModel = AccountGn(formData.fName, formData.lName, formData.emailAddress, formData.password);
 
     try {
-      let crudResponse = await Account.func.create(accountModel);
+      let crudResponse = await Account.fn.create(accountModel);
       console.log(crudResponse);
       return ResponseStatus(true, "Creation Completion");
     } catch (error) {

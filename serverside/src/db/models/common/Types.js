@@ -1,15 +1,21 @@
 import _ from "lodash";
+import WebError, { DATABASE_REJECTION } from "../../../io/HttpErrors";
 
-const checkDetection = (refId, foreignModel) => {
+/**
+ *
+ * @param {*} entryExist
+ * @param {*} refId
+ * @param {Model} foreignModel
+ */
+const checkDetection = (entryExist, refId, foreignModel) => {
   if (_.isNil(entryExist)) {
     let error =
-      "No Entry for given Foreign Key: '" +
+      "No Entry for given Foreign Key '" +
       refId +
-      "' not found in '" +
-      _.get(foreignModel, "modelName", " No Foreign Model") +
+      "' found in '" +
+      _.get(foreignModel, "modelName", "No Foreign Model") +
       "'.";
-    console.error(error);
-    throw new Error(error);
+    throw new WebError(DATABASE_REJECTION, error);
   }
 };
 
@@ -24,20 +30,18 @@ export class Ref {
       this.foreignModel = foreigner;
       this.foreignKey = foreigner.primaryKey;
       if (_.isNil(this.foreignModel)) {
-        throw new Error("No foriegn Model provided for Reference");
+        throw new WebError(DATABASE_REJECTION, "No foriegn Model provided for Reference");
       }
     }
   }
 
   async validator(refId) {
     if (_.isNil(this.foreignModel)) {
-      throw new Error("No foriegn Model provided for Reference");
+      throw new WebError(DATABASE_REJECTION, "No foriegn Model provided for Reference");
     } else if (_.isNil(refId)) {
-      throw new Error("Foreign Model lacks identification for Reference");
+      throw new WebError(DATABASE_REJECTION, "Foreign Model lacks identification for Reference");
     }
-
-    let entryExist = await this.foreignModel.get({ [this.foreignKey]: refId });
-    console.log("Typesjs: Foriegn Model Result Object:", entryExist);
+    let entryExist = await this.foreignModel.fn.get(refId);
     checkDetection(entryExist, refId, this.foreignModel);
 
     return entryExist;
@@ -58,19 +62,18 @@ export class SoftRef {
       this.foreignKey = foreigner.primaryKey;
       this.locked = false;
       if (_.isNil(this.foreignModel)) {
-        throw new Error("No foriegn Model provided for Reference");
+        throw new WebError(DATABASE_REJECTION, "No foriegn Model provided for Reference");
       }
     }
   }
 
   async validator(refId) {
     if (_.isNil(this.foreignModel)) {
-      throw new Error("No foriegn Model provided for Reference");
+      throw new WebError(DATABASE_REJECTION, "No foriegn Model provided for Reference");
     } else if (_.isNil(refId)) {
-      throw new Error("Foreign Model lacks identification for Reference");
+      throw new WebError("Foreign Model lacks identification for Reference");
     }
-    let entryExist = await this.foreignModel.get({ [this.foreignKey]: refId });
-    console.log("Typesjs: Foriegn Model Result Object:", entryExist);
+    let entryExist = await this.foreignModel.fn.get(refId);
     if (!this.locked && !_.isNil(entryExist)) {
       this.locked = true;
     } else if (this.locked) {

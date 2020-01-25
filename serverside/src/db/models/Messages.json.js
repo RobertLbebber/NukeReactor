@@ -2,8 +2,12 @@ import Attributes, { createRef, required, unique } from "./common/Attributes";
 import env from "../../config/env";
 import CommonDBCrud from "../oper/CommonDBCrud";
 import { TYPES } from "./common/Attributes";
+import SingletonGenerator from "../../endpoints/_common/SingletonGenerator";
+import AccountSingleton from "./Account.json";
 
-export default class Messages {
+const TableName = "Messages";
+
+class Model {
   constructor() {
     this.primaryKey = "id";
     this.props = {
@@ -13,10 +17,10 @@ export default class Messages {
       likes: { type: TYPES.NUMBER },
       shares: { type: TYPES.NUMBER },
     };
-    this.func = CommonDBCrud(this, this.constructor.name);
+    this.fn = CommonDBCrud(this, TableName);
   }
-  associate(models) {
-    this.props.accountID = createRef(models.Account, { ...required, ...unique });
+  init() {
+    this.props.accountID = createRef(AccountSingleton.getInstance(), { required, unique });
   }
 }
 
@@ -24,7 +28,7 @@ export const Table = {
   Type: env.mainDB,
   DeletionPolicy: env.deletionPolicy,
   Properties: {
-    TableName: env.tableName(Messages.constructor.name),
+    TableName: env.tableName(TableName),
     KeySchema: [
       {
         AttributeName: "id",
@@ -52,3 +56,6 @@ export const Table = {
 // crementAction: async function(incDec, action = "likes") {
 //   this.update({ [action]: incDec ? 1 : -1 });
 // },
+
+const MessagesSingleton = new SingletonGenerator(Model);
+export default MessagesSingleton;

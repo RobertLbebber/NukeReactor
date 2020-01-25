@@ -8,3 +8,4 @@ credentials.csv
 .dynamodb
 dist/
 logs/*.log
+secrets.json.js
