@@ -25,13 +25,14 @@ let init = new SessionsController()
   .post()
   .open()
   .path("session")
-  .schema(Requests.SESSION_CREATE)
+  .request(Requests.SESSION_CREATE)
   .fn(async (event, context, endpoint) => {
     const Sessions = SessionsSingleton.getInstance();
     let parameters = JSON.parse(event.body);
     if (env.mode === DEVELOPMENT) {
       // try {
-      let existingSession = await Sessions.fn.create({
+      console.log("Hi");
+      let existingSession = await Sessions.fn.createGet({
         id: parameters.formData.emailAddress,
         accountId: "1",
       });
@@ -41,7 +42,7 @@ let init = new SessionsController()
         return ResponseStatus(false, "Unable To Create Session", DATABASE_FAILURE);
       }
     } else {
-      let existingAccount = await Account.fn.get({
+      let existingAccount = await Account.fn.scan({
         email: parameters.formData.emailAddress,
         password: parameters.formData.password,
       });
@@ -72,7 +73,7 @@ let init = new SessionsController()
   .create("destroySession")
   .deleter()
   .path("session")
-  .schema(Requests.SESSION_DELETE)
+  .request(Requests.SESSION_DELETE)
   .fn(async (event, context) => {
     return ResponseStatus(false, middles, NOT_IMPLEMENTED);
   })
@@ -82,7 +83,7 @@ let init = new SessionsController()
   .put()
   .open()
   .path("session")
-  .schema(Requests.SESSION_NEW)
+  .request(Requests.SESSION_NEW)
   .fn(async (event, context) => {
     let formData = _.get(JSON.parse(event.body), "formData");
     if (_.get(formData, "password") !== _.get(formData, "confirmation")) {

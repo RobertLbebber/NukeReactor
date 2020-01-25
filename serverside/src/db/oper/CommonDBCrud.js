@@ -1,6 +1,6 @@
 import _ from "lodash";
 import env, { DEVELOPMENT } from "../../config/env";
-import { checkProps, executor, prepProps } from "./DatabaseValidations";
+import { checkProps, executor, prepProps, dynamoDBFilterMarshalling, uniquenessCondition } from "./DatabaseValidations";
 import { CLIENT_GENERIC } from "../../io/HttpErrors";
 import { ON_CREATE, ON_UPDATE } from "../models/common/Attributes";
 
@@ -14,7 +14,8 @@ export const ATTRIBUTES = "Attributes";
 export const create = Model => async Item => {
   Item = await prepProps(Model, Item, ON_CREATE);
   await checkProps(Model, Item);
-  let params = { Item, ReturnValues: "ALL_OLD" };
+  let uniqueClauses = uniquenessCondition(Model, Item);
+  let params = { Item, ...uniqueClauses };
   return await executor(Model, "put", params);
 };
 export const createGet = Model => async Item => {
@@ -29,11 +30,12 @@ export const crement = Model => async Item => {
   let params = { Item };
   return await executor(Model, UPDATE, params);
 };
-export const update = Model => async (Key, Item) => {
+export const update = Model => async (keyValue, Item) => {
   Item = await prepProps(Model, Item, ON_UPDATE);
-  await checkProps(Model, Item);
+  await checkProps(Model, { [Model.primaryKey]: keyValue, ...Item });
 
-  let params = { Key, Item };
+  let params = { Key: { [Model.primaryKey]: keyValue }, Item };
+  console.log(params);
   return await executor(Model, UPDATE, params);
 };
 export const createUpdate = Model => async (Key, Item) => {
@@ -82,7 +84,7 @@ export const query = Model => async (Item, dynoExpression) => {
     }
   }
   marshalling.KeyConditionExpression = marshalling.KeyConditionExpression.join(" and ");
-  console.log("marshalling", marshalling);
+  console.log("Marshalling: ", marshalling);
   let params = {
     // Key: {
     //   id: event.pathParameters.id,
@@ -99,8 +101,10 @@ export const get = Model => async (keyValue, dynoExpression = {}) => {
   return await executor(Model, "get", params);
 };
 
-export const scan = Model => async () => {
-  return await executor(Model, "scan", {});
+export const scan = Model => async (filterExpression = {}, dynoExpression = {}) => {
+  let marshalledFilteredExpression = dynamoDBFilterMarshalling(Model, filterExpression);
+  let dynamodbObject = _.merge(marshalledFilteredExpression, dynoExpression);
+  return await executor(Model, "scan", dynamodbObject);
 };
 
 export default Model => {

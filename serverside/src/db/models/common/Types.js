@@ -8,7 +8,7 @@ import WebError, { DATABASE_REJECTION } from "../../../io/HttpErrors";
  * @param {Model} foreignModel
  */
 const checkDetection = (entryExist, refId, foreignModel) => {
-  if (_.isNil(entryExist)) {
+  if (_.isEmpty(entryExist)) {
     let error =
       "No Entry for given Foreign Key '" +
       refId +
@@ -20,6 +20,7 @@ const checkDetection = (entryExist, refId, foreignModel) => {
 };
 
 export class Ref {
+  dbType = "B";
   /**
    * @param {Model} foreigner - reference to an instance of a foreign model
    * @param {String} connection - prop being used for connecting the models
@@ -52,6 +53,7 @@ export class Ref {
  * Doesn't Require
  */
 export class SoftRef {
+  dbType = "B";
   /**
    * @param {Model} foreigner - reference to an instance of a foreign model
    * @param {String} connection - prop being used for connecting the models
@@ -84,6 +86,7 @@ export class SoftRef {
 }
 
 export class Collection {
+  dbType = "B";
   /**
    * @param {Model} foreigner - reference to an instance of a foreign model
    */

@@ -1,5 +1,7 @@
-import SessionsSingleton, { Utils } from "../db/models/Sessions.json";
+import Moment from "moment";
 import _ from "lodash";
+
+import SessionsSingleton, { Utils } from "../db/models/Sessions.json";
 import { StatusObject } from "../io/ResponseStatus.js";
 
 export const handleSession = async event => {
@@ -13,14 +15,16 @@ export const handleSession = async event => {
   } else {
     key = event.headers.sessionId;
   }
-  let resultSet = await Sessions.fn.get({ [Sessions.primaryKey]: key });
-  if (_.isNil(resultSet.data)) {
+  let resultSet = await Sessions.fn.get(key);
+  if (_.isNil(resultSet.Item)) {
     return StatusObject(false, "No Session found with that key");
-  } else if (!Utils.stillActive(resultSet.data)) {
+  } else if (!Utils.stillActive(resultSet.Item)) {
+    console.log("NOT HERES");
+
     return StatusObject(false, "No Session found with that key", 2);
   } else {
     //update the timestamp
-    await Sessions.fn.update({ [Sessions.primaryKey]: key });
+    await Sessions.fn.update(key, { updatedDate: new Moment().format() });
     return StatusObject(true);
   }
 };

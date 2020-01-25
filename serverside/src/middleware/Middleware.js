@@ -39,7 +39,7 @@ export const prep = async (event, context, endpoint) => {
     }
 
     //Handle Schema
-    if (!_.isNil(endpoint.schema) && !endpoint.schema(event).valid) {
+    if (!_.isNil(endpoint.request) && !endpoint.request(event).valid) {
       result.fails++;
       result.messages.push("Validation Failure");
     }

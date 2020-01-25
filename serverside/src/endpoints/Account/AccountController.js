@@ -7,6 +7,8 @@ import { NOT_IMPLEMENTED, FORBIDDEN } from "../../io/HttpErrors";
 import Requests from "./Requests";
 import AccountSingleton, { AccountGn } from "../../db/models/Account.json";
 import EmailAccountSingleton from "../../db/models/EmailAccount.json";
+import SessionsSingleton from "../../db/models/Sessions.json";
+import Sessions from "../../../dist/db/models/Sessions.json";
 
 class AccountController extends GenericController {}
 
@@ -14,7 +16,7 @@ let init = new AccountController()
   .create("getMe")
   .path("account/getMe")
   .fn(async (event, context, endpoint, globals) => {
-    return ResponseStatus(false, middles, NOT_IMPLEMENTED);
+    return ResponseStatus(true);
   })
 
   //
@@ -51,16 +53,17 @@ let init = new AccountController()
   .path("account/new")
   .post()
   .open()
-  .schema(Requests.ACCOUNT_CREATE)
-  .fn(async ({ body }, context) => {
+  .request(Requests.ACCOUNT_CREATE)
+  .fn(async ({ body }) => {
     let parameters = JSON.parse(body);
     if (_.get(parameters, "password", undefined) !== _.get(parameters, "confirmation", null)) {
       return ResponseStatus(false, "Password Pair didn't match", FORBIDDEN);
     }
     const EmailAccount = EmailAccountSingleton.getInstance();
     const Account = AccountSingleton.getInstance();
-    let emailResult = await EmailAccount.fn.create({ email: _.get(parameters, "emailAddress") });
-    let primaryEmail = _.get(emailResult, "Attributes.email");
+    const Session = SessionsSingleton.getInstance();
+    let emailResult = await EmailAccount.fn.createGet({ [EmailAccount.primaryKey]: _.get(parameters, "emailAddress") });
+    let primaryEmail = _.get(emailResult, "Item.email");
     let accountResult = await Account.fn.createGet(
       AccountGn(
         _.get(parameters, "firstName"),
@@ -69,9 +72,15 @@ let init = new AccountController()
         _.get(parameters, "password"),
       ),
     );
-    console.log("accountResult:", accountResult);
-    let accountGetResult = await Account.fn.query({ firstName: _.get(accountResult, "Item.firstName") });
-    return ResponseStatus(true, { accountGetResult, accountResult, emailResult });
+    let session = await Session.fn.createGet({
+      accountId: _.get(accountResult, "Item.id"),
+      emailAccountId: primaryEmail,
+    });
+    if (_.has(session, "Item.id")) {
+      return ResponseStatus(true, { session: _.get(session, "Item.id") });
+    } else {
+      return ResponseStatus(false);
+    }
   })
 
   //

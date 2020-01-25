@@ -17,7 +17,8 @@ export default class GenerateController {
     this._policy = [];
     this._session = true;
     this._dynamicPath = [];
-    this._schema = undefined;
+    this._request = undefined;
+    this._response = undefined;
     //Decoration
     this._description = undefined;
     this._contentType = "application/json";
@@ -38,7 +39,8 @@ export default class GenerateController {
       path: this._path,
       //Rules
       policy: this._policy,
-      schema: this._schema,
+      request: this._request,
+      response: this._response,
       session: this._session,
       dynamicPath: this._dynamicPath,
       //Decoration
@@ -52,6 +54,7 @@ export default class GenerateController {
   }
 
   /**
+   * @todo Add Audits
    * @param {Function} value
    *
    * @typedef {Function} fn - Endpoint Function to be called on
@@ -119,8 +122,17 @@ export default class GenerateController {
     return this;
   }
 
-  schema(schema) {
-    this._schema = event => new Validator().validate(JSON.parse(event.body), schema);
+  request(request) {
+    this._request = event => new Validator().validate(JSON.parse(event.body), request);
+    return this;
+  }
+
+  /**
+   *
+   * @param {Object| Object[]} response
+   */
+  response(response) {
+    this._response = event => new Validator().validate(JSON.parse(event.body), { oneOf: response });
     return this;
   }
 

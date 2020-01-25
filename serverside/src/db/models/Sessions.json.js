@@ -1,41 +1,38 @@
+import Moment from "moment";
+
 import CommonAttributes, { TYPES, createRef } from "./common/Attributes";
 import env from "../../config/env";
 import SingletonGenerator from "../../endpoints/_common/SingletonGenerator";
 import AccountSingleton from "./Account.json";
 import CommonModel from "./common/CommonModel.json";
+import EmailAccountSingleton from "./EmailAccount.json";
 
 const TableName = "Sessions";
 
-//Active for 2 Hours.hrs mins secs millis
-const ACTIVE_TIME = 2 * 60 * 60 * 1000;
-
 export const Utils = {
   stillActive: dataResult => {
-    if (dataResult.updatedDate > ACTIVE_TIME) {
-      return false;
-    }
-    return true;
+    let then = new Moment(dataResult.updatedDate);
+    console.log(then.isBetween(new Moment().subtract(10, "minute").format(), new Moment().add(10, "minute").format()));
+    console.log(then.format());
+    console.log(new Moment().subtract(10, "minute").format());
+    console.log(new Moment().add(10, "minute").format());
+    return then.isBetween(new Moment().subtract(10, "minute"), new Moment().add(10, "minute"));
   },
 };
 
 class Model extends CommonModel {
   constructor() {
     super(TableName);
-    this.props = {
-      ...this.props,
-      fName: { type: TYPES.STRING },
-      lName: { type: TYPES.STRING },
-      password: { type: TYPES.STRING },
-      email: { type: TYPES.STRING },
-    };
+    /**
+     * Primary Key is "id"
+     */
   }
   /** @override*/
   init() {
     this.props.accountId = createRef(AccountSingleton.getInstance());
+    this.props.emailAccountId = createRef(EmailAccountSingleton.getInstance());
   }
 }
-// Model.props.accountId = { type: new TYPES.REF(Account, Model) };
-// console.log(new Sessions().props.accountId);
 
 export const Table = {
   Type: env.mainDB,

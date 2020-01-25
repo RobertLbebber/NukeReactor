@@ -13,7 +13,7 @@ let init = new PostController()
   .create("createPost")
   .post()
   .path("post")
-  .schema(Requests.POST)
+  .request(Requests.POST)
   .fn(async (event, context) => {
     let middles = await Middleware.prep(event, context, init);
     if (!middles.ok) {
@@ -28,7 +28,7 @@ let init = new PostController()
   .post()
   .path("post/{postId}/edit")
   .dynamic(["postId"])
-  .schema(Requests.POST)
+  .request(Requests.POST)
   .fn(async (event, context) => {
     let middles = await Middleware.prep(event, context, init);
     return ResponseStatus(middles.ok, middles);
@@ -48,7 +48,7 @@ let init = new PostController()
   .post()
   .path("post/{postId}/react")
   .dynamic(["postId"])
-  .schema(Requests.POST_REACT)
+  .request(Requests.POST_REACT)
   .fn(async (event, context) => {
     let middles = await Middleware.prep(event, context, init);
     return ResponseStatus(middles.ok, middles);
@@ -59,7 +59,7 @@ let init = new PostController()
   .post()
   .path("post/{postId}/donate")
   .dynamic(["postId"])
-  .schema(Requests.POST_DONATE)
+  .request(Requests.POST_DONATE)
   .fn(async (event, context) => {
     let middles = await Middleware.prep(event, context, init);
     return ResponseStatus(middles.ok, middles);
