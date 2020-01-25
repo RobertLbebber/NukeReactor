@@ -3,7 +3,7 @@ import CommonAttributes from "./Attributes";
 
 export default class CommonModel {
   constructor(name) {
-    this.primaryKey = "id";
+    this.pK = "id";
     this.modelName = name;
     this.props = CommonAttributes;
     this.fn = CommonDBCrud(this);

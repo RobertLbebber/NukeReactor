@@ -8,7 +8,7 @@ const TableName = "PageTemplates";
 
 class Model {
   constructor() {
-    this.primaryKey = "id";
+    this.pK = "id";
     this.props = {
       ...Attributes,
       serial: { type: TYPES.STRING },
@@ -84,3 +84,8 @@ export const Table = {
 
 const PageTemplatesSingleton = new SingletonGenerator(Model);
 export default PageTemplatesSingleton;
+export class PageTemplatesDoc extends CommonDoc {
+  constructor(identity) {
+    super(Model, identity);
+  }
+}

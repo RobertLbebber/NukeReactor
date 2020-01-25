@@ -3,14 +3,14 @@ import env from "../../config/env";
 import { TYPES, required, unique, createSoftRef } from "./common/Attributes";
 import AccountSingleton from "./Account.json";
 import SingletonGenerator from "../../endpoints/_common/SingletonGenerator";
-import CommonModel from "./common/CommonModel.json";
+import CommonModel from "./common/CommonModel";
 
 const TableName = "EmailAccount";
 
 class Model extends CommonModel {
   constructor() {
     super(TableName);
-    this.primaryKey = "email";
+    this.pK = "email";
     this.props = _.omit(this.props, "id");
     this.props = {
       ...this.props,
@@ -53,3 +53,8 @@ export const Table = {
 
 const EmailAccountSingleton = new SingletonGenerator(Model);
 export default EmailAccountSingleton;
+export class EmailAccountDoc extends CommonDoc {
+  constructor(identity) {
+    super(Model, identity);
+  }
+}

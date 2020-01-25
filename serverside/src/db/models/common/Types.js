@@ -29,7 +29,7 @@ export class Ref {
     // console.log("Types.js", foreigner);
     if (validate) {
       this.foreignModel = foreigner;
-      this.foreignKey = foreigner.primaryKey;
+      this.foreignKey = foreigner.pK;
       if (_.isNil(this.foreignModel)) {
         throw new WebError(DATABASE_REJECTION, "No foriegn Model provided for Reference");
       }
@@ -61,7 +61,7 @@ export class SoftRef {
   constructor(foreigner, validate = true) {
     if (validate) {
       this.foreignModel = foreigner;
-      this.foreignKey = foreigner.primaryKey;
+      this.foreignKey = foreigner.pK;
       this.locked = false;
       if (_.isNil(this.foreignModel)) {
         throw new WebError(DATABASE_REJECTION, "No foriegn Model provided for Reference");

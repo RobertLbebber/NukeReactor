@@ -8,7 +8,7 @@ const TableName = "CreditCards";
 
 class Model {
   constructor() {
-    this.primaryKey = "id";
+    this.pK = "id";
     this.props = {
       ...Attributes,
       serial: { type: TYPES.STRING },
@@ -55,3 +55,8 @@ export const Table = {
 
 const CreditCards = new SingletonGenerator(Model);
 export default CreditCards;
+export class CreditCardsDoc extends CommonDoc {
+  constructor(identity) {
+    super(Model, identity);
+  }
+}

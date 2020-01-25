@@ -9,7 +9,7 @@ const TableName = "Messages";
 
 class Model {
   constructor() {
-    this.primaryKey = "id";
+    this.pK = "id";
     this.props = {
       ...Attributes,
       mainMessage: { type: TYPES.STRING },
@@ -59,3 +59,8 @@ export const Table = {
 
 const MessagesSingleton = new SingletonGenerator(Model);
 export default MessagesSingleton;
+export class MessagesDoc extends CommonDoc {
+  constructor(identity) {
+    super(Model, identity);
+  }
+}

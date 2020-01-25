@@ -2,7 +2,7 @@ import env from "../../config/env";
 import { TYPES, required, unique, createRef, createCollection, encrypted } from "./common/Attributes";
 import SingletonGenerator from "../../endpoints/_common/SingletonGenerator";
 import EmailAccountSingleton from "./EmailAccount.json";
-import CommonModel from "./common/CommonModel.json";
+import CommonModel from "./common/CommonModel";
 
 const TableName = "Account";
 
@@ -64,3 +64,8 @@ export const Table = {
 
 const AccountSingleton = new SingletonGenerator(Model);
 export default AccountSingleton;
+export class AccountDoc extends CommonDoc {
+  constructor(identity) {
+    super(Model, identity);
+  }
+}

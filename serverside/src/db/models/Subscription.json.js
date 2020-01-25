@@ -8,7 +8,7 @@ const TableName = "Subscription";
 
 class Model {
   constructor() {
-    this.primaryKey = "id";
+    this.pK = "id";
     this.props = {
       ...Attributes,
       serial: { type: TYPES.STRING },
@@ -48,3 +48,8 @@ export const Table = {
 
 const Subscription = new SingletonGenerator(Model);
 export default Subscription;
+export class SubscriptionDoc extends CommonDoc {
+  constructor(identity) {
+    super(Model, identity);
+  }
+}

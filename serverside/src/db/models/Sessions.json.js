@@ -4,7 +4,7 @@ import CommonAttributes, { TYPES, createRef } from "./common/Attributes";
 import env from "../../config/env";
 import SingletonGenerator from "../../endpoints/_common/SingletonGenerator";
 import AccountSingleton from "./Account.json";
-import CommonModel from "./common/CommonModel.json";
+import CommonModel from "./common/CommonModel";
 import EmailAccountSingleton from "./EmailAccount.json";
 
 const TableName = "Sessions";
@@ -12,10 +12,6 @@ const TableName = "Sessions";
 export const Utils = {
   stillActive: dataResult => {
     let then = new Moment(dataResult.updatedDate);
-    console.log(then.isBetween(new Moment().subtract(10, "minute").format(), new Moment().add(10, "minute").format()));
-    console.log(then.format());
-    console.log(new Moment().subtract(10, "minute").format());
-    console.log(new Moment().add(10, "minute").format());
     return then.isBetween(new Moment().subtract(10, "minute"), new Moment().add(10, "minute"));
   },
 };
@@ -60,3 +56,8 @@ export const Table = {
 
 const SessionsSingleton = new SingletonGenerator(Model);
 export default SessionsSingleton;
+export class SessionDoc extends CommonDoc {
+  constructor(identity) {
+    super(Model, identity);
+  }
+}

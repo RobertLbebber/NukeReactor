@@ -13,14 +13,18 @@ export const ATTRIBUTES = "Attributes";
  */
 export const create = Model => async Item => {
   Item = await prepProps(Model, Item, ON_CREATE);
-  await checkProps(Model, Item);
+  await checkProps(Model, Item, true);
   let uniqueClauses = uniquenessCondition(Model, Item);
   let params = { Item, ...uniqueClauses };
   return await executor(Model, "put", params);
 };
-export const createGet = Model => async Item => {
+/**
+ * Create and Get
+ * @param {*} Model
+ */
+export const record = Model => async Item => {
   await create(Model)(Item);
-  return await get(Model)(_.get(Item, [Model.primaryKey]));
+  return await get(Model)(_.get(Item, [Model.pK]));
 };
 
 export const crement = Model => async Item => {
@@ -32,9 +36,9 @@ export const crement = Model => async Item => {
 };
 export const update = Model => async (keyValue, Item) => {
   Item = await prepProps(Model, Item, ON_UPDATE);
-  await checkProps(Model, { [Model.primaryKey]: keyValue, ...Item });
+  await checkProps(Model, { [Model.pK]: keyValue, ...Item });
 
-  let params = { Key: { [Model.primaryKey]: keyValue }, Item };
+  let params = { Key: { [Model.pK]: keyValue }, Item };
   console.log(params);
   return await executor(Model, UPDATE, params);
 };
@@ -48,6 +52,7 @@ export const createUpdate = Model => async (Key, Item) => {
     params = _.omit(params, "Item.createdDate");
     return await executor(Model, UPDATE, params);
   } else {
+    await checkProps(Model, Item, true);
     return await executor(Model, "put", { ...params, ReturnValues: "ALL_OLD" });
   }
 };
@@ -97,18 +102,21 @@ export const query = Model => async (Item, dynoExpression) => {
 };
 
 export const get = Model => async (keyValue, dynoExpression = {}) => {
-  let params = { Key: { [Model.primaryKey]: keyValue }, ...dynoExpression };
+  let params = { Key: { [Model.pK]: keyValue }, ...dynoExpression };
   return await executor(Model, "get", params);
 };
 
 export const scan = Model => async (filterExpression = {}, dynoExpression = {}) => {
-  let marshalledFilteredExpression = dynamoDBFilterMarshalling(Model, filterExpression);
+  let marshalledFilteredExpression = {};
+  if (!_.isNil(filterExpression)) {
+    marshalledFilteredExpression = dynamoDBFilterMarshalling(Model, filterExpression);
+  }
   let dynamodbObject = _.merge(marshalledFilteredExpression, dynoExpression);
   return await executor(Model, "scan", dynamodbObject);
 };
 
 export default Model => {
-  let functions = { get, query, create, createGet, crement, update, createUpdate, remove, scan };
+  let functions = { get, query, create, record, crement, update, createUpdate, remove, scan };
   for (let func in functions) {
     functions[func] = functions[func](Model);
   }

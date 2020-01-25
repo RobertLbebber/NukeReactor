@@ -62,9 +62,9 @@ let init = new AccountController()
     const EmailAccount = EmailAccountSingleton.getInstance();
     const Account = AccountSingleton.getInstance();
     const Session = SessionsSingleton.getInstance();
-    let emailResult = await EmailAccount.fn.createGet({ [EmailAccount.primaryKey]: _.get(parameters, "emailAddress") });
+    let emailResult = await EmailAccount.fn.record({ [EmailAccount.pK]: _.get(parameters, "emailAddress") });
     let primaryEmail = _.get(emailResult, "Item.email");
-    let accountResult = await Account.fn.createGet(
+    let accountResult = await Account.fn.record(
       AccountGn(
         _.get(parameters, "firstName"),
         _.get(parameters, "lastName"),
@@ -72,7 +72,7 @@ let init = new AccountController()
         _.get(parameters, "password"),
       ),
     );
-    let session = await Session.fn.createGet({
+    let session = await Session.fn.record({
       accountId: _.get(accountResult, "Item.id"),
       emailAccountId: primaryEmail,
     });

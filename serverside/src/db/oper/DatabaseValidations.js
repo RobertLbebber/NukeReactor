@@ -17,6 +17,12 @@ const documentClient = new AWS.DynamoDB.DocumentClient({
   secretAccessKey,
 });
 
+/**
+ * Alters the Item object provided
+ * @param {*} model
+ * @param {*} item
+ * @param {*} updateMethod
+ */
 export const prepProps = async (model, item, updateMethod) => {
   if (!_.isEmpty(item)) {
     item = generateKeys(model, item, updateMethod);
@@ -45,17 +51,18 @@ export const uniquenessCondition = (model, item) => {
 };
 
 /**
+ * Validates the Item object provided against the Model Schema
  *
  * @param {Model} model - Local Model
  * @param {Object} item
  */
-export const checkProps = async (model, item) => {
+export const checkProps = async (model, item, requiredCheck = false) => {
   if (_.isNil(item)) {
     throw new WebError(DATABASE_REJECTION, "No query item provided for the Crud Action.");
   }
   for (let field in model.props) {
     let fieldValue = model.props[field];
-    if (_.isNil(item[field]) && fieldValue.required) {
+    if (_.isNil(item[field]) && fieldValue.required && requiredCheck) {
       throw new WebError(DATABASE_REJECTION, model.modelName + " Missing Required Field: " + field);
     } else if (_.isNil(item[field])) {
       continue; //Null values don't have constructors

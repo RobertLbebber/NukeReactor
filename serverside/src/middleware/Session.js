@@ -19,8 +19,6 @@ export const handleSession = async event => {
   if (_.isNil(resultSet.Item)) {
     return StatusObject(false, "No Session found with that key");
   } else if (!Utils.stillActive(resultSet.Item)) {
-    console.log("NOT HERES");
-
     return StatusObject(false, "No Session found with that key", 2);
   } else {
     //update the timestamp
