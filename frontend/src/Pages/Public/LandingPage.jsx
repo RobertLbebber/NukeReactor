@@ -5,8 +5,8 @@ import { FormattedMessage } from "react-intl";
 import { Grid } from "@material-ui/core";
 import _ from "lodash";
 
-import ECrown from "../../general/Stateless/Icons/ECrown";
-import Restful from "../../util/io/Restful";
+import ECrown from "general/Feedback/Graphics/Icons/ECrown";
+import Restful from "util/io/Restful";
 
 export class LandingPage extends Component {
   constructor(props) {
@@ -16,7 +16,7 @@ export class LandingPage extends Component {
       toggleRegister: true,
       formData: {},
       redirect: false,
-      errorMessage: null
+      errorMessage: null,
     };
     this._isMount = false;
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -35,7 +35,7 @@ export class LandingPage extends Component {
   addFormData(name, data) {
     this.setState({
       form: { ...this.state.form, [name]: data },
-      errorMessage: null
+      errorMessage: null,
     });
   }
 
@@ -56,7 +56,7 @@ export class LandingPage extends Component {
     this.setState({
       toggleRegister: !this.state.toggleRegister,
       formData: {},
-      errorMessage: null
+      errorMessage: null,
     });
   };
 
@@ -251,7 +251,7 @@ export class LandingPage extends Component {
   }
 
   static propTypes = {
-    updateUserDataFn: PropTypes.func.isRequired
+    updateUserDataFn: PropTypes.func.isRequired,
   };
 
   // static defaultProps = {};

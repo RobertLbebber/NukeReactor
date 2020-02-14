@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import { get } from "../../util/io/Restful";
-import FeedCard from "../../general/Stateless/Sections/MaterialWrappers/FeedCard";
-import PostCreator from "../../general/Stateful/PostCreator";
-// import { GlobalInputsConsumer, GlobalInputsProvider } from "../../Context/GlobalInputsContext";
+
+import { get } from "util/io/Restful";
+import PostCreator from "general/Inputs/Form/PostCreator";
+import FeedCard from "general/Containers/MaterialWrappers/FeedCard";
+// import { GlobalInputsConsumer, GlobalInputsProvider } from "Context/GlobalInputsContext";
 
 const sampleData = [
   {
@@ -16,8 +17,8 @@ const sampleData = [
       mainText: "Main Text",
       title: "This is the title",
       profileImgLoc: null,
-      profileName: "Robert"
-    }
+      profileName: "Robert",
+    },
   },
   {
     content: {
@@ -28,8 +29,8 @@ const sampleData = [
       mainText: "Main Text",
       title: "This is the title",
       profileImgLoc: null,
-      profileName: "Robert"
-    }
+      profileName: "Robert",
+    },
   },
   {
     content: {
@@ -40,8 +41,8 @@ const sampleData = [
       mainText: "Main Text",
       title: "This is the title",
       profileImgLoc: null,
-      profileName: "Robert"
-    }
+      profileName: "Robert",
+    },
   },
   {
     content: {
@@ -52,8 +53,8 @@ const sampleData = [
       mainText: "Main Text",
       title: "This is the title",
       profileImgLoc: null,
-      profileName: "Robert"
-    }
+      profileName: "Robert",
+    },
   },
   {
     content: {
@@ -64,8 +65,8 @@ const sampleData = [
       mainText: "Main Text",
       title: "This is the title",
       profileImgLoc: null,
-      profileName: "Robert"
-    }
+      profileName: "Robert",
+    },
   },
   {
     content: {
@@ -76,9 +77,9 @@ const sampleData = [
       mainText: "Main Text",
       title: "This is the title",
       profileImgLoc: null,
-      profileName: "Robert"
-    }
-  }
+      profileName: "Robert",
+    },
+  },
 ];
 
 export class Feed extends Component {
@@ -87,7 +88,7 @@ export class Feed extends Component {
     //var id=func.generateSerial(9,36);
     this.state = {
       _tag: this.constructor.name,
-      feedData: sampleData
+      feedData: sampleData,
       //_id: id
     };
     this.isMount = false;
@@ -105,7 +106,7 @@ export class Feed extends Component {
     get("/feed/" + this.props.account.id)
       .then(response => {
         this.setState({
-          feedData: response
+          feedData: response,
         });
       })
       .catch(err => {
@@ -145,7 +146,7 @@ export class Feed extends Component {
     history: PropTypes.object,
     locaton: PropTypes.object,
     match: PropTypes.object,
-    staticContext: PropTypes.object
+    staticContext: PropTypes.object,
   };
 
   static defaultProps = {};

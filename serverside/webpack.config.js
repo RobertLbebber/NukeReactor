@@ -15,7 +15,7 @@ module.exports = {
     path: path.join(__dirname, "dist"),
     library: "[name]",
     libraryTarget: "commonjs2",
-    filename: "[name].js"
+    filename: "[name].js",
   },
   target: "node",
   module: {
@@ -24,13 +24,17 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: "babel-loader",
-        query: JSON.parse(fs.readFileSync(path.join(__dirname, ".babelrc"), { encoding: "utf8" }))
+        query: JSON.parse(fs.readFileSync(path.join(__dirname, ".babelrc"), { encoding: "utf8" })),
       },
       {
         test: /\.json$/,
         exclude: /node_modules/,
-        loader: "json-loader"
-      }
-    ]
-  }
+        loader: "json-loader",
+      },
+    ],
+  },
+  resolve: {
+    extensions: [".js", ".vue", ".json"],
+    alias: { "@": path.resolve(__dirname, "src") },
+  },
 };

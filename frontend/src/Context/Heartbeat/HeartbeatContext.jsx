@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 import Cookies from "js-cookie";
 
-import Restful from "../util/io/Restful";
-import { Details, State } from "../env/InterpretedEnvironment";
+import Restful from "util/io/Restful";
+import { Details, State } from "env/InterpretedEnvironment";
 
 export const HeartbeatContext = React.createContext();
 
@@ -24,8 +24,8 @@ export class HeartbeatProvider extends React.Component {
         profileImg: "src/assets/img/faces/face-0.jpg",
         reputation: {
           donations: 0,
-          presige: 0
-        }
+          presige: 0,
+        },
       };
     } else {
       if (!_.isNil(account)) {
@@ -42,7 +42,7 @@ export class HeartbeatProvider extends React.Component {
     this.state = {
       account: account,
       destroyCookies: this.destroyCookies,
-      updateUserData: this.updateUserData
+      updateUserData: this.updateUserData,
     };
     this._mounted = false;
   }
@@ -105,6 +105,6 @@ export const AccountShape = PropTypes.shape({
   profileImg: PropTypes.string,
   reputation: PropTypes.shape({
     donations: PropTypes.number,
-    presige: PropTypes.number
-  })
+    presige: PropTypes.number,
+  }),
 });

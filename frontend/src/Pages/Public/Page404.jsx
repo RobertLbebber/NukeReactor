@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Typography, Container } from "@material-ui/core";
-import { RouteShape } from "../../routes/Routes";
+import { RouteShape } from "Routes/Routes";
 import { FormattedMessage } from "react-intl";
 //import func from '/frontend/src/util/func/func'
 
@@ -11,7 +11,7 @@ export class Page404 extends Component {
     super(props);
     //var id=func.generateSerial(9,36);
     this.state = {
-      _tag: this.constructor.name
+      _tag: this.constructor.name,
       //_id: id
     };
     this._isMount = false;

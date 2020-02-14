@@ -5,21 +5,21 @@ import { Switch } from "react-router-dom";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
 import { IntlProvider, FormattedMessage } from "react-intl";
 
-import Header from "../general/Stateful/Header";
-import { HeartbeatContext } from "../Context/HeartbeatContext";
-import { LandingPage } from "../Pages/Public/LandingPage";
+import { LandingPage } from "Pages/Public/LandingPage";
 import Routes from "./Routes";
-import RouteContextProvider from "../Context/RouteContext";
-import { flatten as Languages } from "../assets/locale/Langauges";
-import Footer from "../Pages/Navibars/Footer/Footer";
-import { State } from "../env/InterpretedEnvironment";
+import RouteContextProvider from "Context/RouteContext";
+import { flatten as Languages } from "assets/locale/Langauges";
+import Footer from "Pages/Navibars/Footer/Footer";
+import { State } from "env/InterpretedEnvironment";
+import Header from "general/Containers/Header";
+import { HeartbeatContext } from "Context/Heartbeat/HeartbeatContext";
 
 export class Router extends Component {
   constructor(props) {
     super(props);
     this.state = {
       _tag: this.constructor.name,
-      locale: "en"
+      locale: "en",
     };
     this._isMount = false;
   }
@@ -104,7 +104,7 @@ export const RouteShape = {
   history: PropTypes.object,
   locaton: PropTypes.object,
   match: PropTypes.object,
-  staticContext: PropTypes.object
+  staticContext: PropTypes.object,
 };
 
 export default Router;

@@ -67,6 +67,6 @@ const AccountSingleton = new SingletonGenerator(Model);
 export default AccountSingleton;
 export class AccountDoc extends CommonDoc {
   constructor(identity) {
-    super(Model, identity);
+    super(AccountSingleton.getInstance(), identity);
   }
 }

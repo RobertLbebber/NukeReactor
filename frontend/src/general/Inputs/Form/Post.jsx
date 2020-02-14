@@ -6,10 +6,10 @@ import { FormattedMessage } from "react-intl";
 import { withStyles } from "@material-ui/core/styles";
 import { Paper, Grid, Typography, Avatar } from "@material-ui/core";
 
-import { AccountShape } from "Context/HeartbeatContext";
+import { AccountShape } from "Context/Heartbeat/HeartbeatContext";
 import { getAccountPath } from "util/io/UserAPIs";
 import { getLocal } from "util/func/localization";
-import ReactionBar, { DONATE, SHARE, NONE, DISLIKE, LIKE } from "../Feedback/ReactionBar";
+import ReactionBar, { DONATE, SHARE, NONE, DISLIKE, LIKE } from "general/Feedback/ReactionBar";
 
 const styles = theme => ({
   profileImage: { margin: theme.spacing(2) },
@@ -17,12 +17,12 @@ const styles = theme => ({
   notSpecialLink: {
     color: theme.text.secondary.color,
     marginTop: theme.spacing(1),
-    textDecoration: "none"
+    textDecoration: "none",
   },
   nameText: {
     fontWeight: 800,
-    marginTop: theme.spacing(2)
-  }
+    marginTop: theme.spacing(2),
+  },
 });
 
 /**
@@ -34,7 +34,7 @@ class Post extends Component {
     this.state = {
       likeStatus: _.get(this.props.postData, "reactions.likeStatus", NONE),
       hasDonated: _.get(this.props.postData, "reactions.donateData.hasDonated", false),
-      hasShared: _.get(this.props.postData, "reactions.shareData.hasShared", false)
+      hasShared: _.get(this.props.postData, "reactions.shareData.hasShared", false),
     };
     this._tag = this.constructor.name;
     this._isMount = false;
@@ -70,7 +70,7 @@ class Post extends Component {
         } else {
           this.props.onDonate(this.state.hasDonated);
         }
-      }
+      },
     );
   };
 
@@ -124,7 +124,7 @@ class Post extends Component {
     let { poster, classes } = this.props;
     let feedList = [
       { key: DONATE, active: this.state.hasDonated, disabled: false, value: NaN, onClick: () => null },
-      { key: SHARE, active: this.state.hasShared, disabled: false, value: NaN, onClick: () => null }
+      { key: SHARE, active: this.state.hasShared, disabled: false, value: NaN, onClick: () => null },
     ];
     // console.log(feedList);
     return (
@@ -150,13 +150,13 @@ class Post extends Component {
 export const DonationStatusShape = PropTypes.shape({
   donated: PropTypes.number,
   hasDonated: PropTypes.bool,
-  totalDonations: PropTypes.number
+  totalDonations: PropTypes.number,
 });
 export const SharedStatusShape = PropTypes.shape({ shares: PropTypes.number, hasShared: PropTypes.bool });
 export const ReationsShape = PropTypes.shape({
   likesStatus: PropTypes.oneOf([LIKE, DISLIKE, NONE]),
   shareData: SharedStatusShape,
-  donateData: DonationStatusShape
+  donateData: DonationStatusShape,
 });
 export const postShape = PropTypes.shape({
   title: PropTypes.string,
@@ -164,7 +164,7 @@ export const postShape = PropTypes.shape({
   date: PropTypes.number,
   description: PropTypes.string,
   attachments: PropTypes.object,
-  reactions: ReationsShape
+  reactions: ReationsShape,
 });
 
 Post.propTypes = {
@@ -176,13 +176,13 @@ Post.propTypes = {
 
   onLikeStatusChange: PropTypes.func,
   onDonate: PropTypes.func,
-  onShare: PropTypes.func
+  onShare: PropTypes.func,
 };
 
 Post.defaultProps = {
   className: "",
   onLikeStatusChange: () => {},
   onDonate: () => {},
-  onShare: () => {}
+  onShare: () => {},
 };
 export default withStyles(styles)(Post);

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-// import _ from "lodash";
-import Restful from "../../util/io/Restful";
-import Loading from "../../general/Util/Loading";
 import { withStyles } from "@material-ui/core";
-import PageBuilder from "../PageBuilder/PageBuilder";
+// import _ from "lodash";
+import PageBuilder from "Pages/PageBuilder/PageBuilder";
+import Loading from "general/Feedback/Graphics/Loading";
+import Restful from "util/io/Restful";
 
 const styles = theme => {
   console.log(theme);
@@ -12,8 +12,8 @@ const styles = theme => {
     loading: {
       backgroundColor: theme.palette.primary.hvr,
       top: "auto",
-      bottom: 0
-    }
+      bottom: 0,
+    },
   };
 };
 
@@ -23,7 +23,7 @@ export class Account extends Component {
     this.state = {
       _tag: this.constructor.name,
       account: { ...this.props.body },
-      subscribed: false
+      subscribed: false,
     };
     this._isMount = false;
   }
@@ -34,7 +34,7 @@ export class Account extends Component {
       .then(object => {
         if (this._isMount) {
           this.setState({
-            page: object.body
+            page: object.body,
           });
         }
       })
@@ -85,7 +85,7 @@ export class Account extends Component {
     locaton: PropTypes.object,
     match: PropTypes.object,
     staticContext: PropTypes.object,
-    body: PropTypes.object
+    body: PropTypes.object,
 
     //
   };

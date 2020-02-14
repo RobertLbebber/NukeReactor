@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import _ from "lodash";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import { State } from "../../../../env/InterpretedEnvironment";
+import { State } from "env/InterpretedEnvironment";
 import { MenuItem, Menu, MenuList, Link } from "@material-ui/core";
-import { HeartbeatContext } from "../../../../Context/HeartbeatContext";
+import { HeartbeatContext } from "Context/Heartbeat/HeartbeatContext";
 
 const styles = theme => ({});
 
@@ -63,10 +63,10 @@ DebugLinks.propTypes = {
   classes: PropTypes.object,
   close: PropTypes.func.isRequired,
   links: PropTypes.array.isRequired,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 DebugLinks.defaultProps = {
-  classes: {}
+  classes: {},
 };
 export default withStyles(styles)(DebugLinks);

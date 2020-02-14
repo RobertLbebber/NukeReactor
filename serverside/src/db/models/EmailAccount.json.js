@@ -56,6 +56,6 @@ const EmailAccountSingleton = new SingletonGenerator(Model);
 export default EmailAccountSingleton;
 export class EmailAccountDoc extends CommonDoc {
   constructor(identity) {
-    super(Model, identity);
+    super(EmailAccountSingleton.getInstance(), identity);
   }
 }

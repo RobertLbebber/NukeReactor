@@ -1,52 +1,52 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-// import toastr from "toastr";
 import _ from "lodash";
 import { Typography, Toolbar, IconButton, Avatar, Grid, Link } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import { withStyles } from "@material-ui/core/styles";
 import { ArrowDropDown } from "@material-ui/icons";
-
-import { RouteContext } from "../../Context/RouteContext";
-import AccountMenu from "../../Pages/Navibars/Header/Menus/AccountMenu";
-import { LOGOUT, SETTING, HOME, ACCOUNT } from "../../routes/Routes";
-import DebugLinks from "../../Pages/Navibars/Header/Menus/DebugLinks";
-// import Restful from "../../../util/io/Restful";
-import SearchOperator from "../Stateless/Sections/Tools/SearchOperator";
-import { State } from "../../env/InterpretedEnvironment";
 import { FormattedMessage } from "react-intl";
-import { AccountShape } from "../../Context/HeartbeatContext";
-import { getProfileImage } from "../../util/io/UserAPIs";
-import { prettyNumber } from "../../util/func/lodashExtension";
+
+import { RouteContext } from "Context/RouteContext";
+import AccountMenu from "Pages/Navibars/Header/Menus/AccountMenu";
+import { LOGOUT, SETTING, HOME, ACCOUNT } from "Routes/Routes";
+import DebugLinks from "Pages/Navibars/Header/Menus/DebugLinks";
+// import Restful from "util/io/Restful";
+
+import { State } from "env/InterpretedEnvironment";
+import { AccountShape } from "Context/Heartbeat/HeartbeatContext";
+import { getProfileImage } from "util/io/UserAPIs";
+import { prettyNumber } from "util/func/lodashExtension";
+import SearchOperator from "general/Inputs/Form/Tools/SearchOperator";
 
 const styles = theme => {
   return {
     navBar: {
       backgroundColor: theme.palette.primary.hvr,
       boxShadow: "none",
-      marginBottom: theme.spacing(1)
+      marginBottom: theme.spacing(1),
     },
     toolbar: {
       alignItems: "center",
       justifyContent: "space-between",
-      boxShadow: "none"
+      boxShadow: "none",
     },
     navLinks: {
-      display: "flex"
+      display: "flex",
     },
     brandName: {
       fontSize: theme.typography.h4.fontSize,
-      color: theme.palette.white
+      color: theme.palette.white,
     },
     toggleButton: {
-      marginRight: theme.spacing(2)
+      marginRight: theme.spacing(2),
     },
     profileAvatar: {
-      backgroundColor: "lightgray"
+      backgroundColor: "lightgray",
     },
     menu: {
-      top: "35px !important"
-    }
+      top: "35px !important",
+    },
   };
 };
 
@@ -55,13 +55,13 @@ class Header extends Component {
     super(props);
     //TODO
     this.urls = {
-      search: "TDB"
+      search: "TDB",
     };
     this.state = {
       showAccountMenu: false,
       showDebugMenu: false, // For Debug: Drop Down
       searchResults: null,
-      searchCurrently: null
+      searchCurrently: null,
     };
     this._tag = this.constructor.name;
     this.menuRef = React.createRef();
@@ -106,7 +106,7 @@ class Header extends Component {
     const accountMenu = {
       logout: _.find(routes, route => route.key === LOGOUT),
       setting: _.find(routes, route => route.key === SETTING),
-      account: _.find(routes, route => route.key === ACCOUNT)
+      account: _.find(routes, route => route.key === ACCOUNT),
     };
     return (
       <Grid container item xs={3} md={2} spacing={1} justify="space-around">
@@ -215,7 +215,7 @@ class Header extends Component {
 Header.propTypes = {
   classes: PropTypes.object,
   account: AccountShape.isRequired,
-  displayType: PropTypes.oneOf(["standard"])
+  displayType: PropTypes.oneOf(["standard"]),
 };
 
 export default withStyles(styles)(Header);

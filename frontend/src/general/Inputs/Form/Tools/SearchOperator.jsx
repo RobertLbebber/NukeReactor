@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import { ClickAwayListener } from "@material-ui/core";
 
-import Searchbar from "../../../Stateful/Searchbar";
-import Restful from "../../../../util/io/Restful";
-import { ifThen } from "../../../../util/func/lodashExtension";
-import { State } from "../../../../env/InterpretedEnvironment";
+import Restful from "util/io/Restful";
+import { ifThen } from "util/func/lodashExtension";
+import { State } from "env/InterpretedEnvironment";
 import SearchResult from "./SearchResult";
+import Searchbar from "general/Inputs/Searchbar";
 
 const styles = theme => ({ root: { position: "relative" } });
 
@@ -27,7 +27,7 @@ class SearchOperator extends Component {
       [this.searchResult]: null,
       searchRequest: null,
       showSearchOrSuggest: this.suggestionResult,
-      openResults: false
+      openResults: false,
     };
     this._tag = this.constructor.name;
     this._isMount = false;
@@ -44,7 +44,7 @@ class SearchOperator extends Component {
 
   handleClickAway = () => {
     this.setState({
-      openResults: false
+      openResults: false,
     });
   };
 
@@ -53,7 +53,7 @@ class SearchOperator extends Component {
       this.setState({
         openResults: false,
         [stateKey]: null,
-        showSearchOrSuggest: stateKey
+        showSearchOrSuggest: stateKey,
       });
       return;
     } else if (
@@ -66,7 +66,7 @@ class SearchOperator extends Component {
     this.setState({
       [stateKey]: value,
       showSearchOrSuggest: stateKey,
-      loading: true
+      loading: true,
     });
 
     if (State.Debug) {
@@ -80,7 +80,7 @@ class SearchOperator extends Component {
             imageAlt: "Image Alt",
             onClick: () => {
               console.log("HI from Search Result");
-            }
+            },
           },
           {
             title: "This is the title2",
@@ -90,11 +90,11 @@ class SearchOperator extends Component {
             imageAlt: "Image Alt",
             onClick: () => {
               console.log("HI from Search Result");
-            }
-          }
+            },
+          },
         ],
         openResults: true,
-        loading: false
+        loading: false,
       });
     } else {
       Restful.get(this.props.searchUrl + "q=" + encodeURI(value))
@@ -103,7 +103,7 @@ class SearchOperator extends Component {
             this.setState({
               [stateKey]: response.data,
               openResults: true,
-              loading: false
+              loading: false,
             });
           }
         })
@@ -141,12 +141,12 @@ SearchOperator.propTypes = {
   className: PropTypes.string,
   searchUrl: PropTypes.string,
   suggestionUrl: PropTypes.string,
-  resultComponent: PropTypes.func
+  resultComponent: PropTypes.func,
 };
 
 SearchOperator.defaultProps = {
   className: "",
-  resultComponent: results => <SearchResult results={results} />
+  resultComponent: results => <SearchResult results={results} />,
 };
 export default withStyles(styles)(SearchOperator);
 export const SearchResultShape = PropTypes.shape({
@@ -155,5 +155,5 @@ export const SearchResultShape = PropTypes.shape({
   message: PropTypes.string,
   imageLocation: PropTypes.string,
   imageAlt: PropTypes.string,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 });

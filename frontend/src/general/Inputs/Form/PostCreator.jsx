@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import _ from "lodash";
-import Restful from "../../util/io/Restful";
-import { Button, ButtonToolbar, Form, Image } from "react-bootstrap";
-import ModalWrap from "../Stateless/Sections/BootstrapWrappers/ModalWrap";
 import { AttachFile, InsertPhoto, Link, Videocam } from "@material-ui/icons/";
-import avatar from "../../assets/img/avatar.png";
+import _ from "lodash";
+import { Button, ButtonToolbar, Form, Image } from "react-bootstrap";
 // import FileUploader from "./FileUploader";
-import ItemBar from "../Stateless/ItemHolder/ItemBar";
-import * as Keys from "../../util/io/KeyCode.json";
-import { findKey, pop } from "../../util/func/jsonUtil";
+import avatar from "assets/img/avatar.png";
+import * as Keys from "util/io/KeyCode.json";
+import { findKey, pop } from "util/func/jsonUtil";
+import ItemBar from "general/Containers/ItemHolder/ItemBar";
+import Restful from "util/io/Restful";
+import ModalWrap from "general/Containers/BootstrapWrappers/ModalWrap";
 
 export class PostCreator extends Component {
   constructor(props) {
@@ -21,8 +21,8 @@ export class PostCreator extends Component {
       form: {
         mainText: "",
         extraText: "",
-        attachments: { image: [], file: [], video: [], link: [] }
-      }
+        attachments: { image: [], file: [], video: [], link: [] },
+      },
     };
     this._tag = this.constructor.name;
     this._isMount = false;
@@ -82,13 +82,13 @@ export class PostCreator extends Component {
         form: {
           ...this.state.form,
           attachments: {
-            ...localForm
-          }
-        }
+            ...localForm,
+          },
+        },
       },
       () => {
         console.log(this.state);
-      }
+      },
     );
   }
 
@@ -98,7 +98,7 @@ export class PostCreator extends Component {
     _.map(accepted.target.files, file => {
       typeCopy.push({
         location: URL.createObjectURL(file),
-        name: file.name
+        name: file.name,
       });
     });
     this.setState({
@@ -106,9 +106,9 @@ export class PostCreator extends Component {
         ...this.state.form,
         attachments: {
           ...this.state.form.attachments,
-          [type]: typeCopy
-        }
-      }
+          [type]: typeCopy,
+        },
+      },
     });
   }
 
@@ -118,27 +118,27 @@ export class PostCreator extends Component {
         component: AttachFile,
         acceptable: ".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf",
         text: "File",
-        type: "file"
+        type: "file",
       },
       {
         component: InsertPhoto,
         acceptable: "image/*",
         text: "Photo",
-        type: "image"
+        type: "image",
       },
       { component: Link, acceptable: "https://*", text: "Link", type: "link" },
       {
         component: Videocam,
         acceptable: "video/*",
         text: "Video",
-        type: "video"
-      }
+        type: "video",
+      },
     ];
     let attachments = [
       { list: this.state.form.attachments.image, name: "image" },
       { list: this.state.form.attachments.file, name: "file" },
       { list: this.state.form.attachments.video, name: "video" },
-      { list: this.state.form.attachments.link, name: "link" }
+      { list: this.state.form.attachments.link, name: "link" },
     ];
     return (
       <div className={this._tag + " " + this._tag + "-body"} onKeyPress={this.onKeyPress}>
@@ -184,7 +184,7 @@ export class PostCreator extends Component {
                     data={{ ...file }}
                     closeFn={this.handleDeleteItemCard}
                   />
-                ))
+                )),
               )}
             </ItemBar>
           ) : null}
@@ -242,7 +242,7 @@ export class PostCreator extends Component {
   }
 
   static propTypes = {
-    context: PropTypes.object
+    context: PropTypes.object,
   };
 
   static defaultProps = {};

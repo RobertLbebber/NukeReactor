@@ -1,14 +1,12 @@
 import _ from "lodash";
-import Middleware from "../../middleware/Middleware";
 import ResponseStatus from "../../io/ResponseStatus";
 import GH from "../_common/GenerateHandler";
 import { GenericController } from "../_common/GenericController";
-import { NOT_IMPLEMENTED, FORBIDDEN } from "../../io/HttpErrors";
 import Requests from "./Requests";
-import AccountSingleton, { AccountGn } from "../../db/models/Account.json";
-import EmailAccountSingleton from "../../db/models/EmailAccount.json";
-import SessionsSingleton from "../../db/models/Sessions.json";
-import Sessions from "../../../dist/db/models/Sessions.json";
+import AccountSingleton, { AccountGn, AccountDoc } from "../../db/models/Account.json";
+import { EmailAccountDoc } from "../../db/models/EmailAccount.json";
+import { SessionsDoc } from "../../db/models/Sessions.json";
+import { NOT_IMPLEMENTED, FORBIDDEN } from "io/HttpErrors";
 
 class AccountController extends GenericController {}
 
@@ -59,25 +57,20 @@ let init = new AccountController()
     if (_.get(parameters, "password", undefined) !== _.get(parameters, "confirmation", null)) {
       return ResponseStatus(false, "Password Pair didn't match", FORBIDDEN);
     }
-    const EmailAccount = EmailAccountSingleton.getInstance();
-    const Account = AccountSingleton.getInstance();
-    const Session = SessionsSingleton.getInstance();
-    let emailResult = await EmailAccount.fn.record({ [EmailAccount.pK]: _.get(parameters, "emailAddress") });
-    let primaryEmail = _.get(emailResult, "Item.email");
-    let accountResult = await Account.fn.record(
-      AccountGn(
-        _.get(parameters, "firstName"),
-        _.get(parameters, "lastName"),
-        primaryEmail,
-        _.get(parameters, "password"),
-      ),
+    const emailDoc = await new EmailAccountDoc(_.get(parameters, "emailAddress")).record();
+    let primaryEmail = _.get(emailDoc, "Item.email");
+    const accountAct = new AccountDoc(
+      AccountGn(parameters.firstName, parameters.lastName, primaryEmail, parameters.password),
     );
-    let session = await Session.fn.record({
-      accountId: _.get(accountResult, "Item.id"),
+    let accountDoc = await accountAct.record();
+    const sessionAct = await new SessionsDoc({
+      accountId: _.get(accountDoc, "Item.id"),
       emailAccountId: primaryEmail,
     });
-    if (_.has(session, "Item.id")) {
-      return ResponseStatus(true, { session: _.get(session, "Item.id") });
+    let sessionDoc = await sessionAct.record();
+
+    if (_.has(sessionDoc, "Item.id")) {
+      return ResponseStatus(true, { session: _.get(sessionDoc, "Item.id") });
     } else {
       return ResponseStatus(false);
     }
@@ -91,9 +84,7 @@ let init = new AccountController()
   .fn(async (event, context) => {
     const Account = AccountSingleton.getInstance();
     let result = await Account.fn.scan();
-    delete result.response.request;
-    console.log(result.response);
-    return ResponseStatus(true, { ...result.response });
+    return ResponseStatus(true, result);
   })
 
   //

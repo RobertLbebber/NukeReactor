@@ -1,5 +1,5 @@
 import _ from "lodash";
-import WebError from "../../../io/HttpErrors";
+import WebError, { NOT_INSTANTIATED } from "io/HttpErrors";
 
 export default class CommonDoc {
   /**
@@ -8,21 +8,35 @@ export default class CommonDoc {
    * @param {String| Object} identity
    */
   constructor(Model, identity) {
-    if (_.isNil(this.identity)) {
-      throw new WebError(NOT_INSTANTIATED, `${this.Model.modelName}Doc was not provide an identity.`);
-    }
     this.Model = Model;
-    this.props = Singleton.props;
-    this.pK = Singleton.pK;
+    if (_.isNil(this.Model)) {
+      throw new WebError(NOT_INSTANTIATED, `No Model was provided to create a ModelDoc for.`);
+    }
+    this.props = this.Model.props;
+    this.pK = this.Model.pK;
+    this.docName = `${this.Model.modelName}Doc`;
+    if (_.isNil(identity)) {
+      throw new WebError(NOT_INSTANTIATED, `${this.docName} was not provide an identity.`);
+    }
 
     this.identity = identity;
   }
   /**@interface*/
   async save() {
-    await this.Model.fn.create(this.identity);
+    let Item = {};
+    if (_.isString(this.identity)) {
+      Item[this.pK] = this.identity;
+    }
+    await this.Model.fn.create(Item);
   }
   async record() {
-    return await this.Model.fn.record(this.identity);
+    let Item = {};
+    if (_.isString(this.identity)) {
+      Item[this.pK] = this.identity;
+    } else {
+      Item = this.identity;
+    }
+    return await this.Model.fn.record(Item);
   }
   async get(dynoExpression = {}) {
     if (_.isString(this.identity)) {

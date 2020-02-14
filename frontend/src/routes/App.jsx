@@ -3,11 +3,11 @@ import React from "react";
 import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
 import { withStyles } from "@material-ui/core";
 
-import { HeartbeatProvider } from "../Context/HeartbeatContext";
+import { HeartbeatProvider } from "Context/Heartbeat/HeartbeatContext";
 import Router from "./Router";
-import { GlobalInputsProvider } from "../Context/GlobalInputsContext";
-import { theme } from "../Context/ThemeContext";
-import ComponentPlus from "../general/Util/ComponentPlus";
+import { GlobalInputsProvider } from "Context/GlobalInputsContext";
+import { theme } from "Context/ThemeContext";
+import ComponentPlus from "general/Util/ComponentPlus";
 
 const styles = theme => {
   return {
@@ -21,7 +21,7 @@ export class App extends ComponentPlus {
     this.state = {
       _tag: this.constructor.name,
       locale: "en",
-      isOpen: false
+      isOpen: false,
     };
     // this._isMounted = false;
   }

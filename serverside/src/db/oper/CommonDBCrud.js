@@ -13,7 +13,9 @@ export const ATTRIBUTES = "Attributes";
  */
 export const create = Model => async Item => {
   Item = await prepProps(Model, Item, ON_CREATE);
+  console.log(Model.modelName, Item);
   await checkProps(Model, Item, true);
+  console.log(Model.modelName, Item);
   let uniqueClauses = uniquenessCondition(Model, Item);
   let params = { Item, ...uniqueClauses };
   return await executor(Model, "put", params);

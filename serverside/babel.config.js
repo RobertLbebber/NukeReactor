@@ -3,6 +3,16 @@ module.exports = function(api) {
 
   const presets = ["@babel/preset-env"];
   const plugins = [
+    [
+      "module-resolver",
+      {
+        root: ["./src"],
+        alias: {
+          test: "./test",
+          underscore: "lodash",
+        },
+      },
+    ],
     "@babel/plugin-proposal-function-bind",
 
     "@babel/plugin-proposal-export-default-from",
@@ -21,10 +31,10 @@ module.exports = function(api) {
     "@babel/plugin-syntax-dynamic-import",
     "@babel/plugin-syntax-import-meta",
     ["@babel/plugin-proposal-class-properties", { loose: false }],
-    "@babel/plugin-proposal-json-strings"
+    "@babel/plugin-proposal-json-strings",
   ];
   return {
     presets,
-    plugins
+    plugins,
   };
 };

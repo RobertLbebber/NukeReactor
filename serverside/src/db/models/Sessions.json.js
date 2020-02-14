@@ -1,6 +1,6 @@
 import Moment from "moment";
 
-import CommonAttributes, { TYPES, createRef } from "./common/Attributes";
+import { createRef } from "./common/Attributes";
 import env from "../../config/env";
 import SingletonGenerator from "../../endpoints/_common/SingletonGenerator";
 import AccountSingleton from "./Account.json";
@@ -57,8 +57,8 @@ export const Table = {
 
 const SessionsSingleton = new SingletonGenerator(Model);
 export default SessionsSingleton;
-export class SessionDoc extends CommonDoc {
+export class SessionsDoc extends CommonDoc {
   constructor(identity) {
-    super(Model, identity);
+    super(SessionsSingleton.getInstance(), identity);
   }
 }

@@ -3,14 +3,15 @@ import React from "react";
 import _ from "lodash";
 import { ViewDay, AccountCircle, Home as HomeIcon, HighlightOff, Code } from "@material-ui/icons";
 
-import { HeartbeatContext } from "../Context/HeartbeatContext";
-import Feed from "../Pages/Feed/Feed";
-import PageBuilder from "../Pages/PageBuilder/PageBuilder";
-import Account from "../Pages/Account/Account";
-import Home from "../Pages/Home/Home";
-import LandingPage from "../Pages/Public/LandingPage";
-import Page404 from "../Pages/Public/Page404";
-import AccountSetting from "../Pages/Account/AccountSetting/AccountSetting";
+import Feed from "Pages/Feed/Feed";
+import PageBuilder from "Pages/PageBuilder/PageBuilder";
+import Account from "Pages/Account/Account";
+import Home from "Pages/Home/Home";
+import LandingPage from "Pages/Public/LandingPage";
+import Page404 from "Pages/Public/Page404";
+import AccountSetting from "Pages/Account/AccountSetting/AccountSetting";
+import { HeartbeatContext } from "Context/Heartbeat/HeartbeatContext";
+// import HeartbeatContext from "Context/Heartbeat/HeartbeatContext";
 
 export const HOME = "home";
 export const ACCOUNT = "account";
@@ -33,7 +34,7 @@ export default locale =>
       component: Home,
       dynamic: false,
       exact: true,
-      iconComponent: <HomeIcon />
+      iconComponent: <HomeIcon />,
     },
     {
       key: ACCOUNT,
@@ -43,7 +44,7 @@ export default locale =>
       component: Account,
       dynamic: true,
       exact: false,
-      iconComponent: <AccountCircle />
+      iconComponent: <AccountCircle />,
     },
     {
       key: PAGE_BUILDER,
@@ -54,7 +55,7 @@ export default locale =>
       dynamic: true,
       exact: false,
       iconComponent: <AccountCircle />,
-      nonStandardNavbar: true
+      nonStandardNavbar: true,
     },
     {
       key: FEED,
@@ -63,7 +64,7 @@ export default locale =>
       component: Feed,
       dynamic: false,
       exact: true,
-      iconComponent: <ViewDay />
+      iconComponent: <ViewDay />,
     },
     {
       key: LANDING_PAGE,
@@ -72,7 +73,7 @@ export default locale =>
       component: LandingPage,
       dynamic: false,
       exact: true,
-      iconComponent: <Code />
+      iconComponent: <Code />,
     },
     {
       key: SETTING,
@@ -80,7 +81,7 @@ export default locale =>
       name: _.get(locale, "pages.Account.SubPages.AccountSettings.name", "Account Settings"),
       component: AccountSetting,
       dynamic: false,
-      exact: true
+      exact: true,
     },
     {
       key: PAGE_404,
@@ -88,7 +89,7 @@ export default locale =>
       name: _.get(locale, "pages.Public.Pages.Page404", "Page Not Found"),
       component: Page404,
       dynamic: false,
-      exact: false
+      exact: false,
     },
     {
       key: LOGOUT,
@@ -100,8 +101,8 @@ export default locale =>
         return <HeartbeatContext.Consumer>{heart => heart.destroyCookies()}</HeartbeatContext.Consumer>;
       },
       dynamic: false,
-      iconComponent: <HighlightOff />
-    }
+      iconComponent: <HighlightOff />,
+    },
   ]);
 
 export const RouteShape = PropTypes.shape({
@@ -112,5 +113,5 @@ export const RouteShape = PropTypes.shape({
   className: PropTypes.string,
   component: PropTypes.node,
   dynamic: PropTypes.bool,
-  iconComponent: PropTypes.node
+  iconComponent: PropTypes.node,
 });

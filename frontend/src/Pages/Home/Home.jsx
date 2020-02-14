@@ -5,15 +5,15 @@ import { Container } from "react-bootstrap";
 import _ from "lodash";
 // import QRCode from "qrcode.react";
 
-import PostData from "../../assets/data/Post.json";
-import AccountData from "../../assets/data/Account.json";
-import { RouteShape } from "../../routes/Routes";
-import Post from "../../general/Stateful/Post";
+import PostData from "assets/data/Post.json";
+import AccountData from "assets/data/Account.json";
+import { RouteShape } from "Routes/Routes";
+import Post from "general/Inputs/Form/Post.jsx";
 
 const styles = theme => {
   return {
     mainContent: { height: "100%", width: "100%" },
-    post: { marginBottom: theme.spacing(1) }
+    post: { marginBottom: theme.spacing(1) },
   };
 };
 
@@ -21,7 +21,7 @@ export class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      _tag: this.constructor.name
+      _tag: this.constructor.name,
     };
     this._isMounted = false;
   }
@@ -67,7 +67,7 @@ export class Home extends Component {
 
   static propTypes = {
     //Route Page Props
-    routeShape: PropTypes.shape(RouteShape)
+    routeShape: PropTypes.shape(RouteShape),
   };
 
   static defaultProps = {};
