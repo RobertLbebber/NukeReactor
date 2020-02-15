@@ -16,15 +16,15 @@ class DebugLinks extends Component {
   constructor(props) {
     super(props);
     this._tag = this.constructor.name;
-    this._isMount = false;
+    this._mounted = false;
   }
 
   componentDidMount() {
-    this._isMount = true;
+    this._mounted = true;
   }
 
   componentWillUnmount() {
-    this._isMount = false;
+    this._mounted = false;
   }
 
   render() {

@@ -18,18 +18,18 @@ export class LandingPage extends Component {
       redirect: false,
       errorMessage: null,
     };
-    this._isMount = false;
+    this._mounted = false;
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.addFormData = this.addFormData.bind(this);
     this.toggleRegister = this.toggleRegister.bind(this);
   }
 
   componentDidMount() {
-    this._isMount = true;
+    this._mounted = true;
   }
 
   componentWillUnmount() {
-    this._isMount = false;
+    this._mounted = false;
   }
 
   addFormData(name, data) {
@@ -43,9 +43,9 @@ export class LandingPage extends Component {
     e.preventDefault();
     let url = "entrance/" + (this.state.toggleRegister ? "signup" : "login");
     Restful.post(url, this.state.form).then(response => {
-      if (this._isMount && response.status === 200) {
+      if (this._mounted && response.status === 200) {
         this.props.updateUserDataFn(response);
-      } else if (this._isMount && response.status === 400) {
+      } else if (this._mounted && response.status === 400) {
         this.setState({ errorMessage: response.body.errorMessage });
       }
     });

@@ -2,116 +2,36 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 
+import sampleData from "assets/data/Feed";
 import { get } from "util/io/Restful";
 import PostCreator from "general/Inputs/Form/PostCreator";
 import FeedCard from "general/Containers/MaterialWrappers/FeedCard";
-// import { GlobalInputsConsumer, GlobalInputsProvider } from "Context/GlobalInputsContext";
-
-const sampleData = [
-  {
-    content: {
-      additionalText: ["Additional Text"],
-      date: "Today",
-      imgLoc: null,
-      imgTooltip: "Image Tooltip",
-      mainText: "Main Text",
-      title: "This is the title",
-      profileImgLoc: null,
-      profileName: "Robert",
-    },
-  },
-  {
-    content: {
-      additionalText: ["Additional Text"],
-      date: "Today",
-      imgLoc: null,
-      imgTooltip: "Image Tooltip",
-      mainText: "Main Text",
-      title: "This is the title",
-      profileImgLoc: null,
-      profileName: "Robert",
-    },
-  },
-  {
-    content: {
-      additionalText: ["Additional Text"],
-      date: "Today",
-      imgLoc: null,
-      imgTooltip: "Image Tooltip",
-      mainText: "Main Text",
-      title: "This is the title",
-      profileImgLoc: null,
-      profileName: "Robert",
-    },
-  },
-  {
-    content: {
-      additionalText: ["Additional Text"],
-      date: "Today",
-      imgLoc: null,
-      imgTooltip: "Image Tooltip",
-      mainText: "Main Text",
-      title: "This is the title",
-      profileImgLoc: null,
-      profileName: "Robert",
-    },
-  },
-  {
-    content: {
-      additionalText: ["Additional Text"],
-      date: "Today",
-      imgLoc: null,
-      imgTooltip: "Image Tooltip",
-      mainText: "Main Text",
-      title: "This is the title",
-      profileImgLoc: null,
-      profileName: "Robert",
-    },
-  },
-  {
-    content: {
-      additionalText: ["Additional Text"],
-      date: "Today",
-      imgLoc: null,
-      imgTooltip: "Image Tooltip",
-      mainText: "Main Text",
-      title: "This is the title",
-      profileImgLoc: null,
-      profileName: "Robert",
-    },
-  },
-];
+import Dashboard from "example/views/Dashboard/Dashboard";
 
 export class Feed extends Component {
   constructor(props) {
     super(props);
-    //var id=func.generateSerial(9,36);
+    this._tag = this.constructor.name;
     this.state = {
-      _tag: this.constructor.name,
       feedData: sampleData,
-      //_id: id
     };
-    this.isMount = false;
+    this._mounted = false;
   }
 
   componentDidMount() {
-    this.isMount = true;
+    this._mounted = true;
   }
 
   componentWillUnmount() {
-    this.isMount = false;
+    this._mounted = false;
   }
 
   getUserFeed() {
-    get("/feed/" + this.props.account.id)
-      .then(response => {
-        this.setState({
-          feedData: response,
-        });
-      })
-      .catch(err => {
-        console.log(err);
+    get("/feed/" + this.props.account.id).then(response => {
+      this.setState({
+        feedData: response,
       });
+    });
   }
 
   /**
@@ -127,16 +47,14 @@ export class Feed extends Component {
 
   render() {
     return (
-      <div className={this.state._tag}>
+      <div className={this._tag}>
         {_.isNil(this.state.feedDate)
           ? _.map(this.state.feedData, (feedElement, i) => <FeedCard content={feedElement.content} key={i} />)
           : this.getEmptyFeed()}
-        {/* <GlobalInputsConsumer> */}
-        {/* {input =>  */}
+        <Dashboard />
         <PostCreator
         // context={input} active={input.activePostEvent}
         />
-        }{/* </GlobalInputsConsumer> */}
       </div>
     );
   }

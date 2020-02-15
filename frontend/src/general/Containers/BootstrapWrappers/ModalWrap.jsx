@@ -7,16 +7,16 @@ import { Modal } from "react-bootstrap";
 export class ModalWrap extends Component {
   constructor(props) {
     super(props);
-    this._isMount = false;
+    this._mounted = false;
     this._tag = this.constructor.name;
   }
 
   componentDidMount() {
-    this._isMount = true;
+    this._mounted = true;
   }
 
   componentWillUnmount() {
-    this._isMount = false;
+    this._mounted = false;
   }
 
   render() {

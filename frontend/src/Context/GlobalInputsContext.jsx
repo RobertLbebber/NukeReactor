@@ -25,7 +25,7 @@ export class GlobalInputsProvider extends Component {
         save: null
       }
     };
-    this._isMount = false;
+    this._mounted = false;
   }
 
   activatePostEvent = () => {
@@ -49,11 +49,11 @@ export class GlobalInputsProvider extends Component {
   }
 
   componentDidMount() {
-    this._isMount = true;
+    this._mounted = true;
   }
 
   componentWillUnmount() {
-    this._isMount = false;
+    this._mounted = false;
   }
 
   render() {

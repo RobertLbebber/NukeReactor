@@ -13,15 +13,15 @@ const styles = theme => ({
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25)
+      backgroundColor: fade(theme.palette.common.white, 0.25),
     },
     marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(0),
       marginBottom: theme.spacing(0),
-      width: "auto"
-    }
+      width: "auto",
+    },
   },
   searchIcon: {
     width: "100%",
@@ -30,12 +30,12 @@ const styles = theme => ({
     pointerEvents: "none",
     display: "flex",
     alignItems: "center",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
   inputRoot: {
     color: "inherit",
     // paddingLeft: "50px",
-    width: "100%"
+    width: "100%",
   },
   inputInput: {
     borderRadius: "4px",
@@ -47,22 +47,22 @@ const styles = theme => ({
       // width: 120,
       "&:focus": {
         // width: 200
-      }
+      },
     },
     [theme.breakpoints.up("md")]: {
       // width: 520,
       "&:focus": {
         // width: 520
-      }
-    }
+      },
+    },
   },
   open: {
     borderBottomRightRadius: "0px",
     borderBottomLeftRadius: "0px",
     borderBottomStyle: "solid",
     borderBottomWidth: "1px",
-    borderBottomColor: "#ddd"
-  }
+    borderBottomColor: "#ddd",
+  },
 });
 
 /**
@@ -73,16 +73,16 @@ class Searchbar extends Component {
     super(props);
     this.state = { value: null };
     this._tag = this.constructor.name;
-    this._isMount = false;
+    this._mounted = false;
     this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
-    this._isMount = true;
+    this._mounted = true;
   }
 
   componentWillUnmount() {
-    this._isMount = false;
+    this._mounted = false;
   }
 
   onChange(e) {
@@ -111,7 +111,7 @@ class Searchbar extends Component {
                 placeholder={placeholder}
                 classes={{
                   root: classes.inputRoot,
-                  input: [(this.props.showResults ? classes.open : "") + " ", " " + classes.inputInput]
+                  input: [(this.props.showResults ? classes.open : "") + " ", " " + classes.inputInput],
                 }}
                 inputProps={{ "aria-label": "Search" }}
               />
@@ -129,11 +129,11 @@ class Searchbar extends Component {
 Searchbar.propTypes = {
   className: PropTypes.string,
   onSearch: PropTypes.func,
-  showResults: PropTypes.bool
+  showResults: PropTypes.bool,
   //@See https://material-ui.com/api/input-base/
 };
 
 Searchbar.defaultProps = {
-  className: ""
+  className: "",
 };
 export default withStyles(styles)(Searchbar);

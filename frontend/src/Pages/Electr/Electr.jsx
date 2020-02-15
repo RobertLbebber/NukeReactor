@@ -1,24 +1,19 @@
 import React, { Component } from "react";
-//import PropTypes from 'prop-types';
-import func from "../../../util/func/func";
 
 export class Electr extends Component {
   constructor(props) {
     super(props);
-    var id = func.generateSerial(9, 36);
-    this.state = {
-      _tag: this.constructor.name,
-      _id: id
-    };
-    this._isMounted = false;
+    this._tag = this.constructor.name;
+    this.state = {};
+    this._mounted = false;
   }
 
   componentDidMount() {
-    this._isMounted = true;
+    this._mounted = true;
   }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this._mounted = false;
   }
 
   render() {

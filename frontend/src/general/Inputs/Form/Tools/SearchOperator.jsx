@@ -30,16 +30,16 @@ class SearchOperator extends Component {
       openResults: false,
     };
     this._tag = this.constructor.name;
-    this._isMount = false;
+    this._mounted = false;
     this.handleGetRequest = this.handleGetRequest.bind(this);
   }
 
   componentDidMount() {
-    this._isMount = true;
+    this._mounted = true;
   }
 
   componentWillUnmount() {
-    this._isMount = false;
+    this._mounted = false;
   }
 
   handleClickAway = () => {
@@ -99,7 +99,7 @@ class SearchOperator extends Component {
     } else {
       Restful.get(this.props.searchUrl + "q=" + encodeURI(value))
         .then(response => {
-          if (this._isMount && response.ok) {
+          if (this._mounted && response.ok) {
             this.setState({
               [stateKey]: response.data,
               openResults: true,

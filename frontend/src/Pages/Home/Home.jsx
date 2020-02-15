@@ -23,15 +23,15 @@ export class Home extends Component {
     this.state = {
       _tag: this.constructor.name,
     };
-    this._isMounted = false;
+    this._mounteded = false;
   }
 
   componentDidMount() {
-    this._isMounted = true;
+    this._mounteded = true;
   }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this._mounteded = false;
   }
 
   render() {

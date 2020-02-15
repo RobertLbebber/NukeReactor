@@ -7,7 +7,7 @@ export class ItemBar extends Component {
   constructor(props) {
     super(props);
     this._tag = this.constructor.name;
-    this._isMount = false;
+    this._mounted = false;
   }
 
   render() {

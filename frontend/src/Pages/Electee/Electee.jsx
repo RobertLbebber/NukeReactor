@@ -10,15 +10,15 @@ export class Electee extends Component {
       _tag: this.constructor.name,
       _id: id
     };
-    this._isMounted = false;
+    this._mounteded = false;
   }
 
   componentDidMount() {
-    this._isMounted = true;
+    this._mounteded = true;
   }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this._mounteded = false;
   }
 
   render() {
