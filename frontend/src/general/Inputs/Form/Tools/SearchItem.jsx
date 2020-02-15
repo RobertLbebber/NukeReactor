@@ -24,7 +24,7 @@ class SearchItem extends Component {
         {ifThen(
           <Grid item xs={3}>
             <Avatar alt={this.props.imageAlt} src={this.props.imageLocation} />
-          </Grid>
+          </Grid>,
         )}
         <Grid item xs>
           {ifThen(
@@ -33,19 +33,19 @@ class SearchItem extends Component {
               <Typography variant="h3" id="modal-title">
                 {this.props.title}
               </Typography>
-            </Grid>
+            </Grid>,
           )}
           {ifThen(
             this.props.subtitle,
             <Grid item>
               <Typography variant="h6">{this.props.subtitle}</Typography>
-            </Grid>
+            </Grid>,
           )}
           {ifThen(
             this.props.message,
             <Grid item>
               <Typography variant="subtitle1">{this.props.message}</Typography>
-            </Grid>
+            </Grid>,
           )}
         </Grid>
       </Grid>
@@ -53,7 +53,8 @@ class SearchItem extends Component {
   }
 }
 
-SearchItem.propTypes = SearchResultShape;
+// let SearchResultShapeobj = new SearchResultShape();
+// SearchItem.propTypes = SearchResultShapeobj;
 
 SearchItem.defaultProps = {
   title: null,
@@ -61,6 +62,6 @@ SearchItem.defaultProps = {
   message: "This is a result",
   imageLocation: null,
   imageAlt: null,
-  onClick: () => {}
+  onClick: () => {},
 };
 export default withStyles(styles)(SearchItem);

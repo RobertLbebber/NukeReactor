@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { Paper, Grid, withStyles } from "@material-ui/core";
 import { Container } from "react-bootstrap";
 import _ from "lodash";
@@ -7,7 +6,7 @@ import _ from "lodash";
 
 import PostData from "assets/data/Post.json";
 import AccountData from "assets/data/Account.json";
-import { RouteShape } from "Routes/Routes";
+import { RouteShape } from "Pages/_common/main/Routes";
 import Post from "general/Inputs/Form/Post.jsx";
 
 const styles = theme => {
@@ -65,9 +64,10 @@ export class Home extends Component {
     );
   }
 
+  RouteShape2 = RouteShape;
   static propTypes = {
     //Route Page Props
-    routeShape: PropTypes.shape(RouteShape),
+    routeShape: this.RouteShape2,
   };
 
   static defaultProps = {};

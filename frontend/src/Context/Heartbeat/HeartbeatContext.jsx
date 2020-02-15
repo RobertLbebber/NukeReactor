@@ -95,7 +95,6 @@ export class HeartbeatProvider extends React.Component {
     return <HeartbeatContext.Provider value={this.state}>{this.props.children}</HeartbeatContext.Provider>;
   }
 }
-export default HeartbeatProvider;
 export const AccountShape = PropTypes.shape({
   accountPage: PropTypes.string,
   id: PropTypes.string,
@@ -108,3 +107,5 @@ export const AccountShape = PropTypes.shape({
     presige: PropTypes.number,
   }),
 });
+
+export default HeartbeatProvider;

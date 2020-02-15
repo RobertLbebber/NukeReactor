@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 import { Switch } from "react-router-dom";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
-import { IntlProvider, FormattedMessage } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { LandingPage } from "Pages/Public/LandingPage";
 import { RoutesWithLocale } from "./Routes";

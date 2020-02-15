@@ -9,7 +9,7 @@ import { FormattedMessage } from "react-intl";
 
 import { RouteContext } from "Context/RouteContext";
 import AccountMenu from "Pages/Navibars/Header/Menus/AccountMenu";
-import { LOGOUT, SETTING, HOME, ACCOUNT } from "Routes/Routes";
+import { LOGOUT, SETTING, HOME, ACCOUNT } from "Pages/_common/main/Routes";
 import DebugLinks from "Pages/Navibars/Header/Menus/DebugLinks";
 // import Restful from "util/io/Restful";
 

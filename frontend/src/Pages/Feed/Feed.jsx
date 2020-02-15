@@ -6,7 +6,6 @@ import sampleData from "assets/data/Feed";
 import { get } from "util/io/Restful";
 import PostCreator from "general/Inputs/Form/PostCreator";
 import FeedCard from "general/Containers/MaterialWrappers/FeedCard";
-import Dashboard from "example/views/Dashboard/Dashboard";
 
 export class Feed extends Component {
   constructor(props) {
@@ -51,7 +50,6 @@ export class Feed extends Component {
         {_.isNil(this.state.feedDate)
           ? _.map(this.state.feedData, (feedElement, i) => <FeedCard content={feedElement.content} key={i} />)
           : this.getEmptyFeed()}
-        <Dashboard />
         <PostCreator
         // context={input} active={input.activePostEvent}
         />

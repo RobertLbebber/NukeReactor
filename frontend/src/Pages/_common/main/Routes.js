@@ -8,9 +8,9 @@ import PageBuilder from "Pages/PageBuilder/PageBuilder";
 import AccountRouter from "Pages/Account/AccountRouter";
 import Home from "Pages/Home/Home";
 import LandingPage from "Pages/Public/LandingPage";
-import Page404 from "Pages/Public/Page404";
 import AccountSetting from "Pages/Account/AccountSetting/AccountSetting";
 import { HeartbeatContext } from "Context/Heartbeat/HeartbeatContext";
+import Page404 from "Pages/Public/Page404";
 import Page503 from "Pages/Public/Page503";
 // import HeartbeatContext from "Context/Heartbeat/HeartbeatContext";
 
@@ -79,16 +79,16 @@ const Routes = Object.freeze([
     exact: true,
   },
   {
-    key: PAGE_404,
-    path: "*",
-    component: Page404,
+    key: PAGE_503,
+    path: "/Page503",
+    component: Page503,
     dynamic: false,
     exact: false,
   },
   {
-    key: PAGE_503,
-    path: "/Page503",
-    component: Page503,
+    key: PAGE_404,
+    path: "/*",
+    component: Page404,
     dynamic: false,
     exact: false,
   },
@@ -133,12 +133,17 @@ export const RoutesWithLocale = locale =>
       name: _.get(locale, "pages.Account.SubPages.AccountSettings.name", "Account Settings"),
     },
     {
-      ..._.find(Routes, route => route.key === PAGE_404),
-      name: _.get(locale, "pages.Public.Pages.Page404", "Page Not Found"),
+      ..._.find(Routes, route => route.key === PAGE_503),
+      name: _.get(locale, "pages.Public.Pages.Page503", "Page In Service"),
     },
     {
       ..._.find(Routes, route => route.key === LOGOUT),
       name: _.get(locale, "pages.Navibars.Header.Menu.Actions.LogOut.name", "Log out"),
+    },
+    {
+      //This one must be last as it it the catch all
+      ..._.find(Routes, route => route.key === PAGE_404),
+      name: _.get(locale, "pages.Public.Pages.Page404", "Page Not Found"),
     },
   ]);
 

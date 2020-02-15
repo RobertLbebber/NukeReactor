@@ -6,10 +6,9 @@ import Loading from "general/Feedback/Graphics/Loading";
 import Restful from "util/io/Restful";
 import { getAccountPath } from "util/io/UserAPIs";
 import { Redirect } from "react-router-dom";
-import PageShower from "Pages/PageBuilder/PageShower";
+import GEditor from "Pages/PageBuilder/components/GEditor";
 
 const styles = theme => {
-  console.log(theme);
   return {
     loading: {
       backgroundColor: theme.palette.primary.hvr,
@@ -43,7 +42,7 @@ export class AccountShow extends Component {
         let newState = {};
         if (response.ok) {
           newState = { page: response.body, loading: false };
-        } else if (_.isNil(response.status)) {
+        } else if (_.isNaN(response.status)) {
           newState = { error: { message: null, redirect: 503 }, loading: false };
         } else {
           newState = { error: response.body, loading: false };
