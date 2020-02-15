@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import { FormattedMessage } from "react-intl";
 import { withStyles } from "@material-ui/core/styles";
-import { Paper, Grid, Typography, Avatar } from "@material-ui/core";
+import { Paper, Grid, Typography, Avatar, Link } from "@material-ui/core";
 
 import { AccountShape } from "Context/Heartbeat/HeartbeatContext";
 import { getAccountPath } from "util/io/UserAPIs";
@@ -37,15 +37,15 @@ class Post extends Component {
       hasShared: _.get(this.props.postData, "reactions.shareData.hasShared", false),
     };
     this._tag = this.constructor.name;
-    this._isMount = false;
+    this._mounted = false;
   }
 
   componentDidMount() {
-    this._isMount = true;
+    this._mounted = true;
   }
 
   componentWillUnmount() {
-    this._isMount = false;
+    this._mounted = false;
   }
 
   handleLikeChange = value => {
@@ -76,10 +76,12 @@ class Post extends Component {
 
   renderProfile(poster, classes) {
     let posterImage = _.get(poster, "profileImg");
+    let id = _.get(poster, "id");
+
     return (
       <Grid container item xs={12} justify="flex-start" className={classes.profile}>
         <Grid item xs={2}>
-          <Link to={getAccountPath({ id: _.get(poster, "id") })} className={classes.notSpecialLink}>
+          <Link href={getAccountPath(id, "show")} className={classes.notSpecialLink}>
             <Avatar
               component="span"
               className={classes.profileImage}
@@ -90,17 +92,14 @@ class Post extends Component {
         </Grid>
         <Grid item xs={10}>
           <Typography variant="body1">
-            <Link
-              to={getAccountPath({ id: _.get(poster, "id") })}
-              className={classes.notSpecialLink + " " + classes.nameText}
-            >
+            <Link href={getAccountPath(id, "show")} className={classes.notSpecialLink + " " + classes.nameText}>
               {_.get(poster, "firstName")} {_.get(poster, "lastName")}
             </Link>
           </Typography>
           <FormattedMessage id="_id">
             {lang => (
               <Typography variant="body2">
-                <Link to={getAccountPath({ id: _.get(poster, "id") })} className={classes.notSpecialLink}>
+                <Link href={getAccountPath(id, "show")} className={classes.notSpecialLink}>
                   {getLocal(lang, _.get(this.props.postData, "date"))}
                 </Link>
               </Typography>

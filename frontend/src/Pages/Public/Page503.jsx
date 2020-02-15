@@ -2,30 +2,27 @@ import React, { Component } from "react";
 import { Button, Typography, Container } from "@material-ui/core";
 import { RouteShape } from "Routes/Routes";
 import { FormattedMessage } from "react-intl";
-//import func from '/frontend/src/util/func/func'
 
-export const PAGE_NOT_FOUND = "/error/404";
+export const PAGE_UNAVAILABLE = "/error/503";
 
-export class Page404 extends Component {
+export class Page503 extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      _tag: this.constructor.name,
-    };
+    this._tag = this.constructor.name;
   }
 
   render() {
     return (
       <Container className={this.state._tag}>
         {/* Image */}
-        <FormattedMessage id="pages.Public.Pages.Page404.title">
+        <FormattedMessage id="pages.Public.Pages.Page503.title">
           {title => <Typography>{title}</Typography>}
         </FormattedMessage>
-        <FormattedMessage id="pages.Public.Pages.Page404.message">
+        <FormattedMessage id="pages.Public.Pages.Page503.message">
           {message => <Typography>{message}</Typography>}
         </FormattedMessage>
         {/* Back Button */}
-        <FormattedMessage id="pages.Public.Pages.Page404.back">
+        <FormattedMessage id="pages.Public.Pages.Page503.back">
           {back => (
             <Button variant="primary" onClick={() => this.props.routeShape.history.goBack()}>
               {back}
@@ -37,7 +34,5 @@ export class Page404 extends Component {
   }
 
   static propTypes = { routeShape: RouteShape };
-
-  // static defaultProps = {};
 }
-export default Page404;
+export default Page503;

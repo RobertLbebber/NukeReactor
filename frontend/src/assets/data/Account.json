@@ -1,6 +1,6 @@
 [
   {
-    "accountPage": "/acc/-2",
+    "accountPage": "/account/-2",
     "id": "-2",
     "email": "fake@user.1",
     "firstName": "fake",
@@ -12,7 +12,7 @@
     }
   },
   {
-    "accountPage": "/acc/-3",
+    "accountPage": "/account/-3",
     "id": "-3",
     "email": "fake@user.3",
     "firstName": "fake",
@@ -24,7 +24,7 @@
     }
   },
   {
-    "accountPage": "/acc/-4",
+    "accountPage": "/account/-4",
     "id": "-4",
     "email": "fake@user.4",
     "firstName": "fake",
@@ -36,7 +36,7 @@
     }
   },
   {
-    "accountPage": "/acc/-5",
+    "accountPage": "/account/-5",
     "id": "-5",
     "email": "fake@user.5",
     "firstName": "fake",

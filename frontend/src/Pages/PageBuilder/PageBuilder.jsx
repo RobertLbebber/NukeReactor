@@ -1,13 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import _ from "lodash";
-import "./App.css";
+import _ from "lodash";
+import "./GrapeJs.css";
 import GEditor from "./components/GEditor";
 import "grapesjs/dist/css/grapes.min.css";
 // import Restful from "../../util/io/Restful";
 // import toastr from "toastr";
-import { State } from "../../env/InterpretedEnvironment";
-import Endpoints from "./Endpoints/Endpoints";
+import { State } from "env/InterpretedEnvironment";
+import LocaleProvider from "Context/LocaleContext";
+
+export class PageBuilderLocale extends React.Component {
+  render() {
+    return <LocaleProvider>{localeContext => <PageBuilder lT={localeContext.tree} {...this.props} />}</LocaleProvider>;
+  }
+}
 
 class PageBuilder extends React.Component {
   constructor(props) {
@@ -19,85 +25,89 @@ class PageBuilder extends React.Component {
       storageManager: {
         type: "remote",
         stepsBeforeSave: 3,
-        urlStore: Endpoints.save(currenAccount.id, 1).url,
-        urlLoad: Endpoints.load(currenAccount.id, 1).url,
+        // urlStore: Endpoints.save(currenAccount.id, 1).url,
+        // urlLoad: Endpoints.load(currenAccount.id, 1).url,
         // For custom parameters/headers on requests
         params: { _some_token: "...." },
-        headers: { Authorization: "Basic ..." }
-      }
+        headers: { Authorization: "Basic ..." },
+      },
     };
   }
 
-  // savePage(content = content ? content : this.state.apiCurrent) {
-  //   this.setState({ loading: true });
-  //   Restful.post(this.urls.save, this.state.apiCurrent)
-  //     .then(response => {
-  //       if (response.ok) {
-  //         toastr.success("Page may take time to go live", "Successful Published");
-  //       } else {
-  //         //TODO
-  //         toastr.success("Page may take time to go live", "Other Message");
-  //       }
-  //       this.setState({ loading: false });
-  //     })
-  //     .catch(error => {
-  //       toastr.error("There was an error reaching the server", "Failed to Publish");
-  //       this.setState({ loading: false });
-  //     });
-  // }
-
-  // getPage() {
-  //   this.setState({ loading: true });
-  //   Restful.get(this.urls.get)
-  //     .then(response => {
-  //       if (response.ok) {
-  //         //   toastr.success("Page may take time to go live", "Successful Published");
-  //       } else {
-  //         //TODO
-  //         //   toastr.success("Page may take time to go live", "Other Message");
-  //       }
-  //       this.setState({ loading: false });
-  //     })
-  //     .catch(error => {
-  //       toastr.error("There was an error reaching the server", "Failed to Publish");
-  //       this.setState({ loading: false });
-  //     });
-  // }
-
   render() {
+    let { lT } = this.props;
+
     return (
       <GEditor
         id="geditor"
         storageManager={this.state.storageManager}
-        panels={
-          [
-            // {
-            //   id: "Publish",
-            //   visible: true,
-            //   buttons: [
-            //     {
-            //       active: true,
-            //       command: editor => {
-            //         console.log(editor.getCurrent());
-            //         this.savePage(editor.getCurrent());
-            //       },
-            //       className: "fa fa-save",
-            //       attributes: { title: "Publish Work" }
-            //     }
-            //   ]
-            // }
-          ]
-        }
+        panels={[
+          {
+            id: "Publish left-0",
+            visible: true,
+            buttons: [
+              {
+                active: false,
+                command: editor => {
+                  console.log(editor);
+                  // this.savePage(editor.getCurrent());
+                  this.props.onPublish(editor.getCurrent());
+                },
+                className: "fa fa-upload",
+                attributes: { title: _.get(lT, "pages.PageBuilder.ActionButtons.Publish", "Publish Work") },
+              },
+              {
+                active: false,
+                command: editor => {
+                  console.log(editor);
+                  // this.savePage(editor.getCurrent());
+                  this.props.onSave(editor.getCurrent());
+                },
+                className: "fa fa-save",
+                attributes: { title: _.get(lT, "pages.PageBuilder.ActionButtons.Save", "Save Work") },
+              },
+              {
+                active: false,
+                command: editor => {
+                  console.log(editor);
+                  // this.savePage(editor.getCurrent());
+                  this.props.onRefresh();
+                },
+                className: "fa fa-refresh",
+                attributes: { title: _.get(lT, "pages.PageBuilder.ActionButtons.Refresh", "Refresh") },
+              },
+            ],
+          },
+          // {
+          //   id: "Save",
+          //   visible: true,
+          //   buttons: [
+          //   ],
+          // },
+          // {
+          //   id: "Refresh",
+          //   visible: true,
+          //   buttons: [
+          //   ],
+          // },
+        ]}
       />
     );
   }
 }
+
 PageBuilder.propTypes = {
   className: PropTypes.string,
-  account: State.Debug ? PropTypes.object : PropTypes.object.isRequired
+  account: State.Debug ? PropTypes.object : PropTypes.object.isRequired,
+  onSave: PropTypes.func,
+  onPublish: PropTypes.func,
+  onRefresh: PropTypes.func,
 };
 
 PageBuilder.defaultProps = {
-  className: ""
+  className: "",
+  onSave: () => {},
+  onPublish: () => {},
+  onRefresh: () => {},
 };
 export default PageBuilder;

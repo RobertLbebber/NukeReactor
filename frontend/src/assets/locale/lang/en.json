@@ -25,7 +25,15 @@
     "Electee": { "name": "Electee" },
     "Electr": { "name": "Electr" },
     "Feed": { "name": "Feed" },
-    "PageBuilder": { "name": "Page Builder" },
+    "PageBuilder": {
+      "name": "Page Builder",
+      "ActionButtons": {
+        "Publish": "Publish Work",
+        "Save": "Save Work",
+        "Update": "Update Work",
+        "Refresh": "Refresh"
+      }
+    },
     "Public": {
       "Pages": {
         "LandingPage": {
@@ -46,6 +54,18 @@
         "Page404": {
           "name": "Page Not Found",
           "title": "Sorry, No Page Found",
+          "message": "The Page you were looking for doesn't exist or can be accessed at this time.",
+          "back": "Return"
+        },
+        "Page400": {
+          "name": "Page Not Found",
+          "title": "Sorry, No Page Found",
+          "message": "The Page you were looking for doesn't exist or can be accessed at this time.",
+          "back": "Return"
+        },
+        "Page503": {
+          "name": "Page Not Available",
+          "title": "This Page is not Available At This Time",
           "message": "The Page you were looking for doesn't exist or can be accessed at this time.",
           "back": "Return"
         }

@@ -8,13 +8,13 @@ let bodyBuilder = (body, options) => {
     options.body = body;
     options.headers = {
       Accept: "text/plain",
-      "Content-Type": "text/plain"
+      "Content-Type": "text/plain",
     };
   } else if (body.constructor === Object || body.constructor === Array) {
     options.body = JSON.stringify(body);
     options.headers = {
       Accept: "application/json",
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     };
   }
   if (!_.isNil(navigator)) {
@@ -24,7 +24,7 @@ let bodyBuilder = (body, options) => {
       appVersion: navigator.appVersion,
       userAgent: navigator.userAgent,
       vendor: navigator.vendor,
-      platform: navigator.platform
+      platform: navigator.platform,
     };
   }
   return options;
@@ -33,7 +33,8 @@ let bodyBuilder = (body, options) => {
 const fetchResolve = async (uri, options, execution) => {
   try {
     let data;
-    let response = await fetch(Details.DOMAIN + uri, options);
+    let cleanedURI = uri.replace(/^\//, ""); //Replace any leading '/'
+    let response = await fetch(Details.DOMAIN + cleanedURI, options);
     if (execution.constructor === String) {
       data = await response[execution];
     } else if (execution.constructor === Function) {
@@ -131,5 +132,5 @@ export default {
   getWithQuery,
   post,
   put,
-  deleter
+  deleter,
 };

@@ -25,7 +25,7 @@ export class PostCreator extends Component {
       },
     };
     this._tag = this.constructor.name;
-    this._isMount = false;
+    this._mounted = false;
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleHideModal = this.handleHideModal.bind(this);
     this.handleAttachments = this.handleAttachments.bind(this);
@@ -33,11 +33,11 @@ export class PostCreator extends Component {
   }
 
   componentDidMount() {
-    this._isMount = true;
+    this._mounted = true;
   }
 
   componentWillUnmount() {
-    this._isMount = false;
+    this._mounted = false;
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -52,7 +52,7 @@ export class PostCreator extends Component {
 
   handleSubmit() {
     Restful.post("createPost", this.state.form).then(result => {
-      if (this._isMount) {
+      if (this._mounted) {
         console.log(result);
       }
     });

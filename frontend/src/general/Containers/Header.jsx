@@ -24,7 +24,7 @@ const styles = theme => {
     navBar: {
       backgroundColor: theme.palette.primary.hvr,
       boxShadow: "none",
-      marginBottom: theme.spacing(1),
+      // marginBottom: theme.spacing(1),
     },
     toolbar: {
       alignItems: "center",

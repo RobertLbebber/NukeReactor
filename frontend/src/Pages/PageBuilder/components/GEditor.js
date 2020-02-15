@@ -22,7 +22,7 @@ function GEditor(props) {
     components,
     blocks,
     webpage,
-    newsletter
+    newsletter,
   } = props;
   const [editor, setEditor] = useState(null);
   useEffect(() => {
@@ -39,7 +39,7 @@ function GEditor(props) {
         container: `#${id}`,
         plugins,
         storageManager: storageManager,
-        blockManager: blockManager
+        blockManager: blockManager,
       });
       const panelManager = editor.Panels;
       _.map(props.panels, panel => {
@@ -53,16 +53,16 @@ function GEditor(props) {
         editor.DomComponents.addType(component.type, {
           model: defaultModel.extend(
             {
-              defaults: Object.assign({}, defaultModel.prototype.defaults)
+              defaults: Object.assign({}, defaultModel.prototype.defaults),
             },
             {
-              isComponent: component.isComponent.bind(this)
-            }
+              isComponent: component.isComponent.bind(this),
+            },
           ),
           view: defaultView.extend({
             events: component.events,
-            render: component.render.bind(this)
-          })
+            render: component.render.bind(this),
+          }),
         });
       });
       blocks.forEach((block: GBlock) => {
@@ -94,7 +94,7 @@ GEditor.defaultProps = {
   components: [],
   blocks: [],
   storageManager: {},
-  blockManager: {}
+  blockManager: {},
 };
 
 export default GEditor;
