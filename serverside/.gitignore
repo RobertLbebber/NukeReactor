@@ -9,3 +9,5 @@ credentials.csv
 dist/
 logs/*.log
 secrets.json.js
+*.db
+package-lock.json

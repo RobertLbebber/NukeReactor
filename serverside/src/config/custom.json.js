@@ -3,12 +3,13 @@ let custom = {
   custom: {
     dynamodb: {
       start: {
-        port: 8000,
-        inMemory: true,
+        port: 7000,
+        // inMemory: false,
         migrate: true,
+        // sharedDb: true,
       },
       migration: {
-        dir: "offline/migrations",
+        dir: ".dynamodb",
       },
       "serverless-offline": {
         port: 4000,

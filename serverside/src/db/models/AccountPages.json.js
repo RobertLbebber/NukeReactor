@@ -1,11 +1,11 @@
-import Attributes, { TYPES, createRef } from "./common/Attributes";
+import Attributes, { TYPES, createRef, required } from "./common/Attributes";
 import env from "../../config/env";
 import CommonDBCrud from "../oper/CommonDBCrud";
 import SingletonGenerator from "../../endpoints/_common/SingletonGenerator";
-import AccountSingleton from "./Account.json";
+import AccountSingleton from "./Account.json.js";
 import CommonDoc from "./common/CommonDoc";
 
-const TableName = "PageTemplates";
+const TableName = "AccountPages";
 
 class Model {
   constructor() {
@@ -15,7 +15,7 @@ class Model {
       serial: { type: TYPES.STRING },
       designName: { type: TYPES.STRING },
       designCategory: { type: TYPES.STRING },
-      pageLayout: { type: TYPES.STRING },
+      pageContent: { type: TYPES.OBJECT, ...required },
     };
     this.fn = CommonDBCrud(this, TableName);
   }
@@ -83,9 +83,9 @@ export const Table = {
 //   return await this.find({ designName: "Default" }).limit(1);
 // },
 
-const PageTemplatesSingleton = new SingletonGenerator(Model);
-export default PageTemplatesSingleton;
-export class PageTemplatesDoc extends CommonDoc {
+const AccountPagesSingleton = new SingletonGenerator(Model);
+export default AccountPagesSingleton;
+export class AccountPagesDoc extends CommonDoc {
   constructor(identity) {
     super(Model, identity);
   }

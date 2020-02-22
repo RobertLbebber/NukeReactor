@@ -6,11 +6,10 @@ plugins:
 custom:
   dynamodb:
     start:
-      port: 8000
-      inMemory: true
+      port: 7000
       migrate: true
     migration:
-      dir: offline/migrations
+      dir: .dynamodb
     serverless-offline:
       port: 4000
 functions:
@@ -169,11 +168,11 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-    PageTemplates:
+    AccountPages:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Delete
       Properties:
-        TableName: electr-rest-us-east-1-PageTemplates
+        TableName: electr-rest-us-east-1-AccountPages
         KeySchema:
           - AttributeName: id
             KeyType: HASH

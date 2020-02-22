@@ -26,7 +26,6 @@ class Model extends CommonModel {
 
       //Options
       profileImg: { type: TYPES.STRING },
-      pageContent: { collection: "pageTemplates", via: "accountId" },
       messages: { collection: "messages", via: "accountId" },
       creditCard: { collection: "creditCards", via: "accountId" },
     };

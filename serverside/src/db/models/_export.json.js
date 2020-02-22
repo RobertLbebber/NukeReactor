@@ -4,12 +4,12 @@ import AccountSingletons, { Table as Sessions } from "./Sessions.json";
 import SessionsSingletons, { Table as Subscription } from "./Subscription.json";
 import SubscriptionSingletons, { Table as Account } from "./Account.json";
 import EmailAccountSingletons, { Table as EmailAccount } from "./EmailAccount.json";
-import PageTemplatesSingletons, { Table as PageTemplates } from "./PageTemplates.json";
+import AccountPagesSingletons, { Table as AccountPages } from "./AccountPages.json.js";
 
 export default {
   CreditCards,
   Messages,
-  PageTemplates,
+  AccountPages,
   Account,
   Sessions,
   Subscription,
@@ -29,7 +29,7 @@ export default {
 export const Singletons = {
   CreditCardsSingletons,
   MessagesSingletons,
-  PageTemplatesSingletons,
+  AccountPagesSingletons,
   AccountSingletons,
   SessionsSingletons,
   SubscriptionSingletons,
