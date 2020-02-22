@@ -1,0 +1,28 @@
+[
+  {
+    "action": "mentioned you",
+    "avatar": "avatar2",
+    "comment": "@jrogers Could I please have a review on my presentation deck",
+    "id": 1,
+    "name": "Val Handerly",
+    "timePosted": "10 hours ago",
+    "unread": true
+  },
+  {
+    "action": "commented on your post",
+    "avatar": "avatar3",
+    "comment": "I totally agree with your sentiment",
+    "id": 2,
+    "name": "Jon Rogers",
+    "timePosted": "13 hours ago",
+    "unread": true
+  },
+  {
+    "action": "mentioned you",
+    "avatar": "avatar2",
+    "comment": "@jrogers Here's the conversation I mentioned to you",
+    "id": 3,
+    "name": "Rebecca Stone",
+    "timePosted": "1 day ago"
+  }
+]

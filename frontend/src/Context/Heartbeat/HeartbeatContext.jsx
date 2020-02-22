@@ -48,32 +48,30 @@ export class HeartbeatProvider extends React.Component {
   }
 
   destroyCookies() {
-    Restful.get("logout")
-      .then(response => {
-        this.setState({ account: null });
-      })
-      .catch(error => {
-        this.setState({ account: null });
-        Cookies.remove("account", { path: "/", domain: Details.LOCAL });
-        Cookies.remove("UID", { path: "/", domain: Details.LOCAL });
-        console.error(error);
-      });
+    Restful.get("logout").then(response => {
+      if (this._mounted) {
+        if (response.ok) {
+          this.setState({ account: null });
+        } else {
+          this.setState({ account: null });
+          Cookies.remove("account", { path: "/", domain: Details.LOCAL });
+          Cookies.remove("UID", { path: "/", domain: Details.LOCAL });
+          console.error(response.status);
+        }
+      }
+    });
   }
 
   heartbeat() {
-    Restful.get("getMe", false)
-      .then(response => {
-        if (this._mounted) {
-          if (!_.isNil(response)) {
-            this.setState({ ...this.state, ...response });
-          }
-        }
-      })
-      .catch(error => {
-        if (error.status === 410) {
+    Restful.get("getMe", false).then(response => {
+      if (this._mounted) {
+        if (response.ok) {
+          this.setState({ ...this.state, ...response });
+        } else if (response.status === 410) {
           this.setState({ account: null });
         }
-      });
+      }
+    });
   }
 
   componentDidMount() {

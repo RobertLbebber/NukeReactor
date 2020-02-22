@@ -65,7 +65,7 @@ function GEditor(props) {
           }),
         });
       });
-      blocks.forEach((block: GBlock) => {
+      blocks.forEach((block) /**@type {GBlock} */ => {
         editor.BlockManager.add(block.id, block);
       });
       setEditor(editor);
@@ -83,6 +83,12 @@ function GEditor(props) {
       GrapesJS.editors = GrapesJS.editors.filter(e => e !== editor);
     };
   }, []);
+  const selectorManager = editor.SelectorManager;
+  if (props.isLoading) {
+    let selection = selectorManager.add("#wrapper");
+    let rule = editor.cssComposer.add([selection]);
+    rule.set("style", { "background-color": "rgba( 0, 0, 0, 0.3)" });
+  }
 
   return <div id={id} />;
 }

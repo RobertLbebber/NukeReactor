@@ -11,7 +11,7 @@ import LandingPage from "Pages/Public/LandingPage";
 import AccountSetting from "Pages/Account/AccountSetting/AccountSetting";
 import { HeartbeatContext } from "Context/Heartbeat/HeartbeatContext";
 import Page404 from "Pages/Public/Page404";
-import Page503 from "Pages/Public/Page503";
+import Page503, { PAGE_UNAVAILABLE } from "Pages/Public/Page503";
 // import HeartbeatContext from "Context/Heartbeat/HeartbeatContext";
 
 export const HOME = "home";
@@ -80,7 +80,7 @@ const Routes = Object.freeze([
   },
   {
     key: PAGE_503,
-    path: "/Page503",
+    path: PAGE_UNAVAILABLE,
     component: Page503,
     dynamic: false,
     exact: false,

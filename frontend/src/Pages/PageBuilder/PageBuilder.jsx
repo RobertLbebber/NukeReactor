@@ -8,12 +8,15 @@ import "grapesjs/dist/css/grapes.min.css";
 // import toastr from "toastr";
 import { State } from "env/InterpretedEnvironment";
 import LocaleProvider from "Context/LocaleContext";
+import { withStyles } from "@material-ui/core";
 
 export class PageBuilderLocale extends React.Component {
   render() {
     return <LocaleProvider>{localeContext => <PageBuilder lT={localeContext.tree} {...this.props} />}</LocaleProvider>;
   }
 }
+
+const styles = theme => {};
 
 class PageBuilder extends React.Component {
   constructor(props) {
@@ -50,8 +53,16 @@ class PageBuilder extends React.Component {
                 active: false,
                 command: editor => {
                   console.log(editor);
-                  // this.savePage(editor.getCurrent());
-                  this.props.onPublish(editor.getCurrent());
+                  this.props.onRefresh();
+                },
+                className: "fa fa-refresh",
+                attributes: { title: _.get(lT, "pages.PageBuilder.ActionButtons.Refresh", "Refresh") },
+              },
+              {
+                active: false,
+                command: editor => {
+                  console.log(editor);
+                  this.props.onPublish(editor.getComponents());
                 },
                 className: "fa fa-upload",
                 attributes: { title: _.get(lT, "pages.PageBuilder.ActionButtons.Publish", "Publish Work") },
@@ -60,8 +71,7 @@ class PageBuilder extends React.Component {
                 active: false,
                 command: editor => {
                   console.log(editor);
-                  // this.savePage(editor.getCurrent());
-                  this.props.onSave(editor.getCurrent());
+                  this.props.onSave(editor.getComponents());
                 },
                 className: "fa fa-save",
                 attributes: { title: _.get(lT, "pages.PageBuilder.ActionButtons.Save", "Save Work") },
@@ -69,28 +79,31 @@ class PageBuilder extends React.Component {
               {
                 active: false,
                 command: editor => {
-                  console.log(editor);
-                  // this.savePage(editor.getCurrent());
-                  this.props.onRefresh();
+                  this.props.onLoad();
                 },
-                className: "fa fa-refresh",
-                attributes: { title: _.get(lT, "pages.PageBuilder.ActionButtons.Refresh", "Refresh") },
+                className: "fa fa-load",
+                attributes: { title: _.get(lT, "pages.PageBuilder.ActionButtons.Load", "Load Page") },
+              },
+              {
+                active: false,
+                command: editor => {
+                  this.props.onNew();
+                },
+                className: "fa fa-plus",
+                attributes: { title: _.get(lT, "pages.PageBuilder.ActionButtons.New", "New Page") },
+              },
+              {
+                active: false,
+                command: editor => {
+                  this.props.onDelete();
+                },
+                className: "fa fa-trash",
+                attributes: { title: _.get(lT, "pages.PageBuilder.ActionButtons.Delete", "Delete Page") },
               },
             ],
           },
-          // {
-          //   id: "Save",
-          //   visible: true,
-          //   buttons: [
-          //   ],
-          // },
-          // {
-          //   id: "Refresh",
-          //   visible: true,
-          //   buttons: [
-          //   ],
-          // },
         ]}
+        {...this.props}
       />
     );
   }
@@ -101,13 +114,19 @@ PageBuilder.propTypes = {
   account: State.Debug ? PropTypes.object : PropTypes.object.isRequired,
   onSave: PropTypes.func,
   onPublish: PropTypes.func,
+  onNew: PropTypes.func,
+  onDelete: PropTypes.func,
+  onLoad: PropTypes.func,
   onRefresh: PropTypes.func,
 };
 
 PageBuilder.defaultProps = {
   className: "",
-  onSave: () => {},
-  onPublish: () => {},
+  onSave: currentPage => {},
+  onPublish: currentPage => {},
+  onLoad: currentPage => {},
+  onDelete: currentPage => {},
+  onNew: currentPage => {},
   onRefresh: () => {},
 };
-export default PageBuilder;
+export default withStyles(styles)(PageBuilder);

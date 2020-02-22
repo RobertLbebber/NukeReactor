@@ -7,6 +7,7 @@ import Restful from "util/io/Restful";
 import { getAccountPath } from "util/io/UserAPIs";
 import { Redirect } from "react-router-dom";
 import GEditor from "Pages/PageBuilder/components/GEditor";
+import { PAGE_UNAVAILABLE } from "Pages/Public/Page503";
 
 const styles = theme => {
   return {
@@ -43,7 +44,7 @@ export class AccountShow extends Component {
         if (response.ok) {
           newState = { page: response.body, loading: false };
         } else if (_.isNaN(response.status)) {
-          newState = { error: { message: null, redirect: 503 }, loading: false };
+          newState = { error: { message: null, redirect: PAGE_UNAVAILABLE }, loading: false };
         } else {
           newState = { error: response.body, loading: false };
         }
@@ -60,7 +61,7 @@ export class AccountShow extends Component {
     let errorMessage;
     if (!_.isEmpty(this.state.error)) {
       if (_.has(this.state.error, "redirect")) {
-        return <Redirect to={`/Page${this.state.error.redirect}`} />;
+        return <Redirect to={this.state.error.redirect} />;
       } else {
         errorMessage = this.state.error.message;
       }

@@ -14,7 +14,7 @@ export const findKey = (rec, key) => {
   return;
 };
 
-export const pop = (array, index) => _.remove(array, (n, i) => index === i);
+export const pop = (array, index) => _.isArray(array) && array.splice(index, 1);
 
 export const isJson = str => {
   try {
@@ -82,5 +82,5 @@ export const isNilGetDeep = (item, path) => {
 
 export default {
   isJson,
-  flatten
+  flatten,
 };
