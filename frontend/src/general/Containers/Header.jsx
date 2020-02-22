@@ -6,6 +6,20 @@ import AppBar from "@material-ui/core/AppBar";
 import { withStyles } from "@material-ui/core/styles";
 import { ArrowDropDown } from "@material-ui/icons";
 import { FormattedMessage } from "react-intl";
+import NotificationMockData from "assets/data/NotificationMockData";
+
+import Combobox from "@salesforce/design-system-react/components/combobox";
+import Dropdown from "@salesforce/design-system-react/components/menu-dropdown";
+import GlobalHeader from "@salesforce/design-system-react/components/global-header";
+import GlobalHeaderFavorites from "@salesforce/design-system-react/components/global-header/favorites";
+import GlobalHeaderHelp from "@salesforce/design-system-react/components/global-header/help";
+import GlobalHeaderNotifications from "@salesforce/design-system-react/components/global-header/notifications";
+import GlobalHeaderProfile from "@salesforce/design-system-react/components/global-header/profile";
+import GlobalHeaderSearch from "@salesforce/design-system-react/components/global-header/search";
+import GlobalHeaderSetup from "@salesforce/design-system-react/components/global-header/setup";
+import GlobalHeaderTask from "@salesforce/design-system-react/components/global-header/task";
+import IconSettings from "@salesforce/design-system-react/components/icon-settings";
+import Popover from "@salesforce/design-system-react/components/popover";
 
 import { RouteContext } from "Context/RouteContext";
 import AccountMenu from "Pages/Navibars/Header/Menus/AccountMenu";
@@ -17,7 +31,8 @@ import { State } from "env/InterpretedEnvironment";
 import { AccountShape } from "Context/Heartbeat/HeartbeatContext";
 import { getProfileImage } from "util/io/UserAPIs";
 import { prettyNumber } from "util/func/lodashExtension";
-import SearchOperator from "general/Inputs/Form/Tools/SearchOperator";
+
+// import SearchOperator from "general/Inputs/Form/Tools/SearchOperator";
 
 const styles = theme => {
   return {
@@ -179,26 +194,94 @@ class Header extends Component {
             <RouteContext.Consumer>
               {routes => (
                 <React.Fragment>
-                  <Toolbar className={classes.toolbar} variant="dense">
-                    <Grid container justify="space-around">
-                      <Grid item xs={2} md={1}>
-                        <Typography className={classes.brandName} noWrap>
-                          <Link
-                            href={_.find(routes.routes(locale), route => route.key === HOME).path}
-                            underline="none"
-                            color="textSecondary"
-                          >
-                            Electr
-                          </Link>
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={5} md={4}>
-                        <SearchOperator searchUrl={""} suggestionUrl={""} />
-                      </Grid>
-
-                      {this.renderAccountMenu(routes.routes(locale), classes)}
-                    </Grid>
-                  </Toolbar>
+                  <GlobalHeader logoSrc="/assets/img/new.logo.png" onSkipToContent={() => {}} onSkipToNav={() => {}}>
+                    <GlobalHeaderSearch
+                      combobox={
+                        <Combobox
+                          assistiveText={{ label: "Search" }}
+                          events={{
+                            onSelect: () => {},
+                          }}
+                          id="header-search-custom-id"
+                          labels={{ placeholder: "Search Salesforce" }}
+                          options={[
+                            { id: "email", label: "Email" },
+                            { id: "mobile", label: "Mobile" },
+                          ]}
+                        />
+                      }
+                    />
+                    <GlobalHeaderFavorites
+                      actionSelected={this.state.favoritesActionSelected}
+                      onToggleActionSelected={(event, data) => {
+                        this.setState({ favoritesActionSelected: !data.actionSelected });
+                      }}
+                      popover={
+                        <Popover
+                          ariaLabelledby="favorites-heading"
+                          body={
+                            <div>
+                              <h2 className="slds-text-heading_small" id="favorites-heading">
+                                Favorites
+                              </h2>
+                            </div>
+                          }
+                          id="header-favorites-popover-id"
+                        />
+                      }
+                    />
+                    <GlobalHeaderTask
+                      dropdown={
+                        <Dropdown
+                          id="header-task-dropdown-id"
+                          options={[
+                            { id: "taskOptionOne", label: "Task Option One" },
+                            { id: "taskOptionTwo", label: "Task Option Two" },
+                          ]}
+                        />
+                      }
+                    />
+                    <GlobalHeaderHelp
+                      popover={
+                        <Popover
+                          ariaLabelledby="help-heading"
+                          body={
+                            <div>
+                              <h2 className="slds-text-heading_small" id="help-heading">
+                                Help and Training
+                              </h2>
+                            </div>
+                          }
+                          id="header-help-popover-id"
+                        />
+                      }
+                    />
+                    <GlobalHeaderSetup
+                      dropdown={
+                        <Dropdown
+                          id="header-setup-dropdown-id"
+                          options={[
+                            { id: "setupOptionOne", label: "Setup Option One" },
+                            { id: "setupOptionTwo", label: "Setup Option Two" },
+                          ]}
+                        />
+                      }
+                    />
+                    <GlobalHeaderNotifications
+                      notificationCount={5}
+                      popover={
+                        <Popover
+                          ariaLabelledby="header-notifications-custom-popover-content"
+                          body={null}
+                          id="header-notifications-popover-id"
+                        />
+                      }
+                    />
+                    <GlobalHeaderProfile
+                      popover={<Popover body={null} id="header-profile-popover-id" />}
+                      userName="Art Vandelay"
+                    />
+                  </GlobalHeader>
                   <Grid item xs={1}>
                     {this.renderDebugMenuLinks(routes.routes(locale), classes)}
                   </Grid>
