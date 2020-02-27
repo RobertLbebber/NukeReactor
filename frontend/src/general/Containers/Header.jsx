@@ -8,20 +8,22 @@ import { ArrowDropDown } from "@material-ui/icons";
 import { FormattedMessage } from "react-intl";
 import NotificationMockData from "assets/data/NotificationMockData";
 
-import Combobox from "@salesforce/design-system-react/components/combobox";
-import Dropdown from "@salesforce/design-system-react/components/menu-dropdown";
-import GlobalHeader from "@salesforce/design-system-react/components/global-header";
-import GlobalHeaderFavorites from "@salesforce/design-system-react/components/global-header/favorites";
-import GlobalHeaderHelp from "@salesforce/design-system-react/components/global-header/help";
-import GlobalHeaderNotifications from "@salesforce/design-system-react/components/global-header/notifications";
-import GlobalHeaderProfile from "@salesforce/design-system-react/components/global-header/profile";
-import GlobalHeaderSearch from "@salesforce/design-system-react/components/global-header/search";
-import GlobalHeaderSetup from "@salesforce/design-system-react/components/global-header/setup";
-import GlobalHeaderTask from "@salesforce/design-system-react/components/global-header/task";
-import IconSettings from "@salesforce/design-system-react/components/icon-settings";
-import Popover from "@salesforce/design-system-react/components/popover";
-
+import {
+  Combobox,
+  Dropdown,
+  GlobalHeader,
+  GlobalHeaderFavorites,
+  GlobalHeaderHelp,
+  GlobalHeaderNotifications,
+  GlobalHeaderProfile,
+  GlobalHeaderSearch,
+  GlobalHeaderSetup,
+  GlobalHeaderTask,
+  IconSettings,
+  Popover,
+} from "react-lds";
 import { RouteContext } from "Context/RouteContext";
+
 import AccountMenu from "Pages/Navibars/Header/Menus/AccountMenu";
 import { LOGOUT, SETTING, HOME, ACCOUNT } from "Pages/_common/main/Routes";
 import DebugLinks from "Pages/Navibars/Header/Menus/DebugLinks";
@@ -219,6 +221,7 @@ class Header extends Component {
                       popover={
                         <Popover
                           ariaLabelledby="favorites-heading"
+                          onClose={() => {}}
                           body={
                             <div>
                               <h2 className="slds-text-heading_small" id="favorites-heading">
@@ -244,6 +247,7 @@ class Header extends Component {
                     <GlobalHeaderHelp
                       popover={
                         <Popover
+                          onClose={() => {}}
                           ariaLabelledby="help-heading"
                           body={
                             <div>
@@ -272,13 +276,14 @@ class Header extends Component {
                       popover={
                         <Popover
                           ariaLabelledby="header-notifications-custom-popover-content"
+                          onClose={() => {}}
                           body={null}
                           id="header-notifications-popover-id"
                         />
                       }
                     />
                     <GlobalHeaderProfile
-                      popover={<Popover body={null} id="header-profile-popover-id" />}
+                      popover={<Popover body={null} onClose={() => {}} id="header-profile-popover-id" />}
                       userName="Art Vandelay"
                     />
                   </GlobalHeader>
