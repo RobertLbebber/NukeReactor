@@ -1,184 +1,148 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import { Typography, Toolbar, IconButton, Avatar, Grid, Link } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
-import { ArrowDropDown } from "@material-ui/icons";
-import { FormattedMessage } from "react-intl";
+// import {
+//   Typography,
+//   Toolbar,
+//   IconButton,
+//   Avatar,
+//   Grid,
+//   Link
+// } from "@material-ui/core";
+// import { ArrowDropDown } from "@material-ui/icons";
+// import { FormattedMessage } from "react-intl";
 
 import { RouteContext } from "Context/RouteContext";
 
 import GlobalNavbar from "./SalesWrapper/Header/GlobalNavbar";
-import AccountMenu from "Pages/Navibars/Header/Menus/AccountMenu";
-import { LOGOUT, SETTING, HOME, ACCOUNT, RoutesDefinition } from "Pages/_common/main/Routes";
-import DebugLinks from "Pages/Navibars/Header/Menus/DebugLinks";
-// import Restful from "util/io/Restful";
+// import AccountMenu from "Pages/Navibars/Header/Menus/AccountMenu";
+// import { LOGOUT, SETTING, ACCOUNT } from "Pages/_common/main/Routes";
+// import DebugLinks from "Pages/Navibars/Header/Menus/DebugLinks";
 
-import { State } from "env/InterpretedEnvironment";
+// import { State } from "env/InterpretedEnvironment";
 import { AccountShape } from "Context/Heartbeat/HeartbeatContext";
-import { getProfileImage } from "util/io/UserAPIs";
-import { prettyNumber } from "util/func/lodashExtension";
-
-const styles = theme => {
-  return {
-    navBar: {
-      backgroundColor: theme.palette.primary.hvr,
-      boxShadow: "none",
-      // marginBottom: theme.spacing(1),
-    },
-    toolbar: {
-      alignItems: "center",
-      justifyContent: "space-between",
-      boxShadow: "none",
-    },
-    navLinks: {
-      display: "flex",
-    },
-    brandName: {
-      fontSize: theme.typography.h4.fontSize,
-      color: theme.palette.white,
-    },
-    toggleButton: {
-      marginRight: theme.spacing(2),
-    },
-    profileAvatar: {
-      backgroundColor: "lightgray",
-    },
-    menu: {
-      top: "35px !important",
-    },
-  };
-};
+// import { getProfileImage } from "util/io/UserAPIs";
+// import { prettyNumber } from "util/func/lodashExtension";
 
 class Header extends Component {
   constructor(props) {
     super(props);
     //TODO
-    this.urls = {
-      search: "TDB",
-    };
-    this.redirects = {
-      [SETTING]: () => window.location.href = RoutesDefinition[SETTING].path,
-      [ACCOUNT]: () => window.location.href = RoutesDefinition[ACCOUNT].dynamicPath(this.props.account.id),
-      notifications: (id) => window.location.href = "TBD"
-    }
     this.state = {
       showAccountMenu: false,
       showDebugMenu: false, // For Debug: Drop Down
       searchResults: null,
-      searchCurrently: null,
+      searchCurrently: null
     };
     this._tag = this.constructor.name;
-    this.menuRef = React.createRef();
-    this.renderAccountMenu = this.renderAccountMenu.bind(this);
+    // this.menuRef = React.createRef();
+    // this.renderAccountMenu = this.renderAccountMenu.bind(this);
   }
 
-  renderDebugMenuLinks(routes, classes) {
-    if (!State.Debug) {
-      return null;
-    }
+  // renderDebugMenuLinks(routes, classes) {
+  //   if (!State.Debug) {
+  //     return null;
+  //   }
 
-    return (
-      <div>
-        <IconButton
-          key="debugMenu"
-          className={classes.toggleButton + " " + classes.debugObject}
-          onClick={e => {
-            this.menuRef = e.currentTarget;
-            this.setState({ showDebugMenu: true, showAccountMenu: false });
-          }}
-        >
-          <ArrowDropDown />
-        </IconButton>
-        {State.Debug && this.state.showDebugMenu ? (
-          <DebugLinks
-            links={routes}
-            anchorRef={this.menuRef}
-            className={classes.menu}
-            close={() => {
-              this.menuRef = null;
-              this.setState({ showDebugMenu: false });
-            }}
-          />
-        ) : null}
-      </div>
-    );
-  }
+  //   return (
+  //     <div>
+  //       <IconButton
+  //         key="debugMenu"
+  //         className={classes.toggleButton + " " + classes.debugObject}
+  //         onClick={e => {
+  //           this.menuRef = e.currentTarget;
+  //           this.setState({ showDebugMenu: true, showAccountMenu: false });
+  //         }}
+  //       >
+  //         <ArrowDropDown />
+  //       </IconButton>
+  //       {State.Debug && this.state.showDebugMenu ? (
+  //         <DebugLinks
+  //           links={routes}
+  //           anchorRef={this.menuRef}
+  //           className={classes.menu}
+  //           close={() => {
+  //             this.menuRef = null;
+  //             this.setState({ showDebugMenu: false });
+  //           }}
+  //         />
+  //       ) : null}
+  //     </div>
+  //   );
+  // }
 
-  renderAccountMenu(routes, classes) {
-    const { account } = this.props;
-
-    const accountMenu = {
-      logout: _.find(routes, route => route.key === LOGOUT),
-      setting: _.find(routes, route => route.key === SETTING),
-      account: _.find(routes, route => route.key === ACCOUNT),
-    };
-    return (
-      <Grid container item xs={3} md={2} spacing={1} justify="space-around">
-        <Grid item xs={10}>
-          <Typography variant="h5" component="h5">
-            <Link
-              underline="hover"
-              color="inherit"
-              href={accountMenu.account.dynamicPath({ id: _.get(account, "id") })}
-            >
-              {_.get(account, "firstName")}
-            </Link>
-          </Typography>
-          <FormattedMessage id="common.money.currencySymbol">
-            {currencySymbol => (
-              <FormattedMessage id="pages.Navibars.Header.Reputation.Donations.name">
-                {donations => (
-                  <Typography variant="body2" component="span">
-                    {donations} {currencySymbol}
-                    {prettyNumber(account, "reputation.donations")}
-                    {"  "}
-                    {/* Intentional Spacing */}
-                  </Typography>
-                )}
-              </FormattedMessage>
-            )}
-          </FormattedMessage>
-          <FormattedMessage id="pages.Navibars.Header.Reputation.Presige.name">
-            {presige => (
-              <Typography variant="body2" component="span">
-                {presige} ({prettyNumber(account, "reputation.presige")})
-              </Typography>
-            )}
-          </FormattedMessage>
-        </Grid>
-        <Grid item xs={2}>
-          <Avatar
-            className={classes.profileAvatar}
-            alt={_.get(account, "firstName", ["#"])[0]}
-            src={getProfileImage(_.get(account, "id"), _.get(account, "profileImg"))}
-            onClick={e => {
-              this.menuRef = e.currentTarget;
-              this.setState({ showAccountMenu: true, showDebugMenu: false });
-            }}
-          />
-        </Grid>
-        {this.state.showAccountMenu ? (
-          <AccountMenu
-            account={account}
-            links={accountMenu}
-            anchorRef={this.menuRef}
-            className={classes.menu}
-            close={() => {
-              this.menuRef = null;
-              this.setState({ showAccountMenu: false });
-            }}
-          />
-        ) : null}
-      </Grid>
-    );
-  }
+  // renderAccountMenu(routes, classes) {
+  //   return (
+  //     <Grid container item xs={3} md={2} spacing={1} justify="space-around">
+  //       <Grid item xs={10}>
+  //         <Typography variant="h5" component="h5">
+  //           <Link
+  //             underline="hover"
+  //             color="inherit"
+  //             href={accountMenu.account.dynamicPath({
+  //               id: _.get(account, "id")
+  //             })}
+  //           >
+  //             {_.get(account, "firstName")}
+  //           </Link>
+  //         </Typography>
+  //         <FormattedMessage id="common.money.currencySymbol">
+  //           {currencySymbol => (
+  //             <FormattedMessage id="pages.Navibars.Header.Reputation.Donations.name">
+  //               {donations => (
+  //                 <Typography variant="body2" component="span">
+  //                   {donations} {currencySymbol}
+  //                   {prettyNumber(account, "reputation.donations")}
+  //                   {"  "}
+  //                   {/* Intentional Spacing */}
+  //                 </Typography>
+  //               )}
+  //             </FormattedMessage>
+  //           )}
+  //         </FormattedMessage>
+  //         <FormattedMessage id="pages.Navibars.Header.Reputation.Presige.name">
+  //           {presige => (
+  //             <Typography variant="body2" component="span">
+  //               {presige} ({prettyNumber(account, "reputation.presige")})
+  //             </Typography>
+  //           )}
+  //         </FormattedMessage>
+  //       </Grid>
+  //       <Grid item xs={2}>
+  //         <Avatar
+  //           className={classes.profileAvatar}
+  //           alt={_.get(account, "firstName", ["#"])[0]}
+  //           src={getProfileImage(
+  //             _.get(account, "id"),
+  //             _.get(account, "profileImg")
+  //           )}
+  //           onClick={e => {
+  //             this.menuRef = e.currentTarget;
+  //             this.setState({ showAccountMenu: true, showDebugMenu: false });
+  //           }}
+  //         />
+  //       </Grid>
+  //       {this.state.showAccountMenu ? (
+  //         <AccountMenu
+  //           account={account}
+  //           links={accountMenu}
+  //           anchorRef={this.menuRef}
+  //           className={classes.menu}
+  //           close={() => {
+  //             this.menuRef = null;
+  //             this.setState({ showAccountMenu: false });
+  //           }}
+  //         />
+  //       ) : null}
+  //     </Grid>
+  //   );
+  // }
 
   render() {
     return (
       <RouteContext.Consumer>
         {routes => (
-          <GlobalNavbar redirects={this.redirects} account={this.props.account} />
+          <GlobalNavbar routes={routes} account={this.props.account} />
         )}
       </RouteContext.Consumer>
     );
@@ -188,7 +152,7 @@ class Header extends Component {
 Header.propTypes = {
   classes: PropTypes.object,
   account: AccountShape.isRequired,
-  displayType: PropTypes.oneOf(["standard"]),
+  displayType: PropTypes.oneOf(["standard"])
 };
 
-export default withStyles(styles)(Header);
+export default Header;

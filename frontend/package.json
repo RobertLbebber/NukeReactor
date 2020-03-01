@@ -53,7 +53,7 @@
     "build-css": "node-sass-chokidar src/index.scss -o src/build/",
     "ignore-watch-css": "npm run build-css && node-sass-chokidar src/ -o src/build/ --watch --recursive",
     "watch-css": "echo css building is de-activated",
-    "start": "cross-env NODE_PATH=src react-scripts start",
+    "start": "cross-env NODE_PATH=src react-scripts start --no-cache",
     "build": "npm run build-css"
   },
   "devDependencies": {

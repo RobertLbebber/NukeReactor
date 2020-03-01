@@ -12,16 +12,15 @@ import Post from "general/Inputs/Form/Post.jsx";
 const styles = theme => {
   return {
     mainContent: { height: "100%", width: "100%" },
-    post: { marginBottom: theme.spacing(1) },
+    post: { marginBottom: theme.spacing(1) }
   };
 };
 
 export class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      _tag: this.constructor.name,
-    };
+    this._tag = this.constructor.name;
+    this.state = {};
     this._mounteded = false;
   }
 
@@ -37,7 +36,7 @@ export class Home extends Component {
     let { classes } = this.props;
 
     return (
-      <Container className={this.state._tag + " " + classes.mainContent}>
+      <Container className={this._tag + " " + classes.mainContent}>
         <Grid container spacing={3} justify="space-between">
           <Grid item xs={1} sm={3} md={2}>
             {/* Sidebar */}
@@ -49,9 +48,20 @@ export class Home extends Component {
               {this.state._tag}
               <QRCode value="http://localhost" />
             </Paper> */}
-            <Grid container item spacing={1} direction="column" className={classes.mainContent}>
+            <Grid
+              container
+              item
+              spacing={1}
+              direction="column"
+              className={classes.mainContent}
+            >
               {_.map(PostData, (post, index) => (
-                <Post key={index} postData={post} poster={AccountData[index]} className={classes.post} />
+                <Post
+                  key={index}
+                  postData={post}
+                  poster={AccountData[index]}
+                  className={classes.post}
+                />
               ))}
             </Grid>
           </Grid>
@@ -64,10 +74,10 @@ export class Home extends Component {
     );
   }
 
-  RouteShape2 = RouteShape;
+  routes = RouteShape;
   static propTypes = {
     //Route Page Props
-    routeShape: this.RouteShape2,
+    routes: this.routes
   };
 
   static defaultProps = {};

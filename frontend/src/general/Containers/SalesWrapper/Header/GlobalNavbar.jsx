@@ -1,13 +1,13 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core";
 //SalesForce
 import {
-  Combobox,
   SLDSGlobalHeader,
   SLDSGlobalHeaderFavorites,
   SLDSGlobalHeaderHelp,
   SLDSGlobalHeaderNotifications,
   SLDSGlobalHeaderProfile,
-  SLDSGlobalHeaderSearch,
   SLDSGlobalHeaderSetup,
   SLDSGlobalHeaderTask,
   IconSettings,
@@ -19,14 +19,50 @@ import HeaderNotificationsContent from "./HeaderNotificationContent";
 import HeaderProfileContent from "./HeaderProfileContent";
 //Mock Data
 import NotificationMockData from "assets/data/NotificationMockData.json";
+import { HeartbeatContext } from "Context/Heartbeat/HeartbeatContext";
+import HeaderSearch from "./HeaderSearch";
+import { RouteShape } from "Pages/_common/main/Routing";
+
+const styles = theme => {
+  return {
+    navBar: {
+      backgroundColor: theme.palette.primary.hvr,
+      boxShadow: "none"
+      // marginBottom: theme.spacing(1),
+    },
+    toolbar: {
+      alignItems: "center",
+      justifyContent: "space-between",
+      boxShadow: "none"
+    },
+    navLinks: {
+      display: "flex"
+    },
+    brandName: {
+      fontSize: theme.typography.h4.fontSize,
+      color: theme.palette.white
+    },
+    toggleButton: {
+      marginRight: theme.spacing(2)
+    },
+    profileAvatar: {
+      backgroundColor: "lightgray"
+    },
+    menu: {
+      top: "35px !important"
+    }
+  };
+};
 
 class GlobalNavbar extends Component {
-  static displayName = "SLDSGlobalHeaderExample";
-
   constructor(props) {
     super(props);
     this.state = {
       favoritesActionSelected: false
+    };
+    this.redirects = {
+      ...this.prop.routes,
+      notifications: id => (window.location.href = "TBD")
     };
   }
 
@@ -42,23 +78,7 @@ class GlobalNavbar extends Component {
             console.log(">>> Skip to Nav Clicked");
           }}
         >
-          <SLDSGlobalHeaderSearch
-            combobox={
-              <Combobox
-                assistiveText={{ label: "Search" }}
-                events={{
-                  onSelect: () => {
-                    console.log(">>> onSelect");
-                  }
-                }}
-                labels={{ placeholder: "Search Salesforce" }}
-                options={[
-                  { id: "email", label: "Email" },
-                  { id: "mobile", label: "Mobile" }
-                ]}
-              />
-            }
-          />
+          <HeaderSearch />
           <SLDSGlobalHeaderFavorites
             actionSelected={this.state.favoritesActionSelected}
             onToggleActionSelected={(event, data) => {
@@ -119,13 +139,31 @@ class GlobalNavbar extends Component {
             }
           />
           <SLDSGlobalHeaderProfile
-            popover={<Popover body={<HeaderProfileContent />} />}
-            userName="Art Vandelay"
+            popover={
+              <Popover
+                body={
+                  <HeartbeatContext.Consumer>
+                    {heart => (
+                      <HeaderProfileContent
+                        pages={this.redirects}
+                        userName={this.props.account.name}
+                        destroySession={heart.destroySession}
+                      />
+                    )}
+                  </HeartbeatContext.Consumer>
+                }
+              />
+            }
+            userName={this.props.account.name}
           />
         </SLDSGlobalHeader>
       </IconSettings>
     );
   }
+
+  routes = RouteShape;
+  static propTypes = { classes: PropTypes.object, routes: this.routes };
+  static defaultProps = {};
 }
 
-export default GlobalNavbar;
+export default withStyles(styles)(GlobalNavbar);
