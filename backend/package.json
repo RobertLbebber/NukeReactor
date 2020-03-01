@@ -16,7 +16,7 @@
     "graceful-fs": "^4.1.15",
     "grunt-babel": "^8.0.0",
     "https-proxy-agent": ">=2.2.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "sails": "^1.1.0",
     "sails-hook-apianalytics": "^2.0.0",
     "sails-hook-babel": "^7.0.0",
