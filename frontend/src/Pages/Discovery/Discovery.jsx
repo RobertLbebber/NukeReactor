@@ -7,7 +7,7 @@ import { get } from "util/io/Restful";
 import PostCreator from "general/Inputs/Form/PostCreator";
 import FeedCard from "general/Containers/MaterialWrappers/FeedCard";
 
-export class Feed extends Component {
+class Discovery extends Component {
   constructor(props) {
     super(props);
     this._tag = this.constructor.name;
@@ -26,7 +26,7 @@ export class Feed extends Component {
   }
 
   getUserFeed() {
-    get("/feed/" + this.props.account.id).then(response => {
+    get("/discovery/" + this.props.account.id).then(response => {
       this.setState({
         feedData: response,
       });
@@ -67,4 +67,4 @@ export class Feed extends Component {
 
   static defaultProps = {};
 }
-export default Feed;
+export default Discovery;

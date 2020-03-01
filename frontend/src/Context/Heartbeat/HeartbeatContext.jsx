@@ -48,7 +48,7 @@ export class HeartbeatProvider extends React.Component {
   }
 
   destroyCookies() {
-    Restful.get("logout").then(response => {
+    Restful.put("logout").then(response => {
       if (this._mounted) {
         if (response.ok) {
           this.setState({ account: null });

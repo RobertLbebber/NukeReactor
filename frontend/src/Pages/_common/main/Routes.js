@@ -3,13 +3,14 @@ import React from "react";
 import _ from "lodash";
 import { ViewDay, AccountCircle, Home as HomeIcon, HighlightOff, Code } from "@material-ui/icons";
 
-import Feed from "Pages/Feed/Feed";
+import Discovery from "Pages/Discovery/Discovery";
 import PageBuilder from "Pages/PageBuilder/PageBuilder";
 import AccountRouter from "Pages/Account/AccountRouter";
 import Home from "Pages/Home/Home";
 import LandingPage from "Pages/Public/LandingPage";
 import AccountSetting from "Pages/Account/AccountSetting/AccountSetting";
 import { HeartbeatContext } from "Context/Heartbeat/HeartbeatContext";
+import Donate from "Pages/Public/Donate/Donate";
 import Page404 from "Pages/Public/Page404";
 import Page503, { PAGE_UNAVAILABLE } from "Pages/Public/Page503";
 // import HeartbeatContext from "Context/Heartbeat/HeartbeatContext";
@@ -17,14 +18,15 @@ import Page503, { PAGE_UNAVAILABLE } from "Pages/Public/Page503";
 export const HOME = "home";
 export const ACCOUNT = "account";
 export const PAGE_BUILDER = "pageBuilder";
-export const FEED = "feed";
+export const DISCOVERY = "feed";
 export const LANDING_PAGE = "landingPage";
 export const SETTING = "setting";
 export const LOGOUT = "logout";
+export const DONATE = "donate";
 export const PAGE_404 = "page404";
 export const PAGE_503 = "page503";
 
-export const PAGES = [HOME, ACCOUNT, PAGE_BUILDER, FEED, LANDING_PAGE, SETTING, LOGOUT];
+export const PAGES = [HOME, ACCOUNT, PAGE_BUILDER, DISCOVERY, LANDING_PAGE, SETTING, LOGOUT, DONATE];
 
 const Routes = Object.freeze([
   {
@@ -56,9 +58,9 @@ const Routes = Object.freeze([
     nonStandardNavbar: true,
   },
   {
-    key: FEED,
+    key: DISCOVERY,
     path: "/feed",
-    component: Feed,
+    component: Discovery,
     dynamic: false,
     exact: true,
     iconComponent: <ViewDay />,
@@ -79,15 +81,23 @@ const Routes = Object.freeze([
     exact: true,
   },
   {
+    key: DONATE,
+    path: PAGE_UNAVAILABLE,
+    dynamicPath: ({ id }) => "/donate/" + id,
+    component: Donate,
+    dynamic: true,
+    exact: false,
+  },
+  {
     key: PAGE_503,
     path: PAGE_UNAVAILABLE,
     component: Page503,
     dynamic: false,
-    exact: false,
+    exact: true,
   },
   {
     key: PAGE_404,
-    path: "/*",
+    // path: "/*",
     component: Page404,
     dynamic: false,
     exact: false,
@@ -105,7 +115,6 @@ const Routes = Object.freeze([
   },
 ]);
 
-export default Routes;
 export const RoutesWithLocale = locale =>
   Object.freeze([
     {
@@ -121,8 +130,8 @@ export const RoutesWithLocale = locale =>
       name: _.get(locale, "pages.PageBuilder.name", "Page Builder"),
     },
     {
-      ..._.find(Routes, route => route.key === FEED),
-      name: _.get(locale, "pages.Feed.name", "Feed"),
+      ..._.find(Routes, route => route.key === DISCOVERY),
+      name: _.get(locale, "pages.Discovery.name", "Discovery"),
     },
     {
       ..._.find(Routes, route => route.key === LANDING_PAGE),
@@ -157,3 +166,7 @@ export const RouteShape = PropTypes.shape({
   dynamic: PropTypes.bool,
   iconComponent: PropTypes.node,
 });
+
+export const RoutesDefinition = _.keyBy(Routes, "key")
+
+export default Routes;

@@ -1,4 +1,5 @@
 {
   "git.ignoreLimitWarning": true,
-  "workbench.colorTheme": "Material Theme Palenight High Contrast"
+  "workbench.colorTheme": "Super One Dark",
+  "workbench.preferredDarkColorTheme": "Tomorrow Night Blue"
 }
