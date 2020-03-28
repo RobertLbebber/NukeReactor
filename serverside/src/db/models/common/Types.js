@@ -23,7 +23,7 @@ export class Ref {
   dbType = "B";
   /**
    * @param {Model} foreigner - reference to an instance of a foreign model
-   * @param {String} connection - prop being used for connecting the models
+   * @param {String} connection - property being used for connecting the models
    */
   constructor(foreigner, validate = true) {
     // console.log("Types.js", foreigner);
@@ -31,16 +31,25 @@ export class Ref {
       this.foreignModel = foreigner;
       this.foreignKey = foreigner.pK;
       if (_.isNil(this.foreignModel)) {
-        throw new WebError(DATABASE_REJECTION, "No foriegn Model provided for Reference");
+        throw new WebError(
+          DATABASE_REJECTION,
+          "No foriegn Model provided for Reference"
+        );
       }
     }
   }
 
   async validator(refId) {
     if (_.isNil(this.foreignModel)) {
-      throw new WebError(DATABASE_REJECTION, "No foriegn Model provided for Reference");
+      throw new WebError(
+        DATABASE_REJECTION,
+        "No foriegn Model provided for Reference"
+      );
     } else if (_.isNil(refId)) {
-      throw new WebError(DATABASE_REJECTION, "Foreign Model lacks identification for Reference");
+      throw new WebError(
+        DATABASE_REJECTION,
+        "Foreign Model lacks identification for Reference"
+      );
     }
     let entryExist = await this.foreignModel.fn.get(refId);
     checkDetection(entryExist, refId, this.foreignModel);
@@ -56,7 +65,7 @@ export class SoftRef {
   dbType = "B";
   /**
    * @param {Model} foreigner - reference to an instance of a foreign model
-   * @param {String} connection - prop being used for connecting the models
+   * @param {String} connection - property being used for connecting the models
    */
   constructor(foreigner, validate = true) {
     if (validate) {
@@ -64,14 +73,20 @@ export class SoftRef {
       this.foreignKey = foreigner.pK;
       this.locked = false;
       if (_.isNil(this.foreignModel)) {
-        throw new WebError(DATABASE_REJECTION, "No foriegn Model provided for Reference");
+        throw new WebError(
+          DATABASE_REJECTION,
+          "No foriegn Model provided for Reference"
+        );
       }
     }
   }
 
   async validator(refId) {
     if (_.isNil(this.foreignModel)) {
-      throw new WebError(DATABASE_REJECTION, "No foriegn Model provided for Reference");
+      throw new WebError(
+        DATABASE_REJECTION,
+        "No foriegn Model provided for Reference"
+      );
     } else if (_.isNil(refId)) {
       throw new WebError("Foreign Model lacks identification for Reference");
     }

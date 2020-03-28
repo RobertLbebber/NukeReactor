@@ -1,5 +1,12 @@
 import env from "../../config/env";
-import { TYPES, required, unique, createRef, createCollection, encrypted } from "./common/Attributes";
+import {
+  TYPES,
+  required,
+  unique,
+  createRef,
+  createCollection,
+  encrypted
+} from "./common/Attributes";
 import SingletonGenerator from "../../endpoints/_common/SingletonGenerator";
 import EmailAccountSingleton from "./EmailAccount.json";
 import CommonModel from "./common/CommonModel";
@@ -11,14 +18,14 @@ export const AccountGn = (firstName, lastName, primaryEmail, password) => ({
   firstName,
   lastName,
   primaryEmail,
-  password,
+  password
 });
 
 class Model extends CommonModel {
   constructor() {
     super(TableName);
-    this.props = {
-      ...this.props,
+    this.properties = {
+      ...this.properties,
       //Required
       password: { type: TYPES.STRING, required, encrypted },
       firstName: { type: TYPES.STRING, required },
@@ -27,14 +34,19 @@ class Model extends CommonModel {
       //Options
       profileImg: { type: TYPES.STRING },
       messages: { collection: "messages", via: "accountId" },
-      creditCard: { collection: "creditCards", via: "accountId" },
+      creditCard: { collection: "creditCards", via: "accountId" }
     };
   }
 
   init() {
     //Connections
-    this.props.primaryEmail = createRef(EmailAccountSingleton.getInstance(), { required, unique });
-    this.props.emails = createCollection(EmailAccountSingleton.getInstance());
+    this.properties.primaryEmail = createRef(
+      EmailAccountSingleton.getInstance(),
+      { required, unique }
+    );
+    this.properties.emails = createCollection(
+      EmailAccountSingleton.getInstance()
+    );
   }
 }
 
@@ -46,20 +58,20 @@ export const Table = {
     KeySchema: [
       {
         AttributeName: "id",
-        KeyType: "HASH",
-      },
+        KeyType: "HASH"
+      }
     ],
     AttributeDefinitions: [
       {
         AttributeName: "id",
-        AttributeType: "S",
-      },
+        AttributeType: "S"
+      }
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 1,
-      WriteCapacityUnits: 1,
-    },
-  },
+      WriteCapacityUnits: 1
+    }
+  }
 };
 
 const AccountSingleton = new SingletonGenerator(Model);

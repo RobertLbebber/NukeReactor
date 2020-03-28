@@ -10,13 +10,13 @@ const TableName = "CreditCards";
 class Model {
   constructor() {
     this.pK = "id";
-    this.props = {
+    this.properties = {
       ...Attributes,
       serial: { type: TYPES.STRING },
       cardNumber: { type: TYPES.NUMBER },
       expMonth: { type: TYPES.NUMBER },
       expYear: { type: TYPES.NUMBER },
-      cvv: { type: TYPES.NUMBER },
+      cvv: { type: TYPES.NUMBER }
       /**
        * Connecitions
        * @property {Ref} accountId - Connection Reference to a given account
@@ -26,7 +26,7 @@ class Model {
   }
 
   init = () => {
-    this.props.accountId = createRef(AccountSingleton.getInstance());
+    this.properties.accountId = createRef(AccountSingleton.getInstance());
   };
 }
 
@@ -38,20 +38,20 @@ export const Table = {
     KeySchema: [
       {
         AttributeName: "id",
-        KeyType: "HASH",
-      },
+        KeyType: "HASH"
+      }
     ],
     AttributeDefinitions: [
       {
         AttributeName: "id",
-        AttributeType: "S",
-      },
+        AttributeType: "S"
+      }
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 1,
-      WriteCapacityUnits: 1,
-    },
-  },
+      WriteCapacityUnits: 1
+    }
+  }
 };
 
 const CreditCards = new SingletonGenerator(Model);

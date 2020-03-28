@@ -5,7 +5,7 @@ export default class CommonModel {
   constructor(name) {
     this.pK = "id";
     this.modelName = name;
-    this.props = CommonAttributes;
+    this.properties = CommonAttributes;
     this.fn = CommonDBCrud(this);
   }
   /**@interface*/
