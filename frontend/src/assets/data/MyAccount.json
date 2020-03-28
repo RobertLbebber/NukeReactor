@@ -1,0 +1,12 @@
+{
+  "id": "-1",
+  "email": "fake@email.com",
+  "firstName": "Bobasdsadas",
+  "lastName": "Hert",
+  "profileImg": "src/assets/img/faces/face-0.jpg",
+  "reputation": {
+    "donations": 0,
+    "presige": 0
+  },
+  "role": "admin"
+}

@@ -10,14 +10,22 @@
       "Like": "Like",
       "Dislike": "Dislike",
       "Donate": "Donate",
-      "Share": "Share"
+      "Share": "Share",
+      "Settings": "Settings",
+      "Logout": "Logout"
     },
     "Directions": {
       "ClickMe": "Click Me",
       "ClickHere": "click here"
     },
     "money": {
-      "currencySymbol": "$"
+      "currencySymbol": "$",
+      "range": {
+        "id": {
+          "0": "1|5|25|100"
+        },
+        "maxCurrency": 2000
+      }
     }
   },
   "pages": {
@@ -28,7 +36,7 @@
       "name": "Account",
       "SubPages": {
         "AccountSettings": {
-          "name": "AccountSettings"
+          "name": "Account Settings"
         }
       }
     },

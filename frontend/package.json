@@ -2,6 +2,14 @@
   "name": "Electr",
   "version": "0.2.5",
   "private": true,
+  "scripts": {
+    "build-lang": "cross-env NODE_PATH=src babel src/assets/locale/generateLang.js",
+    "build-css": "node-sass-chokidar src/index.scss -o src/build/",
+    "ignore-watch-css": "npm run build-css && node-sass-chokidar src/ -o src/build/ --watch --recursive",
+    "watch-css": "echo css building is de-activated",
+    "start": "cross-env NODE_PATH=src react-scripts start --no-cache",
+    "build": "npm run build-css"
+  },
   "dependencies": {
     "@babel/core": "^7.8.4",
     "@babel/plugin-proposal-class-properties": "^7.3.3",
@@ -48,17 +56,13 @@
     "webpack-dev-middleware": "1.12.2",
     "webpack-manifest-plugin": "1.3.2"
   },
-  "scripts": {
-    "build-lang": "babel-node ./src/assets/locale/generateLang.js",
-    "build-css": "node-sass-chokidar src/index.scss -o src/build/",
-    "ignore-watch-css": "npm run build-css && node-sass-chokidar src/ -o src/build/ --watch --recursive",
-    "watch-css": "echo css building is de-activated",
-    "start": "cross-env NODE_PATH=src react-scripts start --no-cache",
-    "build": "npm run build-css"
-  },
   "devDependencies": {
     "@babel/node": "^7.6.3",
     "babel-plugin-root-import": "^6.4.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
     "css-loader": "^2.1.1",
     "eslint-import-resolver-babel-root-import": "0.0.2",
     "eslint-plugin-import": "^2.18.2",
