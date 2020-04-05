@@ -1,3 +1,171 @@
-{
-    "workbench.colorTheme": "Monokai Pro (Filter Spectrum)"
-}
+[
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.terminal.kill",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.terminal.clear",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+r",
+    "command": "editor.action.formatDocument"
+  },
+  {
+    "key": "ctrl+d",
+    "command": "editor.action.copyLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+down",
+    "command": "editor.action.moveLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+2",
+    "command": "editor.action.toggleMinimap",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+up",
+    "command": "editor.action.moveLinesUpAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+s",
+    "command": "workbench.action.files.saveAll"
+  },
+  {
+    "key": "ctrl+[",
+    "command": "editor.fold"
+  },
+  {
+    "key": "ctrl+]",
+    "command": "editor.unfold"
+  },
+  {
+    "key": "ctrl+alt+f",
+    "command": "workbench.action.quickOpen"
+  },
+  {
+    "key": "ctrl+b",
+    "command": "-workbench.action.toggleSidebarVisibility"
+  },
+  {
+    "key": "ctrl+1",
+    "command": "workbench.action.toggleSidebarVisibility"
+  },
+  {
+    "key": "shift+alt+1",
+    "command": "workbench.files.action.showActiveFileInExplorer"
+  },
+  {
+    "key": "ctrl+0",
+    "command": "-workbench.action.focusSideBar"
+  },
+  {
+    "key": "ctrl+shift+`",
+    "command": "workbench.action.terminal.focus"
+  },
+  {
+    "key": "ctrl+3",
+    "command": "workbench.action.toggleZenMode"
+  },
+  {
+    "key": "ctrl+shift+1",
+    "command": "workbench.action.quickOpenView"
+    // "when": "focus"
+  },
+  {
+    "key": "ctrl+tab",
+    "command": "workbench.action.terminal.focusNext",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+tab",
+    "command": "workbench.action.nextEditor",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+tab",
+    "command": "workbench.action.previousEditor",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+t",
+    "command": "workbench.action.terminal.new",
+    "when": "terminalFocus"
+  },
+  ////////////////////////////////////////////////////////////////
+  ////////////              Code Snippet              ////////////
+  ////////////////////////////////////////////////////////////////
+  {
+    "key": "ctrl+numpad0",
+    "command": "editor.action.insertSnippet",
+    "when": "editorTextFocus",
+    "args": {
+      "langId": "javascript",
+      "name": "Print to Console"
+    }
+  },
+  {
+    "key": "ctrl+numpad1",
+    "command": "editor.action.insertSnippet",
+    "when": "editorTextFocus",
+    "args": {
+      "langId": "javascript",
+      "name": "Map Array"
+    }
+  },
+  {
+    "key": "ctrl+numpad2",
+    "command": "editor.action.insertSnippet",
+    "when": "editorTextFocus",
+    "args": {
+      "langId": "javascript",
+      "name": "React Page Builder"
+    }
+  },
+  {
+    "key": "ctrl+shift+[",
+    "command": "editor.action.outdentLines",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+[",
+    "command": "-editor.action.outdentLines",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+]",
+    "command": "editor.action.indentLines",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+]",
+    "command": "-editor.action.indentLines",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+alt+[",
+    "command": "editor.fold",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+[",
+    "command": "-editor.fold",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "alt+down",
+    "command": "-editor.action.moveLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "alt+up",
+    "command": "-editor.action.moveLinesUpAction",
+    "when": "editorTextFocus && !editorReadonly"
+  }
+]

@@ -1,0 +1,69 @@
+{
+  "Print to Console": {
+    "prefix": "log",
+    "body": ["console.log('This is $information: ', $information);", "$0"],
+    "description": "Log output to console"
+  },
+  "React Page Builder": {
+    "prefix": "reactjs",
+    "body": [
+      "import React, { Component } from 'react';",
+      "import _ from 'lodash';",
+      "import PropTypes from 'prop-types';",
+      "import { withStyles } from \"@material-ui/core/styles\";",
+      "",
+      "const styles = theme => ({",
+      "    ",
+      "});",
+      "",
+      "/** ",
+      " *  TODO Documentation",
+      " */ ",
+      "class ${TM_FILENAME/(.*)\\..+$/$1/} extends Component {",
+      "    ",
+      "    constructor(props) {",
+      "        super(props);",
+      "        this.state = {",
+      "        };",
+      "        this._tag= this.constructor.name;",
+      "        this._isMount=false;",
+      "    }",
+      "    ",
+      "    componentDidMount(){",
+      "        this._isMount=true;",
+      "    }",
+      "    ",
+      "    componentWillUnmount(){",
+      "        this._isMount=false;",
+      "    }",
+      "    ",
+      "    render() {",
+      "        return (<div className={this._tag+\" \"+this.props.className}>",
+      "             {this.state._tag}",
+      "        </div>",
+      "    );}",
+      "}",
+      "    ",
+      "${TM_FILENAME/(.*)\\..+$/$1/}.propTypes = {",
+      "    className:PropTypes.string,",
+      "    classes:PropTypes.object,",
+      "};",
+      "    ",
+      "${TM_FILENAME/(.*)\\..+$/$1/}.defaultProps = {",
+      "    className: \"\",",
+      "    classes: \"\",",
+      "};",
+      "export default  withStyles(styles)(${TM_FILENAME/(.*)\\..+$/$1/});"
+    ],
+    "description": "Generate Reactjs Template Page"
+  },
+  "Serverless Handler": {
+    "prefix": ["handler", "serverless"],
+    "body": [
+      "const $1 = (event, context, callback) => {",
+      "let middles = Middleware.prep(event, context, ${TM_FILENAME/(.*)\\..+$/$1/};);",
+      "}"
+    ],
+    "description": "Quick setState Template"
+  }
+}
