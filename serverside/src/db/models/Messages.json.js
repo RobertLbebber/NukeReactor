@@ -11,17 +11,20 @@ const TableName = "Messages";
 class Model {
   constructor() {
     this.pK = "id";
-    this.props = {
+    this.properties = {
       ...Attributes,
       mainMessage: { type: TYPES.STRING },
       extraMessage: { type: TYPES.STRING },
       likes: { type: TYPES.NUMBER },
-      shares: { type: TYPES.NUMBER },
+      shares: { type: TYPES.NUMBER }
     };
     this.fn = CommonDBCrud(this, TableName);
   }
   init() {
-    this.props.accountID = createRef(AccountSingleton.getInstance(), { required, unique });
+    this.properties.accountID = createRef(AccountSingleton.getInstance(), {
+      required,
+      unique
+    });
   }
 }
 
@@ -33,20 +36,20 @@ export const Table = {
     KeySchema: [
       {
         AttributeName: "id",
-        KeyType: "HASH",
-      },
+        KeyType: "HASH"
+      }
     ],
     AttributeDefinitions: [
       {
         AttributeName: "id",
-        AttributeType: "S",
-      },
+        AttributeType: "S"
+      }
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 1,
-      WriteCapacityUnits: 1,
-    },
-  },
+      WriteCapacityUnits: 1
+    }
+  }
 };
 // /**
 //  * Increment or Decrement the an action of the message

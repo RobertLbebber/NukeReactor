@@ -10,13 +10,19 @@ export default class CommonDoc {
   constructor(Model, identity) {
     this.Model = Model;
     if (_.isNil(this.Model)) {
-      throw new WebError(NOT_INSTANTIATED, `No Model was provided to create a ModelDoc for.`);
+      throw new WebError(
+        NOT_INSTANTIATED,
+        `No Model was provided to create a ModelDoc for.`
+      );
     }
-    this.props = this.Model.props;
+    this.properties = this.Model.properties;
     this.pK = this.Model.pK;
     this.docName = `${this.Model.modelName}Doc`;
     if (_.isNil(identity)) {
-      throw new WebError(NOT_INSTANTIATED, `${this.docName} was not provide an identity.`);
+      throw new WebError(
+        NOT_INSTANTIATED,
+        `${this.docName} was not provide an identity.`
+      );
     }
 
     this.identity = identity;

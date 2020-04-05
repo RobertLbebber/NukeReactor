@@ -6,6 +6,7 @@ import App from "./Pages/_common/main/App";
 import "./assets/css/bootstrap4.2.1.css";
 import "./assets/css/bootstrap-additions.css";
 import "./assets/css/demo.css";
+import "./assets/css/salesforce.css";
 import "./assets/css/generic.css";
 import "./assets/css/global.css";
 import "./assets/css/pe-icon-7-stroke.css";

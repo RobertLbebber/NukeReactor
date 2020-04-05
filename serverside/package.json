@@ -6,7 +6,7 @@
   "main": "build.js",
   "scripts": {
     "start": "npm run b-d && npm run deploy",
-    "sls": "sls offline --port 3000",
+    "sls": "sls offline --port 4000",
     "local": "npm-run-all --parallel sls database",
     "database": "sls dynamodb start",
     "deploy": "serverless deploy ",
@@ -58,6 +58,7 @@
     "@babel/runtime": "^7.4.4",
     "aws-sdk": "^2.437.0",
     "bcrypt": "^3.0.7",
+    "chokidar": "^3.3.1",
     "dynamodb": "^1.2.0",
     "jsonschema": "^1.2.4",
     "lodash": "^4.17.11",

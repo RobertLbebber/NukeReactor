@@ -10,17 +10,17 @@ const TableName = "AccountPages";
 class Model {
   constructor() {
     this.pK = "id";
-    this.props = {
+    this.properties = {
       ...Attributes,
       serial: { type: TYPES.STRING },
       designName: { type: TYPES.STRING },
       designCategory: { type: TYPES.STRING },
-      pageContent: { type: TYPES.OBJECT, ...required },
+      pageContent: { type: TYPES.OBJECT, ...required }
     };
     this.fn = CommonDBCrud(this, TableName);
   }
   init() {
-    this.props.accountId = createRef(AccountSingleton.getInstance());
+    this.properties.accountId = createRef(AccountSingleton.getInstance());
   }
 }
 
@@ -32,20 +32,20 @@ export const Table = {
     KeySchema: [
       {
         AttributeName: "id",
-        KeyType: "HASH",
-      },
+        KeyType: "HASH"
+      }
     ],
     AttributeDefinitions: [
       {
         AttributeName: "id",
-        AttributeType: "S",
-      },
+        AttributeType: "S"
+      }
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 1,
-      WriteCapacityUnits: 1,
-    },
-  },
+      WriteCapacityUnits: 1
+    }
+  }
 };
 // updateOrCreate: function(criteria, values) {
 //   var self = this; // reference for use by callbacks

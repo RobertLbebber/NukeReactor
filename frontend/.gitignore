@@ -7,3 +7,4 @@ src/build/**
 src/build/*.*
 src/assets/img/*
 public/assets
+*.log

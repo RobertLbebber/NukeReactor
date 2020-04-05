@@ -25,10 +25,10 @@ class AccountRouter extends Component {
     return (
       <div className={this._tag + " " + this.props.className}>
         <Switch>
-          <Route path="/account/:id/show" render={() => <AccountShow />} />
-          <Route path="/account/:id/show/:pageId" render={() => <AccountShow />} />
-          <Route path="/account/:id/create" render={() => <AccountCreate />} />
-          <Route path="/account/settings" render={() => <AccountSetting />} />
+          <Route path="/account/:id/show" render={AccountShow} />
+          <Route path="/account/:id/show/:pageId" render={AccountShow} />
+          <Route path="/account/:id/create" render={AccountCreate} />
+          <Route path="/account/settings" render={AccountSetting} />
         </Switch>
       </div>
     );

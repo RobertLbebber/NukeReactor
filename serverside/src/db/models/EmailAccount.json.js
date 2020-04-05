@@ -12,10 +12,10 @@ class Model extends CommonModel {
   constructor() {
     super(TableName);
     this.pK = "email";
-    this.props = _.omit(this.props, "id");
-    this.props = {
-      ...this.props,
-      email: { type: TYPES.STRING, required, unique },
+    this.properties = _.omit(this.properties, "id");
+    this.properties = {
+      ...this.properties,
+      email: { type: TYPES.STRING, required, unique }
       /**
        * Connections
        * @property {SoftRef} accountId-
@@ -24,7 +24,9 @@ class Model extends CommonModel {
   }
 
   init() {
-    this.props.accountID = createSoftRef(AccountSingleton.getInstance(), { unique });
+    this.properties.accountID = createSoftRef(AccountSingleton.getInstance(), {
+      unique
+    });
   }
 }
 
@@ -36,20 +38,20 @@ export const Table = {
     KeySchema: [
       {
         AttributeName: "email",
-        KeyType: "HASH",
-      },
+        KeyType: "HASH"
+      }
     ],
     AttributeDefinitions: [
       {
         AttributeName: "email",
-        AttributeType: "S",
-      },
+        AttributeType: "S"
+      }
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 1,
-      WriteCapacityUnits: 1,
-    },
-  },
+      WriteCapacityUnits: 1
+    }
+  }
 };
 
 const EmailAccountSingleton = new SingletonGenerator(Model);

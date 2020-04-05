@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Redirect } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
 import { LandingPage } from "Pages/Public/LandingPage";
-import { RoutesWithLocale } from "./Routes";
+import Routes, { RoutesLocale } from "./Routes";
 import RouteContextProvider from "Context/RouteContext";
 import { flatten as Languages } from "assets/locale/Langauges";
 import Footer from "Pages/Navibars/Footer/Footer";
@@ -40,17 +40,24 @@ export class Router extends Component {
                       <FormattedMessage id="_id">
                         {lang => (
                           <Switch>
-                            {RoutesWithLocale(Languages[lang]).map(route => (
+                            {_.map(Routes, route => (
                               <Route
                                 exact={route.exact}
                                 key={route.name}
                                 path={route.path}
                                 render={props => (
                                   <RouteContextProvider
-                                    value={{ currentRoute: route, currentInfo: props, routes: RoutesWithLocale }}
+                                    value={{
+                                      currentRoute: route,
+                                      currentInfo: props,
+                                      routes: RoutesLocale(lang)
+                                    }}
                                   >
                                     {Boolean(route.nonStandardNavbar) ? (
-                                      <route.component {...props} {...heart.account} />
+                                      <route.component
+                                        {...props}
+                                        {...heart.account}
+                                      />
                                     ) : (
                                       <React.Fragment>
                                         <Header
@@ -59,7 +66,10 @@ export class Router extends Component {
                                           routes={route}
                                           account={heart.account}
                                         />
-                                        <route.component routeShape={props} {...heart.account} />
+                                        <route.component
+                                          routeShape={props}
+                                          {...heart.account}
+                                        />
                                       </React.Fragment>
                                     )}
                                   </RouteContextProvider>
@@ -87,7 +97,7 @@ export const RouteShape = {
   history: PropTypes.object,
   locaton: PropTypes.object,
   match: PropTypes.object,
-  staticContext: PropTypes.object,
+  staticContext: PropTypes.object
 };
 
 export default Router;

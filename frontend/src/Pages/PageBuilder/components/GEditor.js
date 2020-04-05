@@ -9,7 +9,7 @@ import gjsPresetNewsletter from "grapesjs-preset-newsletter";
 import gjsBasicBlocks from "grapesjs-blocks-basic";
 // Components
 // import GComponent from "./GComponent";
-import GBlock from "./GBlock";
+// import GBlock from "./GBlock";
 // import type, { GrapesPluginType } from "../types/grapes";
 
 const { useEffect, useState } = React;

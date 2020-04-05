@@ -4,27 +4,51 @@
     "Buttons": {
       "Cancel": "Cancel",
       "Submit": "Submit",
+      "Back": "Back",
       "Close": "Close",
       "Open": "Open",
       "Like": "Like",
       "Dislike": "Dislike",
       "Donate": "Donate",
-      "Share": "Share"
+      "Share": "Share",
+      "Settings": "Settings",
+      "Logout": "Logout"
     },
     "Directions": {
       "ClickMe": "Click Me",
       "ClickHere": "click here"
     },
     "money": {
-      "currencySymbol": "$"
+      "currencySymbol": "$",
+      "range": {
+        "id": {
+          "0": "1|5|25|100"
+        },
+        "maxCurrency": 2000
+      }
     }
   },
   "pages": {
-    "Home": { "name": "Home" },
-    "Account": { "name": "Account", "SubPages": { "AccountSettings": { "name": "AccountSettings" } } },
-    "Electee": { "name": "Electee" },
-    "Electr": { "name": "Electr" },
-    "Feed": { "name": "Feed" },
+    "Home": {
+      "name": "Home"
+    },
+    "Account": {
+      "name": "Account",
+      "SubPages": {
+        "AccountSettings": {
+          "name": "Account Settings"
+        }
+      }
+    },
+    "Electee": {
+      "name": "Electee"
+    },
+    "Electr": {
+      "name": "Electr"
+    },
+    "Feed": {
+      "name": "Feed"
+    },
     "PageBuilder": {
       "name": "Page Builder",
       "ActionButtons": {
@@ -39,15 +63,42 @@
         "LandingPage": {
           "name": "Landing Page",
           "form": {
-            "Email": { "label": "Email", "placeholder": "Email", "title": "" },
-            "FirstName": { "label": "First Name", "placeholder": "First Name", "title": "" },
-            "LastName": { "label": "Last Name", "placeholder": "Last Name", "title": "" },
-            "Password": { "label": "Password", "placeholder": "Password", "title": "" },
-            "Confirmation": { "label": "Confirm Password", "placeholder": "Confirmation", "title": "" },
-            "RememberMe": { "label": "Remember Me", "title": "" }
+            "Email": {
+              "label": "Email",
+              "placeholder": "Email",
+              "title": ""
+            },
+            "FirstName": {
+              "label": "First Name",
+              "placeholder": "First Name",
+              "title": ""
+            },
+            "LastName": {
+              "label": "Last Name",
+              "placeholder": "Last Name",
+              "title": ""
+            },
+            "Password": {
+              "label": "Password",
+              "placeholder": "Password",
+              "title": ""
+            },
+            "Confirmation": {
+              "label": "Confirm Password",
+              "placeholder": "Confirmation",
+              "title": ""
+            },
+            "RememberMe": {
+              "label": "Remember Me",
+              "title": ""
+            }
           },
-          "SignIn": { "Switch": "Already have an account?" },
-          "SignUp": { "Switch": "Don't have an account?" },
+          "SignIn": {
+            "Switch": "Already have an account?"
+          },
+          "SignUp": {
+            "Switch": "Don't have an account?"
+          },
           "Register": "Register",
           "Login": "Login"
         },
@@ -81,12 +132,18 @@
       "Header": {
         "Menu": {
           "Actions": {
-            "LogOut": { "name": "Log Out" }
+            "LogOut": {
+              "name": "Log Out"
+            }
           }
         },
         "Reputation": {
-          "Donations": { "name": "Donations" },
-          "Presige": { "name": "Presige" }
+          "Donations": {
+            "name": "Donations"
+          },
+          "Presige": {
+            "name": "Presige"
+          }
         }
       }
     }

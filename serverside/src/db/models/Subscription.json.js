@@ -10,16 +10,16 @@ const TableName = "Subscription";
 class Model {
   constructor() {
     this.pK = "id";
-    this.props = {
+    this.properties = {
       ...Attributes,
-      serial: { type: TYPES.STRING },
+      serial: { type: TYPES.STRING }
     };
     this.fn = CommonDBCrud(this, TableName);
   }
 
   init() {
-    this.props.subscribeTo = createRef(AccountSingleton.getInstance());
-    this.props.accountId = createRef(AccountSingleton.getInstance());
+    this.properties.subscribeTo = createRef(AccountSingleton.getInstance());
+    this.properties.accountId = createRef(AccountSingleton.getInstance());
   }
 }
 
@@ -31,20 +31,20 @@ export const Table = {
     KeySchema: [
       {
         AttributeName: "id",
-        KeyType: "HASH",
-      },
+        KeyType: "HASH"
+      }
     ],
     AttributeDefinitions: [
       {
         AttributeName: "id",
-        AttributeType: "S",
-      },
+        AttributeType: "S"
+      }
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 1,
-      WriteCapacityUnits: 1,
-    },
-  },
+      WriteCapacityUnits: 1
+    }
+  }
 };
 
 const Subscription = new SingletonGenerator(Model);

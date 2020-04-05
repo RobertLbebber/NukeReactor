@@ -13,8 +13,11 @@ const TableName = "Sessions";
 export const Utils = {
   stillActive: dataResult => {
     let then = new Moment(dataResult.updatedDate);
-    return then.isBetween(new Moment().subtract(10, "minute"), new Moment().add(10, "minute"));
-  },
+    return then.isBetween(
+      new Moment().subtract(10, "minute"),
+      new Moment().add(10, "minute")
+    );
+  }
 };
 
 class Model extends CommonModel {
@@ -26,8 +29,10 @@ class Model extends CommonModel {
   }
   /** @override*/
   init() {
-    this.props.accountId = createRef(AccountSingleton.getInstance());
-    this.props.emailAccountId = createRef(EmailAccountSingleton.getInstance());
+    this.properties.accountId = createRef(AccountSingleton.getInstance());
+    this.properties.emailAccountId = createRef(
+      EmailAccountSingleton.getInstance()
+    );
   }
 }
 
@@ -39,20 +44,20 @@ export const Table = {
     KeySchema: [
       {
         AttributeName: "id",
-        KeyType: "HASH",
-      },
+        KeyType: "HASH"
+      }
     ],
     AttributeDefinitions: [
       {
         AttributeName: "id",
-        AttributeType: "S",
-      },
+        AttributeType: "S"
+      }
     ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 1,
-      WriteCapacityUnits: 1,
-    },
-  },
+      WriteCapacityUnits: 1
+    }
+  }
 };
 
 const SessionsSingleton = new SingletonGenerator(Model);
