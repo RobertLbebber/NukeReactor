@@ -15,7 +15,7 @@
     "deep-extend": ">=0.5.1",
     "graceful-fs": "^4.1.15",
     "grunt-babel": "^8.0.0",
-    "https-proxy-agent": ">=2.2.0",
+    "https-proxy-agent": ">=2.2.3",
     "lodash": "^4.17.11",
     "sails": "^1.1.0",
     "sails-hook-apianalytics": "^2.0.0",
